@@ -2,15 +2,15 @@ import { GitHub } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import "./projectComponent.css";
-import { makeStyles } from "@mui/styles";
+// import { makeStyles } from "@mui/styles";
 
-const styles = makeStyles((theme) => ({
-  projectImage: {
-    height: 200,
-    width: 400,
-    borderRadius: 15,
-  },
-}));
+// const styles = makeStyles((theme) => ({
+//   projectImage: {
+//     height: 200,
+//     width: 400,
+//     borderRadius: 15,
+//   },
+// }));
 
 const projData = [
   {
