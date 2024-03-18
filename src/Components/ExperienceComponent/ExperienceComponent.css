@@ -1,0 +1,11 @@
+.experienceContainer {
+  animation: grow 1s;
+}
+@keyframes grow {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

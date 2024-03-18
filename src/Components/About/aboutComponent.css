@@ -1,0 +1,56 @@
+.aboutContainer {
+  animation: grow 1s;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.skillList {
+  display: flex;
+}
+
+.skillContainer {
+  display: flex;
+  gap: "3vw";
+  flex-wrap: wrap;
+}
+.skill {
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+  padding: 7px;
+  height: fit-content;
+  display: flex;
+  margin: 0;
+  border-radius: 0.5vh;
+  text-align: center;
+}
+.skill:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0px 0px 3px white);
+}
+
+.skillList {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 25vw;
+  /* gap: 5px; */
+  color: white;
+}
+
+.skillIcon {
+  height: fit-content;
+  width: fit-content;
+  margin-right: 4px;
+  align-self: center;
+}
+
+.skillContent {
+  margin: auto;
+  margin-left: 2px;
+}
