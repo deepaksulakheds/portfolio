@@ -1,7 +1,7 @@
 import React from "react";
 import "./header.css";
 import Grid from "@mui/system/Unstable_Grid/Grid";
-import { Chip, Tooltip, Typography } from "@mui/material";
+import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Call, GitHub, LinkedIn, LocationOn, Mail } from "@mui/icons-material";
 
 const contacts = [
@@ -60,17 +60,24 @@ function Header(props) {
           label="Software Engineer 1"
           style={{ color: "white", background: "rgba(255, 255, 255, 0.1)" }}
         />
-        <Grid sx={{ display: "flex", gap: "20px", marginTop: "20px" }}>
+        <Grid
+          sx={{
+            display: "flex",
+            gap: "10px",
+            marginTop: "20px",
+            flexWrap: "wrap",
+          }}
+        >
           {contacts.map((contact) => (
             <Tooltip key={contact.name} title={contact.toolTip}>
-              <a
+              <IconButton
                 style={{
                   color: "white",
                 }}
                 href={contact.ref}
               >
                 {contact.icon}
-              </a>
+              </IconButton>
             </Tooltip>
           ))}
         </Grid>

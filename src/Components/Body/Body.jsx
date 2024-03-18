@@ -79,7 +79,7 @@ function Body(props) {
             </a>
           ))}
         </Grid>
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        <Box className="navBar" sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton
             size="large"
             aria-label="account of current user"
