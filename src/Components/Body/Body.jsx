@@ -43,6 +43,8 @@ function Body(props) {
     <Grid className="bodyContainer">
       <Grid
         style={{
+          margin: -1,
+          padding: 0,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",

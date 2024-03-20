@@ -40,14 +40,16 @@ const contacts = [
 function Header(props) {
   return (
     <Grid
-      className="header"
+      className="headerContainer"
       style={{ display: "flex", padding: "20px", alignItems: "center" }}
     >
       <img
         src="/deepak.jpg"
         style={{
-          height: "80px",
-          width: "80px",
+          padding: "20px",
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          height: "90px",
+          width: "90px",
           marginRight: "20px",
           borderRadius: "50%",
         }}
@@ -58,7 +60,10 @@ function Header(props) {
         </Typography>
         <Chip
           label="Software Engineer 1"
-          style={{ color: "white", background: "rgba(255, 255, 255, 0.1)" }}
+          style={{
+            color: "white",
+            background: "rgba(255, 255, 255, 0.1)",
+          }}
         />
         <Grid
           sx={{
@@ -71,8 +76,13 @@ function Header(props) {
           {contacts.map((contact) => (
             <Tooltip key={contact.name} title={contact.toolTip}>
               <IconButton
-                style={{
+                sx={{
                   color: "white",
+                  "&:hover": {
+                    color: "black",
+                    backgroundColor: "rgba(255, 255, 255, 0.6)",
+                    // filter: "drop-shadow(0px 0px 5px 5px white)",
+                  },
                 }}
                 href={contact.ref}
               >

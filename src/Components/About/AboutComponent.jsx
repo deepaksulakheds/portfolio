@@ -46,16 +46,6 @@ function AboutComponent(props) {
   return (
     <Grid className="aboutContainer">
       <Grid>
-        {/* <Typography
-          style={{
-            margin: "10px 0px",
-            fontWeight: "bold",
-            textDecoration: "underline",
-          }}
-          variant="h6"
-        >
-          Hi
-        </Typography> */}
         <Typography variant="h6">
           To be a part of an organization that provides ample opportunities for
           professional and personal growth, where i can use my skills for the
@@ -91,16 +81,7 @@ function AboutComponent(props) {
               </h3>
               <Grid className="skillList">
                 {skill.list.map((s) => (
-                  <Grid
-                    key={s.content}
-                    style={{
-                      "&:hover": {
-                        transform: "scale(1.2)",
-                        filter: "drop-shadow(0px 0px 5px white)",
-                      },
-                    }}
-                    className="skill"
-                  >
+                  <Grid key={s.content} className="skill">
                     <img
                       src={s.icon}
                       className="skillIcon"

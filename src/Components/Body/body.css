@@ -1,15 +1,11 @@
 .bodyContainer {
-  /* padding: 20px; */
   margin: 20px;
-  /* padding: 20px; */
-  /* height: 100vh; */
   background: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5.5px);
   -webkit-backdrop-filter: blur(5.5px);
   border: 1px solid rgba(255, 255, 255, 0.24);
-  /* animation: grow 1s; */
 }
 
 .navBar {
@@ -17,7 +13,7 @@
   transition: all ease-in-out 0.5s;
   padding: 10px;
   border-radius: 0 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5.5px);
   -webkit-backdrop-filter: blur(5.5px);
   border: 1px solid rgba(255, 255, 255, 0.24);

@@ -1,6 +1,8 @@
 .experienceContainer {
   animation: grow 1s;
+  display: flex;
 }
+
 @keyframes grow {
   0% {
     opacity: 0;

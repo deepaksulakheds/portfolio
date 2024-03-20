@@ -2,15 +2,6 @@ import { GitHub } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 import "./projectComponent.css";
-// import { makeStyles } from "@mui/styles";
-
-// const styles = makeStyles((theme) => ({
-//   projectImage: {
-//     height: 200,
-//     width: 400,
-//     borderRadius: 15,
-//   },
-// }));
 
 const projData = [
   {
@@ -35,6 +26,12 @@ const projData = [
     title: "Rice Mill Management System",
     techUsed: "HTML, CSS, PHP, Bootstrap 5, WAMP",
     image: "/icons/riceMill.jpeg",
+    path: "#",
+  },
+  {
+    title: "Fruits Classification using CNN",
+    techUsed: "Python, Deep Learning, CNN",
+    image: "/icons/fruits.jpg",
     path: "#",
   },
 ];
