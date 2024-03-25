@@ -1,5 +1,5 @@
 import { GitHub } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import "./projectComponent.css";
 
@@ -43,7 +43,7 @@ function ProjectsComponent(props) {
         <Grid key={project.title} width={300}>
           <Grid
             sx={{
-              marginBottom: 3,
+              marginBottom: 1,
               borderRadius: 3,
               height: 150,
               width: 300,
@@ -67,16 +67,27 @@ function ProjectsComponent(props) {
               }}
             />
           </Grid>
-          <Grid style={{ display: "flex", justifyContent: "space-between" }}>
+          <Grid
+            style={{
+              fontWeight: "bold",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             {project.title}
-            <a
-              style={{
+            <IconButton
+              sx={{
                 color: "white",
+                "&:hover": {
+                  color: "black",
+                  backgroundColor: "rgba(255, 255, 255)",
+                },
               }}
               href={project.path}
             >
               <GitHub />
-            </a>
+            </IconButton>
           </Grid>
           <Typography>{project.techUsed}</Typography>
         </Grid>

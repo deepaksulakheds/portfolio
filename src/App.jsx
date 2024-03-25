@@ -1,12 +1,15 @@
 import "./App.css";
 import Header from "./Components/Header/Header";
 import Body from "./Components/Body/Body";
+import { SnackbarProvider } from "./Components/SharedSnackbar/SharedSnackbar";
 
 function App() {
   return (
     <>
-      <Header />
-      <Body />
+      <SnackbarProvider>
+        <Header />
+        <Body />
+      </SnackbarProvider>
     </>
   );
 }

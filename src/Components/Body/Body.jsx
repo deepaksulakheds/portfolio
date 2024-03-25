@@ -24,7 +24,7 @@ function Body(props) {
   }, [selectedMenu]);
 
   const handleMenuSelect = (index) => {
-    console.log(menuList[index]);
+    // console.log(menuList[index]);
     setSelectedMenu(menuList[index].name + " " + menuList[index].icon);
     setAnchorElNav(null);
   };

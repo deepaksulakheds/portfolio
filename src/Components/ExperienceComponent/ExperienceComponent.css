@@ -1,6 +1,7 @@
 .experienceContainer {
   animation: grow 1s;
   display: flex;
+  flex-wrap: wrap;
 }
 
 @keyframes grow {

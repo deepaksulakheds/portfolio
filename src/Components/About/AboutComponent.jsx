@@ -36,7 +36,7 @@ const skills = [
   {
     title: "Others",
     list: [
-      { content: "Git & Github", icon: "/icons/git.svg" },
+      { content: "Git, Github & Gitlab", icon: "/icons/git.svg" },
       { content: "ApolloServer", icon: "/icons/apollo.svg" },
     ],
   },
