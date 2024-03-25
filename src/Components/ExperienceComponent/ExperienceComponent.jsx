@@ -15,31 +15,16 @@ import { Grid } from "@mui/material";
 
 const experienceData = [
   {
-    company: "Zeliot Connectecd Services Pvt. Ltd.",
+    company: "Zeliot Connected Services Pvt. Ltd.",
     titlesList: [
       {
         designation: "Software Engineer 1",
-        description: "asd",
+        // description: "asd",
         duration: "Sep 2023 - Present",
       },
       {
         designation: "Full Stack Developer Intern",
-        description: "asd",
-        duration: "June 2023 - Aug 2023",
-      },
-    ],
-  },
-  {
-    company: "Zeliot Connectecd Services Pvt. Ltd.",
-    titlesList: [
-      {
-        designation: "Software Engineer 1",
-        description: "asd",
-        duration: "Sep 2023 - Present",
-      },
-      {
-        designation: "Full Stack Developer Intern",
-        description: "asd",
+        // description: "asd",
         duration: "June 2023 - Aug 2023",
       },
     ],
@@ -158,7 +143,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
     <TimelineItem>
       <TimelineSeparator>
         <TimelineDot variant="outlined" sx={{ margin: 0 }} />
-        {index == educationData.length - 1 ? null : <TimelineConnector />}
+        {index == experienceData.length - 1 ? null : <TimelineConnector />}
       </TimelineSeparator>
       <TimelineContent
         sx={{
@@ -175,20 +160,23 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
             width: "fit-content",
             fontWeight: "bold",
             border: "1px solid white",
-            borderRadius: 1,
+            borderRadius: 2,
           }}
         >
           {company}
         </Typography>
         <Grid sx={{ marginTop: "10px", marginLeft: "10px" }}>
           {titlesList.map((title) => (
-            <Grid key={title.designation}>
-              <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
+            <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
+              <Typography sx={{ fontSize: 17, fontWeight: "bold" }}>
                 - {title.designation}
               </Typography>
               <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
-                {title.description}
+                {title.duration}
               </Typography>
+              {/* <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
+                {title?.description}
+              </Typography> */}
             </Grid>
           ))}
         </Grid>
