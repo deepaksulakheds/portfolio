@@ -7,31 +7,31 @@ const projData = [
   {
     title: "Telematic Analytics - Zeliot",
     techUsed: "JavaScript, NodeJS, React JS, GraphQL, ApolloServer",
-    image: "/icons/fleet.jpg",
+    image: "./icons/fleet.jpg",
     path: "https://github.com/deepaksulakheds/Zeliot_Telematic_Project",
   },
   {
     title: "Dashboard - Zeliot Analytics",
     techUsed: "React JS, Node JS, Apollo-Server, MUI, HTML, CSS, ",
-    image: "/icons/dashboard.png",
+    image: "./icons/dashboard.png",
     path: "https://github.com/deepaksulakheds/Zeliot-Analytics-Dashboard",
   },
   {
     title: "Face Recognition using LBPH",
     techUsed: "Python, OpenCV, Haar-Cascade Classifier, LBPH Algorithm",
-    image: "/icons/face-rec.jpg",
+    image: "./icons/face-rec.jpg",
     path: "https://github.com/deepaksulakheds/Face-Recognition-using-LBPH",
   },
   {
     title: "Rice Mill Management System",
     techUsed: "HTML, CSS, PHP, Bootstrap 5, WAMP",
-    image: "/icons/riceMill.jpeg",
+    image: "./icons/riceMill.jpeg",
     path: "#",
   },
   {
     title: "Fruits Classification using CNN",
     techUsed: "Python, Deep Learning, CNN",
-    image: "/icons/fruits.jpg",
+    image: "./icons/fruits.jpg",
     path: "#",
   },
 ];

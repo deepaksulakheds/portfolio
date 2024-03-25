@@ -8,7 +8,7 @@ function ResumeComponent(props) {
       <iframe
         allowFullScreen={true}
         style={{ height: "60vh", width: "100%", borderRadius: 15, border: 0 }}
-        src="/Deepak-Sulakhe-Resume.pdf"
+        src="./Deepak-Sulakhe-Resume.pdf"
       />
     </Grid>
   );

@@ -47,7 +47,7 @@ function Header(props) {
       style={{ display: "flex", padding: "20px", alignItems: "center" }}
     >
       <img
-        src="/deepak.jpg"
+        src="./deepak.jpg"
         style={{
           padding: "20px",
           backgroundColor: "rgba(255, 255, 255, 0.1)",
