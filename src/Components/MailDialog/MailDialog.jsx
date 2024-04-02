@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useStyles } from "./styles";
 import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
 
 function MailDialog({ mailDialogVisible, onclose, snackbar }) {
@@ -19,7 +18,6 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
     subject: "",
     message: "",
   });
-  const styledClasses = useStyles();
 
   useEffect(() => {
     return () => {
