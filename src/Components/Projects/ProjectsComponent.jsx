@@ -84,6 +84,7 @@ function ProjectsComponent(props) {
                   backgroundColor: "rgba(255, 255, 255)",
                 },
               }}
+              target="blank"
               href={project.path}
             >
               <GitHub />

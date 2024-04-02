@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
+import { Alert, useTheme } from "@mui/material";
 
 // Create a context for managing the Snackbar state
 const SnackbarContext = createContext();
@@ -10,6 +10,8 @@ export const SnackbarProvider = ({ children }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("info");
+
+  const theme = useTheme();
 
   // Function to show the Snackbar
   const showSnackbar = (message, severity = "info") => {
@@ -29,15 +31,15 @@ export const SnackbarProvider = ({ children }) => {
       {children}
       <Snackbar
         open={snackbarOpen}
-        ClickAwayListenerProps={{ onClickAway: null }}
-        autoHideDuration={3000}
+        ClickAwayListenerProps={{ onClickAway: () => null }}
+        autoHideDuration={4000}
         onClose={hideSnackbar}
       >
         <Alert
           sx={{
             backgroundColor: "transparent",
-            color: "red",
-            border: "3px solid red",
+            color: theme.palette[snackbarSeverity].main,
+            border: `3px solid ${theme.palette[snackbarSeverity].main}`,
             borderRadius: "10px",
             fontWeight: "bold",
           }}

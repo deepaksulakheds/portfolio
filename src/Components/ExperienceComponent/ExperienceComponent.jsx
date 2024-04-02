@@ -64,7 +64,15 @@ export default function ExperienceComponent() {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>
-            <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
+            <Typography
+              sx={{
+                fontSize: 18,
+                fontWeight: "bold",
+                textDecoration: "underline",
+                textUnderlineOffset: "5px",
+                textDecorationThickness: "0.1px",
+              }}
+            >
               Experience
             </Typography>
           </TimelineContent>
@@ -99,7 +107,15 @@ export default function ExperienceComponent() {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>
-            <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
+            <Typography
+              sx={{
+                fontSize: 18,
+                fontWeight: "bold",
+                textDecoration: "underline",
+                textUnderlineOffset: "5px",
+                textDecorationThickness: "0.1px",
+              }}
+            >
               Education
             </Typography>
           </TimelineContent>

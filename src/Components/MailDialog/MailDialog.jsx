@@ -41,9 +41,10 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
       contactDetails.name &&
       contactDetails.subject
     ) {
-      console.log("contactDetails", contactDetails);
+      // console.log("contactDetails", contactDetails);
+      snackbar.showSnackbar("Feature comming soon.", "info");
     } else {
-      snackbar.showSnackbar("Please enter all fields.", "error");
+      snackbar.showSnackbar("Please enter all the fields.", "error");
     }
   };
 

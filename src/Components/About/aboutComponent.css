@@ -29,7 +29,8 @@
 .skillList {
   display: flex;
   flex-wrap: wrap;
-  max-width: 18vw;
+  /* max-width: 18vw; */
+  width: clamp(150px, 18vw, 350px);
   gap: 5px;
   color: white;
 }

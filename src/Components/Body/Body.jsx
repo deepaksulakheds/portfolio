@@ -19,6 +19,7 @@ function Body(props) {
   const [selectedMenu, setSelectedMenu] = useState(
     menuList[0].name + " " + menuList[0].icon
   );
+
   useEffect(() => {
     document.title = selectedMenu;
   }, [selectedMenu]);
