@@ -50,7 +50,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
     <Dialog
       open={mailDialogVisible}
       onClose={onclose}
-      sx={{ backdropFilter: "blur(3px)" }}
+      sx={{ backdropFilter: "blur(5px)" }}
       PaperProps={{
         style: {
           borderRadius: "15px",
