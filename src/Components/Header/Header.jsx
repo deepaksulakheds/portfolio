@@ -58,7 +58,10 @@ function Header(props) {
         }}
       />
       <Grid>
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+        <Typography
+          variant="h4"
+          sx={{ fontWeight: "bold", marginBlock: "5px" }}
+        >
           Deepak Sulakhe
         </Typography>
         <Chip

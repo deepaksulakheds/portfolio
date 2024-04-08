@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { AutoStories, BusinessCenter } from "@mui/icons-material";
 import "./ExperienceComponent.css";
 import { Grid } from "@mui/material";
+import moment from "moment";
 
 const experienceData = [
   {
@@ -20,12 +21,14 @@ const experienceData = [
       {
         designation: "Software Engineer 1",
         // description: "asd",
-        duration: "Sep 2023 - Present",
+        duration: "Sep 2023 - Present", // In time period pass current time for duration.
+        timePeriod: moment.duration(moment().diff("sep-2023")),
       },
       {
         designation: "Full Stack Developer Intern",
         // description: "asd",
-        duration: "June 2023 - Aug 2023",
+        duration: "June 2023 - Aug 2023", // In time period pass end duration.
+        timePeriod: moment.duration(moment("sep 2023").diff("june 2023")),
       },
     ],
   },
@@ -188,7 +191,14 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
                 - {title.designation}
               </Typography>
               <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
-                {title.duration}
+                {title.duration}, (
+                {/* {title.timePeriod.years() +
+                    " Y" +
+                    title.timePeriod.months() +
+                    " M"} */}
+                {title.timePeriod.years() > 0 &&
+                  `${title.timePeriod.years()} Y`}{" "}
+                {title.timePeriod.months()} M )
               </Typography>
               {/* <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
                 {title?.description}

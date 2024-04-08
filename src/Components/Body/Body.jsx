@@ -44,7 +44,7 @@ function Body(props) {
     <Grid className="bodyContainer">
       <Grid
         style={{
-          margin: -1,
+          margin: -1.5,
           padding: 0,
           display: "flex",
           justifyContent: "space-between",
@@ -53,8 +53,8 @@ function Body(props) {
       >
         <span
           style={{
-            margin: 15,
-            fontSize: 25,
+            marginLeft: 20,
+            fontSize: 22,
             fontWeight: "bold",
             transition: "all ease-in-out 0.5s",
             textUnderlineOffset: 10,
@@ -90,6 +90,7 @@ function Body(props) {
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
             color="inherit"
+            sx={{ padding: "6px" }}
           >
             <MenuOutlined />
           </IconButton>
@@ -107,11 +108,13 @@ function Body(props) {
             }}
             open={Boolean(anchorElNav)}
             onClose={handleCloseNavMenu}
-            PaperProps={{
-              style: {
-                background: "#121212",
-                border: "1px solid white",
-                borderRadius: "10px",
+            slotProps={{
+              paper: {
+                style: {
+                  background: "#121212",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                },
               },
             }}
             sx={{
