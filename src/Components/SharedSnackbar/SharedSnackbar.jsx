@@ -32,7 +32,7 @@ export const SnackbarProvider = ({ children }) => {
       <Snackbar
         open={snackbarOpen}
         ClickAwayListenerProps={{ onClickAway: () => null }}
-        autoHideDuration={4000}
+        autoHideDuration={10000}
         onClose={hideSnackbar}
       >
         <Alert

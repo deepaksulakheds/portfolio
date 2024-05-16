@@ -10,39 +10,75 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
+import CryptoJS from "crypto-js";
+import { SEND_MAIL_QUERY } from "../queries";
+import axios from "axios";
 
 function MailDialog({ mailDialogVisible, onclose, snackbar }) {
   const [contactDetails, setContactDetails] = useState({
     name: "",
-    mail: "",
+    email: "",
     subject: "",
     message: "",
   });
 
   useEffect(() => {
     return () => {
-      setContactDetails({ name: "", mail: "", subject: "", message: "" });
+      setContactDetails({ name: "", email: "", subject: "", message: "" });
     };
   }, []);
 
-  const handleChange = (event) => {
+  const handleChange = async (event) => {
     setContactDetails({
       ...contactDetails,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleSubmit = () => {
-    if (
-      contactDetails.mail &&
-      contactDetails.message &&
-      contactDetails.name &&
-      contactDetails.subject
-    ) {
-      // console.log("contactDetails", contactDetails);
-      snackbar.showSnackbar("Feature comming soon.", "info");
-    } else {
-      snackbar.showSnackbar("Please enter all the fields.", "error");
+  const handleSubmit = async () => {
+    console.log("meta", import.meta.env.VITE_APP_BACKEND_URL);
+    try {
+      if (
+        contactDetails.email &&
+        contactDetails.message &&
+        contactDetails.name &&
+        contactDetails.subject
+      ) {
+        // console.log("contactDetails", contactDetails);
+        const encryptedData = CryptoJS.AES.encrypt(
+          JSON.stringify({
+            query: SEND_MAIL_QUERY,
+            variables: contactDetails,
+          }),
+          import.meta.env.VITE_APP_AES_SECRET
+        ).toString();
+        // console.log("encryptedData", { encryptedData: encryptedData });
+        const resp = await axios.request({
+          method: "post",
+          maxBodyLength: Infinity,
+          url: import.meta.env.VITE_APP_BACKEND_URL,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: JSON.stringify({ encryptedData: encryptedData }),
+        });
+        if (resp.data) {
+          console.log("resp.data", resp.data);
+          snackbar.showSnackbar("Mail Sent.", "success");
+        }
+        // snackbar.showSnackbar("Feature comming soon.", "info");
+      } else {
+        snackbar.showSnackbar("Please enter all the fields.", "error");
+      }
+    } catch (err) {
+      console.log("Error", err);
+      if (err.name.toString().toLowerCase().includes("axios")) {
+        console.log("mailResp", err.response.data.message);
+        snackbar.showSnackbar(err.response.data.message, "error");
+      } else {
+        console.log("catch else", err);
+        snackbar.showSnackbar(err.message, "error");
+      }
     }
   };
 
@@ -85,8 +121,8 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
               InputProps={{ style: { color: "white" } }}
               fullWidth
               variant="standard"
-              value={contactDetails.mail}
-              name="mail"
+              value={contactDetails.email}
+              name="email"
               onChange={handleChange}
               label="Enter E-Mail"
             />
