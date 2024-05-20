@@ -14,19 +14,20 @@ import CryptoJS from "crypto-js";
 import { SEND_MAIL_QUERY } from "../queries";
 import axios from "axios";
 
-function MailDialog({ mailDialogVisible, onclose, snackbar }) {
+function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
   const [contactDetails, setContactDetails] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+  const [secretMailAlert, setSecretMailAlert] = useState(false);
 
   useEffect(() => {
-    return () => {
-      setContactDetails({ name: "", email: "", subject: "", message: "" });
-    };
-  }, []);
+    console.log("cleared");
+    setContactDetails({ name: "", email: "", subject: "", message: "" });
+    setSecretMailAlert(false); // Set secretMailAlert to false on unmount
+  }, [mailDialogVisible]);
 
   const handleChange = async (event) => {
     setContactDetails({
@@ -82,6 +83,13 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
     }
   };
 
+  const secretMailAlertHandler = async () => {
+    if (secretAlert) {
+      setSecretMailAlert(!secretMailAlert);
+      console.log("setSecretMailAlert");
+    }
+  };
+
   return (
     <Dialog
       open={mailDialogVisible}
@@ -95,7 +103,10 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
         },
       }}
     >
-      <DialogTitle sx={{ color: "white", fontWeight: "bold" }}>
+      <DialogTitle
+        sx={{ color: "white", fontWeight: "bold" }}
+        onClick={secretMailAlertHandler}
+      >
         Contact Me
       </DialogTitle>
       <Grid style={{ display: "flex", justifyContent: "center" }}>
@@ -160,7 +171,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
                 border: "2px solid white",
                 borderRadius: "7px",
                 color: "white",
-                fontWeight: "bold",
+                ...(secretMailAlert && { fontWeight: "bold" }),
                 "&:hover": { backgroundColor: "white", color: "black" },
               }}
               onClick={onclose}
@@ -172,7 +183,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar }) {
                 border: "2px solid white",
                 borderRadius: "7px",
                 color: "white",
-                fontWeight: "bold",
+                ...(secretMailAlert && { fontWeight: "bold" }),
                 "&:hover": { backgroundColor: "white", color: "black" },
               }}
               onClick={(e) => handleSubmit()}
