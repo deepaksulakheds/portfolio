@@ -10,3 +10,18 @@
   display: flex;
   align-items: center;
 }
+
+.image {
+  cursor: pointer;
+  padding: 20px;
+  height: 90px;
+  width: 90px;
+  margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: background-color 0.3s ease; /* Optional: Smooth transition effect */
+}
+
+.image:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}

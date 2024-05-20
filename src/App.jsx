@@ -4,6 +4,8 @@ import Body from "./Components/Body/Body";
 import { SnackbarProvider } from "./Components/SharedSnackbar/SharedSnackbar";
 
 function App() {
+  console.clear();
+
   return (
     <>
       <SnackbarProvider>

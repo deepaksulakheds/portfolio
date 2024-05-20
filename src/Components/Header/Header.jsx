@@ -4,9 +4,13 @@ import Grid from "@mui/system/Unstable_Grid/Grid";
 import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Call, GitHub, LinkedIn, LocationOn, Mail } from "@mui/icons-material";
 import MailDialog from "../MailDialog/MailDialog";
+import HeaderImageDialog from "./HeaderImageDialog";
 
 function Header(props) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
+  const [imageDialogVisible, setImageDialogVisible] = useState(false);
+  const [secretAlert, setSecretAlert] = useState(false);
+
   const [contacts, setContacts] = useState([
     {
       name: "Github",
@@ -47,15 +51,9 @@ function Header(props) {
       style={{ display: "flex", padding: "20px", alignItems: "center" }}
     >
       <img
+        onClick={() => setImageDialogVisible(true)}
         src="./deepak.jpg"
-        style={{
-          padding: "20px",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          height: "90px",
-          width: "90px",
-          marginRight: "20px",
-          borderRadius: "50%",
-        }}
+        className="image"
       />
       <Grid>
         <Typography
@@ -65,9 +63,11 @@ function Header(props) {
           Deepak Sulakhe
         </Typography>
         <Chip
+          onClick={(e) => setSecretAlert(!secretAlert)}
           label="Software Engineer 1"
           style={{
             color: "white",
+            cursor: "text",
             background: "rgba(255, 255, 255, 0.1)",
           }}
         />
@@ -102,6 +102,11 @@ function Header(props) {
       <MailDialog
         mailDialogVisible={mailDialogVisible}
         onclose={() => setMailDialogVisible(!mailDialogVisible)}
+        secretAlert={secretAlert}
+      />
+      <HeaderImageDialog
+        imageDialogVisible={imageDialogVisible}
+        onClose={() => setImageDialogVisible(!imageDialogVisible)}
       />
     </Grid>
   );
