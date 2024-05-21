@@ -24,9 +24,9 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
   const [secretMailAlert, setSecretMailAlert] = useState(false);
 
   useEffect(() => {
-    console.log("cleared");
+    // console.log("cleared");
     setContactDetails({ name: "", email: "", subject: "", message: "" });
-    setSecretMailAlert(false); // Set secretMailAlert to false on unmount
+    setSecretMailAlert(false);
   }, [mailDialogVisible]);
 
   const handleChange = async (event) => {
@@ -49,7 +49,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
         const encryptedData = CryptoJS.AES.encrypt(
           JSON.stringify({
             query: SEND_MAIL_QUERY,
-            variables: contactDetails,
+            variables: { ...contactDetails, isSecretAlert: secretMailAlert },
           }),
           import.meta.env.VITE_APP_AES_SECRET
         ).toString();
@@ -66,18 +66,19 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
         if (resp.data) {
           console.log("resp.data", resp.data);
           snackbar.showSnackbar("Mail Sent.", "success");
+          onclose();
         }
         // snackbar.showSnackbar("Feature comming soon.", "info");
       } else {
         snackbar.showSnackbar("Please enter all the fields.", "error");
       }
     } catch (err) {
-      console.log("Error", err);
-      if (err.name.toString().toLowerCase().includes("axios")) {
-        console.log("mailResp", err.response.data.message);
+      // console.log("Error", err);
+      if (err.message.toString().toLowerCase().includes("400")) {
+        // console.log("mailResp", err.response.data.message);
         snackbar.showSnackbar(err.response.data.message, "error");
       } else {
-        console.log("catch else", err);
+        // console.log("catch else", err);
         snackbar.showSnackbar(err.message, "error");
       }
     }

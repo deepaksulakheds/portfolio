@@ -68,7 +68,7 @@ function Header(props) {
           style={{
             color: "white",
             cursor: "text",
-            background: "rgba(255, 255, 255, 0.1)",
+            background: "rgba(255, 255, 255, 0.13)",
           }}
         />
         <Grid
@@ -84,6 +84,7 @@ function Header(props) {
               <IconButton
                 target="blank"
                 sx={{
+                  transition: "all ease-in-out 0.2s",
                   color: "white",
                   "&:hover": {
                     color: "black",
