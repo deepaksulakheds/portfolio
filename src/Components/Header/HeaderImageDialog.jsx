@@ -12,6 +12,9 @@ export default function HeaderImageDialog({ imageDialogVisible, onClose }) {
         sx: {
           boxShadow: "none",
           background: "none",
+          height: "auto",
+          width: "100%",
+          overflow: "hidden",
         },
       }}
     >
@@ -19,10 +22,9 @@ export default function HeaderImageDialog({ imageDialogVisible, onClose }) {
         src="./deepak.jpg"
         style={{
           padding: "40px",
-          height: "85%",
-          width: "85%",
+          // height: "85%",
           borderRadius: "50%",
-          backgroundColor: "rgba(255, 255, 255, 0.2)",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
         }}
       />
     </Dialog>
