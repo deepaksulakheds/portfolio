@@ -5,7 +5,6 @@ import { SnackbarProvider } from "./Components/SharedSnackbar/SharedSnackbar";
 
 function App() {
   console.clear();
-  console.log("Hello");
 
   return (
     <>
