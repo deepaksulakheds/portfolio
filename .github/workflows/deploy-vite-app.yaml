@@ -31,6 +31,7 @@ jobs:
       DEMO_VAR: ${{ vars.DEMO_VAR }} # Access the secret variable here
       DEMO_SEC: ${{ secrets.DEMO_SEC }}
       VITE_APP_AES_SECRET: ${{ secrets.VITE_APP_AES_SECRET }}
+      VITE_APP_BACKEND_URL: ${{ secrets.VITE_APP_BACKEND_URL }}
 
     steps:
       - name: Checkout
