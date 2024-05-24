@@ -22,10 +22,15 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
     message: "",
   });
   const [secretMailAlert, setSecretMailAlert] = useState(false);
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+  });
 
   useEffect(() => {
     // console.log("cleared");
     setContactDetails({ name: "", email: "", subject: "", message: "" });
+    setErrors({ name: "", email: "" });
     setSecretMailAlert(false);
   }, [mailDialogVisible]);
 
@@ -34,6 +39,26 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
       ...contactDetails,
       [event.target.name]: event.target.value,
     });
+
+    handleValidity(event);
+  };
+
+  const handleValidity = (event) => {
+    if (event.target.name === "name") {
+      const nameRegex = /^[A-Za-z ]{3,30}$/;
+      if (!nameRegex.test(event.target.value)) {
+        setErrors({ ...errors, name: "Only alphabets and spaces are allowed" });
+      } else {
+        setErrors({ ...errors, name: "" });
+      }
+    } else if (event.target.name === "email") {
+      const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+      if (!emailRegex.test(event.target.value)) {
+        setErrors({ ...errors, email: "Enter a valid email address" });
+      } else {
+        setErrors({ ...errors, email: "" });
+      }
+    }
   };
 
   const handleSubmit = async () => {
@@ -53,7 +78,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
           }),
           import.meta.env.VITE_APP_AES_SECRET
         ).toString();
-        // console.log("encryptedData", { encryptedData: encryptedData });
+        console.log("encryptedData", { encryptedData: encryptedData });
         const resp = await axios.request({
           method: "post",
           maxBodyLength: Infinity,
@@ -61,7 +86,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
           headers: {
             "Content-Type": "application/json",
           },
-          data: JSON.stringify({ encryptedData: encryptedData }),
+          data: JSON.stringify({ payload: encryptedData }),
         });
         if (resp.data) {
           console.log("resp.data", resp.data);
@@ -118,25 +143,31 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
           <Grid>
             <TextField
               InputLabelProps={{
-                style: { color: "white" },
+                style: { color: errors.name ? "red" : "white" },
               }}
-              InputProps={{ style: { color: "white" } }}
+              InputProps={{ style: { color: errors.name ? "red" : "white" } }}
               variant="standard"
               fullWidth
               value={contactDetails.name}
               name="name"
               onChange={handleChange}
-              label="Enter Name"
+              label={errors.name ? "Enter valid name." : "Enter Name"}
+              error={!!errors.name}
+              // onBlur={handleValidity}
             />
             <TextField
-              InputLabelProps={{ style: { color: "white" } }}
-              InputProps={{ style: { color: "white" } }}
+              InputLabelProps={{
+                style: { color: errors.email ? "red" : "white" },
+              }}
+              InputProps={{ style: { color: errors.email ? "red" : "white" } }}
               fullWidth
               variant="standard"
               value={contactDetails.email}
               name="email"
               onChange={handleChange}
-              label="Enter E-Mail"
+              label={errors.email ? "Enter valid E-Mail." : "Enter E-Mail"}
+              error={!!errors.email}
+              // onBlur={handleValidity}
             />
             <TextField
               InputLabelProps={{ style: { color: "white" } }}
@@ -181,13 +212,19 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
             </Button>
             <Button
               sx={{
-                border: "2px solid white",
+                border: !!(errors.name || errors.email)
+                  ? "2px solid rgba(255, 255, 255,0.4)"
+                  : "2px solid rgba(255, 255, 255)",
                 borderRadius: "7px",
                 color: "white",
                 ...(secretMailAlert && { fontWeight: "bold" }),
                 "&:hover": { backgroundColor: "white", color: "black" },
+                "&:disabled": {
+                  color: "rgba(255, 255, 255,0.4)",
+                },
               }}
               onClick={(e) => handleSubmit()}
+              disabled={!!(errors.name || errors.email)}
             >
               Submit
             </Button>
