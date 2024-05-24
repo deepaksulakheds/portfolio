@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
@@ -26,6 +27,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
     name: "",
     email: "",
   });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // console.log("cleared");
@@ -61,7 +63,8 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log("meta", import.meta.env.VITE_APP_BACKEND_URL);
     try {
       if (
@@ -70,6 +73,8 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
         contactDetails.name &&
         contactDetails.subject
       ) {
+        setLoading(true);
+        // await new Promise((resolve) => setTimeout(() => resolve(true), 10000));
         // console.log("contactDetails", contactDetails);
         const encryptedData = CryptoJS.AES.encrypt(
           JSON.stringify({
@@ -88,6 +93,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
           },
           data: JSON.stringify({ payload: encryptedData }),
         });
+        setLoading(false);
         if (resp.data) {
           console.log("resp.data", resp.data);
           snackbar.showSnackbar("Mail Sent.", "success");
@@ -98,6 +104,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
         snackbar.showSnackbar("Please enter all the fields.", "error");
       }
     } catch (err) {
+      setLoading(false);
       // console.log("Error", err);
       if (err.message.toString().toLowerCase().includes("400")) {
         // console.log("mailResp", err.response.data.message);
@@ -200,6 +207,8 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
           >
             <Button
               sx={{
+                height: 40,
+                width: 90,
                 border: "2px solid white",
                 borderRadius: "7px",
                 color: "white",
@@ -212,6 +221,8 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
             </Button>
             <Button
               sx={{
+                height: 40,
+                width: 90,
                 border: !!(errors.name || errors.email)
                   ? "2px solid rgba(255, 255, 255,0.4)"
                   : "2px solid rgba(255, 255, 255)",
@@ -222,11 +233,18 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
                 "&:disabled": {
                   color: "rgba(255, 255, 255,0.4)",
                 },
+                "&:hover > *": {
+                  color: "black", // Change color when parent is hovered
+                },
               }}
-              onClick={(e) => handleSubmit()}
+              onClick={(e) => handleSubmit(e)}
               disabled={!!(errors.name || errors.email)}
             >
-              Submit
+              {loading ? (
+                <CircularProgress size={25} sx={{ color: "white" }} />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </Grid>
         </Grid>
