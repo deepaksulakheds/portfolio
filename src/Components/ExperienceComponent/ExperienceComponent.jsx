@@ -48,94 +48,97 @@ const educationData = [
 ];
 export default function ExperienceComponent() {
   return (
-    <Grid className="experienceContainer">
-      {/* Experience Timeline */}
-      <Timeline
-        sx={{
-          padding: 0,
-          [`& .${timelineItemClasses.root}:before`]: {
-            flex: 0,
+    <>
+      <Grid className="experienceContainer">
+        {/* Experience Timeline */}
+        <Timeline
+          sx={{
             padding: 0,
-          },
-        }}
-      >
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineDot sx={{ margin: 0 }} variant="outlined">
-              <BusinessCenter />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Typography
-              sx={{
-                fontSize: 18,
-                fontWeight: "bold",
-                textDecoration: "underline",
-                textUnderlineOffset: "5px",
-                textDecorationThickness: "0.1px",
-              }}
-            >
-              Experience
-            </Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <Grid item style={{ marginLeft: 12 }}>
-          {experienceData.map((experience, index) => (
-            <CustomExperienceTimeLineItem
-              company={experience.company}
-              key={index}
-              titlesList={experience.titlesList}
-              index={index}
-            />
-          ))}
-        </Grid>
-      </Timeline>
+            [`& .${timelineItemClasses.root}:before`]: {
+              flex: 0,
+              padding: 0,
+            },
+          }}
+        >
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot sx={{ margin: 0 }} variant="outlined">
+                <BusinessCenter />
+              </TimelineDot>
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <Typography
+                sx={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "5px",
+                  textDecorationThickness: "0.1px",
+                }}
+              >
+                Experience
+              </Typography>
+            </TimelineContent>
+          </TimelineItem>
+          <Grid item style={{ marginLeft: 12 }}>
+            {experienceData.map((experience, index) => (
+              <CustomExperienceTimeLineItem
+                company={experience.company}
+                key={index}
+                titlesList={experience.titlesList}
+                index={index}
+              />
+            ))}
+          </Grid>
+        </Timeline>
 
-      {/* Education Timeline */}
-      <Timeline
-        sx={{
-          padding: 0,
-          [`& .${timelineItemClasses.root}:before`]: {
-            flex: 0,
+        {/* Education Timeline */}
+        <Timeline
+          sx={{
             padding: 0,
-          },
-        }}
-      >
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineDot sx={{ margin: 0 }} variant="outlined">
-              <AutoStories />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent>
-            <Typography
-              sx={{
-                fontSize: 18,
-                fontWeight: "bold",
-                textDecoration: "underline",
-                textUnderlineOffset: "5px",
-                textDecorationThickness: "0.1px",
-              }}
-            >
-              Education
-            </Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <Grid item style={{ marginLeft: 12 }}>
-          {educationData.map((education, index) => (
-            <CustomEducationTimeLineItem
-              institute={education.institute}
-              key={index}
-              index={index}
-              course={education.course}
-              place={education.place}
-            />
-          ))}
-        </Grid>
-      </Timeline>
-    </Grid>
+            [`& .${timelineItemClasses.root}:before`]: {
+              flex: 0,
+              padding: 0,
+            },
+          }}
+        >
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot sx={{ margin: 0 }} variant="outlined">
+                <AutoStories />
+              </TimelineDot>
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <Typography
+                sx={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  textDecoration: "underline",
+                  textUnderlineOffset: "5px",
+                  textDecorationThickness: "0.1px",
+                }}
+              >
+                Education
+              </Typography>
+            </TimelineContent>
+          </TimelineItem>
+          <Grid item style={{ marginLeft: 12 }}>
+            {educationData.map((education, index) => (
+              <CustomEducationTimeLineItem
+                institute={education.institute}
+                key={index}
+                index={index}
+                course={education.course}
+                place={education.place}
+              />
+            ))}
+          </Grid>
+        </Timeline>
+      </Grid>
+      {/* <CompanyCard companyName={"asd"} timePeriod={"asd"} /> */}
+    </>
   );
 }
 
@@ -208,5 +211,35 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
         </Grid>
       </TimelineContent>
     </TimelineItem>
+  );
+}
+
+function CompanyCard({ companyName, timePeriod }) {
+  return (
+    <Grid
+      sx={{
+        height: 150,
+        width: 300,
+        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        borderRadius: "20px",
+        padding: "10px",
+      }}
+    >
+      <img
+        src="./icons/html.svg"
+        alt="image"
+        style={{
+          height: 64,
+          width: 64,
+          top: -30,
+          left: 20,
+          position: "relative",
+        }}
+      />
+      <Typography sx={{ fontSize: 22, fontWeight: "bold" }}>
+        {companyName}
+      </Typography>
+      <Typography sx={{ fontSize: 16 }}>{timePeriod}</Typography>
+    </Grid>
   );
 }

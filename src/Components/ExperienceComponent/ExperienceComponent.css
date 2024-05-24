@@ -12,3 +12,9 @@
     opacity: 1;
   }
 }
+
+.companyCardImage {
+  height: 32;
+  width: 32;
+  top: -300px;
+}
