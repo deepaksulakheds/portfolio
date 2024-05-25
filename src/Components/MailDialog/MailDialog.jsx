@@ -55,6 +55,11 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
       }
     } else if (event.target.name === "email") {
       const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+      console.log(
+        "regex",
+        emailRegex.test(event.target.value),
+        event.target.value
+      );
       if (!emailRegex.test(event.target.value)) {
         setErrors({ ...errors, email: "Enter a valid email address" });
       } else {
