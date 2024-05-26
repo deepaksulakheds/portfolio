@@ -34,6 +34,26 @@ const experienceData = [
   },
 ];
 
+const experienceData1 = [
+  {
+    company: "Zeliot Connected Services Pvt. Ltd.",
+    titlesList: [
+      {
+        designation: "Software Engineer 1",
+        // description: "asd",
+        duration: "Sep 2023 - Present", // In time period pass current time for duration.
+        timePeriod: moment.duration(moment().diff("sep-2023")),
+      },
+      {
+        designation: "Full Stack Developer Intern",
+        // description: "asd",
+        duration: "June 2023 - Aug 2023", // In time period pass end duration.
+        timePeriod: moment.duration(moment("sep 2023").diff("june 2023")),
+      },
+    ],
+  },
+];
+
 const educationData = [
   {
     course: "Master of Computer Application",
@@ -137,7 +157,38 @@ export default function ExperienceComponent() {
           </Grid>
         </Timeline>
       </Grid>
-      {/* <CompanyCard companyName={"asd"} timePeriod={"asd"} /> */}
+
+      {/* Do not Delete, company card is added */}
+
+      {/* <Grid
+        sx={{
+          display: "flex",
+          gap: 2,
+          overflowX: "auto",
+          padding: 2,
+          scrollSnapType: "inline mandatory",
+          overscrollBehaviorInline: "contain",
+          scrollBehavior: "smooth",
+          height: "100%",
+          transition: "all ease-in-out .2s",
+          "&::-webkit-scrollbar": {
+            height: "5px",
+            width: "5px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(255,255,255,0.5)",
+            borderRadius: "20px",
+          },
+        }}
+      >
+        {experienceData1.map((experience) => (
+          <CompanyCard
+            key={experience.company}
+            companyName={experience.company}
+            titlesList={experience.titlesList}
+          />
+        ))}
+      </Grid> */}
     </>
   );
 }
@@ -214,32 +265,61 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
   );
 }
 
-function CompanyCard({ companyName, timePeriod }) {
+function CompanyCard({ companyName, titlesList }) {
   return (
     <Grid
       sx={{
         height: 150,
-        width: 300,
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
+        width: "18vw",
+        minWidth: "320px",
+        maxWidth: "380px",
+        backgroundColor: "#121212",
         borderRadius: "20px",
+        // padding: "5px 0px 15px 15px",
         padding: "10px",
+        borderStyle: "solid",
+        borderColor: "rgba(255, 255, 255, 0.3)",
+        borderWidth: "thin",
+        transition: "all ease-in-out .2s",
+        scrollSnapAlign: "start",
+        overflow: "hidden",
+        ":hover": {
+          // backgroundColor: "rgba(255, 255, 255, 0.1)",
+          borderColor: "rgba(255, 255, 255)",
+          overflow: "visible",
+          height: "fit-content",
+        },
+        ":hover > img": {
+          transform: "translateY(-20px)",
+        },
       }}
     >
       <img
         src="./icons/html.svg"
         alt="image"
         style={{
+          transition: "all ease-in-out .2s",
           height: 64,
           width: 64,
-          top: -30,
-          left: 20,
+          // top: -30,
           position: "relative",
         }}
       />
-      <Typography sx={{ fontSize: 22, fontWeight: "bold" }}>
+      <Typography sx={{ fontSize: 18, fontWeight: "bold" }}>
         {companyName}
       </Typography>
-      <Typography sx={{ fontSize: 16 }}>{timePeriod}</Typography>
+      {titlesList.map((title) => (
+        <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
+          <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
+            - {title.designation}
+          </Typography>
+          <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
+            {title.duration}, (
+            {title.timePeriod.years() > 0 && `${title.timePeriod.years()} Y`}{" "}
+            {title.timePeriod.months()} M )
+          </Typography>
+        </Grid>
+      ))}
     </Grid>
   );
 }

@@ -21,7 +21,7 @@ function Body(props) {
   );
 
   useEffect(() => {
-    document.title = selectedMenu;
+    document.title = selectedMenu + " | Deepak Sulakhe";
   }, [selectedMenu]);
 
   const handleMenuSelect = (index) => {
