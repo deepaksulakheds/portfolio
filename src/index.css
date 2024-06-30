@@ -1,3 +1,12 @@
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) #121212;
+}
+
+html::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
