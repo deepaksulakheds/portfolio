@@ -23,7 +23,7 @@ const experienceData = [
         // description: "asd",
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: moment.duration(
-          moment().endOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY")) + 1
+          moment().endOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY")) + 1 // add 1 sec for correct day
         ),
       },
       {
