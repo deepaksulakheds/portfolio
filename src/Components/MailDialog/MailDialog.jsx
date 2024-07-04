@@ -14,6 +14,7 @@ import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
 import CryptoJS from "crypto-js";
 import { SEND_MAIL_QUERY } from "../queries";
 import axios from "axios";
+import "./MailDialog.css";
 
 function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
   const [contactDetails, setContactDetails] = useState({
@@ -145,8 +146,19 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
       <Grid style={{ display: "flex", justifyContent: "center" }}>
         <Divider color="white" width="90%" />
       </Grid>
-      <DialogContent sx={{ padding: "20px" }}>
-        <Grid sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+      <DialogContent
+        sx={{
+          padding: "20px",
+          scrollbarWidth: "thin",
+        }}
+      >
+        <Grid
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "30px",
+          }}
+        >
           <Grid>
             <TextField
               InputLabelProps={{
