@@ -21,14 +21,18 @@ const experienceData = [
       {
         designation: "Software Engineer 1",
         // description: "asd",
-        duration: "Sep 2023 - Present", // In time period pass current time for duration.
-        timePeriod: moment.duration(moment().diff("sep-2023")),
+        duration: "Sep 2023 - Present", // present.diff(start)
+        timePeriod: moment.duration(
+          moment().endOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY")) + 1
+        ),
       },
       {
         designation: "Full Stack Developer Intern",
         // description: "asd",
-        duration: "June 2023 - Aug 2023", // In time period pass end duration.
-        timePeriod: moment.duration(moment("sep 2023").diff("june 2023")),
+        duration: "June 2023 - Aug 2023", // end.diff(start)
+        timePeriod: moment.duration(
+          moment("sep-2023", "MMM-YYYY").diff(moment("june-2023", "MMM-YYYY"))
+        ),
       },
     ],
   },
@@ -41,14 +45,20 @@ const experienceData1 = [
       {
         designation: "Software Engineer 1",
         // description: "asd",
-        duration: "Sep 2023 - Present", // In time period pass current time for duration.
-        timePeriod: moment.duration(moment().diff("sep-2023")),
+        duration: "Sep 2023 - Present",
+        timePeriod: moment.duration(
+          moment().diff(moment("sep-2023", "D-MMM-YYYY"))
+        ),
       },
       {
         designation: "Full Stack Developer Intern",
         // description: "asd",
-        duration: "June 2023 - Aug 2023", // In time period pass end duration.
-        timePeriod: moment.duration(moment("sep 2023").diff("june 2023")),
+        duration: "June 2023 - Aug 2023",
+        timePeriod: moment.duration(
+          moment(moment("sep 2023", "D-MMM-YYYY")).diff(
+            moment("june 2023", "D-MMM-YYYY")
+          )
+        ),
       },
     ],
   },
@@ -245,14 +255,23 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
                 - {title.designation}
               </Typography>
               <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
-                {title.duration}, (
-                {/* {title.timePeriod.years() +
-                    " Y" +
-                    title.timePeriod.months() +
-                    " M"} */}
+                {title.duration}, ({" "}
                 {title.timePeriod.years() > 0 &&
-                  `${title.timePeriod.years()} Y`}{" "}
-                {title.timePeriod.months()} M )
+                  `${title.timePeriod.years()} Y`}
+                {/* Comma is added as required */}
+                {((title.timePeriod.years() > 0 &&
+                  title.timePeriod.months() > 0) ||
+                  (title.timePeriod.years() > 0 &&
+                    title.timePeriod.days() > 0)) &&
+                  `, `}
+                {title.timePeriod.months() > 0 &&
+                  `${title.timePeriod.months()} M`}
+                {/* Comma is added as required */}
+                {title.timePeriod.months() > 0 &&
+                  title.timePeriod.days() > 0 &&
+                  `, `}
+                {title.timePeriod.days() > 0 && `${title.timePeriod.days()} D`}{" "}
+                )
               </Typography>
               {/* <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
                 {title?.description}
