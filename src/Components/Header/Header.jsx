@@ -74,7 +74,7 @@ function Header(props) {
         <Grid
           sx={{
             display: "flex",
-            gap: "12px",
+            gap: "10px",
             marginTop: "20px",
             flexWrap: "wrap",
           }}
