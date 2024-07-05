@@ -13,6 +13,7 @@ import { AutoStories, BusinessCenter } from "@mui/icons-material";
 import "./ExperienceComponent.css";
 import { Grid } from "@mui/material";
 import moment from "moment";
+import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 
 const experienceData = [
   {
@@ -76,7 +77,7 @@ const educationData = [
     place: "Dharwad | KA",
   },
 ];
-export default function ExperienceComponent() {
+export function ExperienceComponent({ attachmentToggle }) {
   return (
     <>
       <Grid className="experienceContainer">
@@ -93,7 +94,9 @@ export default function ExperienceComponent() {
           <TimelineItem>
             <TimelineSeparator>
               <TimelineDot sx={{ margin: 0 }} variant="outlined">
-                <BusinessCenter />
+                <BusinessCenter
+                  onDoubleClick={() => attachmentToggle.toggleAttachment()}
+                />
               </TimelineDot>
               <TimelineConnector />
             </TimelineSeparator>
@@ -342,3 +345,5 @@ function CompanyCard({ companyName, titlesList }) {
     </Grid>
   );
 }
+
+export default withAttachmentToggle(ExperienceComponent);
