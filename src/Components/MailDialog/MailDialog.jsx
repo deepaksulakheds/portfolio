@@ -8,6 +8,8 @@ import {
   Button,
   Typography,
   CircularProgress,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
@@ -15,14 +17,26 @@ import CryptoJS from "crypto-js";
 import { SEND_MAIL_QUERY } from "../queries";
 import axios from "axios";
 import "./MailDialog.css";
+import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
+import CancelIcon from "@mui/icons-material/Cancel";
+import fs from "node:fs";
+import { withAttachmentToggle } from "./attachmentContext";
 
-function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
+function MailDialog({
+  mailDialogVisible,
+  onclose,
+  snackbar,
+  secretAlert,
+  attachmentToggle,
+}) {
+  // console.log("attachmentToggle", attachmentToggle);
   const [contactDetails, setContactDetails] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
   });
+  const [filesUploaded, setFilesUploaded] = useState([]);
   const [secretMailAlert, setSecretMailAlert] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
@@ -35,6 +49,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
     setContactDetails({ name: "", email: "", subject: "", message: "" });
     setErrors({ name: "", email: "" });
     setSecretMailAlert(false);
+    setFilesUploaded([]);
   }, [mailDialogVisible]);
 
   const handleChange = async (event) => {
@@ -44,6 +59,23 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
     });
 
     handleValidity(event);
+  };
+
+  const handleFilesUpload = async (event) => {
+    if (event.target.files.length) {
+      if (Array.from(event.target.files).length > 5) {
+        snackbar.showSnackbar("Max 5 files allowed.", "error");
+      } else {
+        setFilesUploaded(Array.from(event.target.files));
+      }
+    }
+  };
+
+  const handleRemoveFile = async (removedFile) => {
+    console.log("file", removedFile);
+    setFilesUploaded(
+      filesUploaded.filter((file) => file.name !== removedFile.name)
+    );
   };
 
   const handleValidity = (event) => {
@@ -84,7 +116,7 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
           }),
           import.meta.env.VITE_APP_AES_SECRET
         ).toString();
-        console.log("encryptedData", { encryptedData: encryptedData });
+        console.log("payload", { payload: encryptedData });
         const resp = await axios.request({
           method: "post",
           maxBodyLength: Infinity,
@@ -259,10 +291,126 @@ function MailDialog({ mailDialogVisible, onclose, snackbar, secretAlert }) {
               )}
             </Button>
           </Grid>
+          {attachmentToggle.isAttachmentEnabled && (
+            <Grid>
+              <input
+                onKeyDown={(e) => console.log("e", e)}
+                type="file"
+                multiple
+                accept="*.jpg"
+                name="files"
+                style={{ display: "none" }}
+                id="files"
+                onChange={handleFilesUpload}
+                label={"Select files."}
+              />
+              <Grid sx={{ display: "flex", alignItems: "center" }}>
+                <label htmlFor="files">
+                  <Tooltip
+                    arrow
+                    placement="left"
+                    title="Attach files."
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          backgroundColor: "white",
+                          color: "black",
+                          fontSize: 14,
+                          fontWeight: "bold",
+                        },
+                      },
+                      arrow: { sx: { color: "white" } },
+                    }}
+                  >
+                    <FileUploadRoundedIcon
+                      sx={{
+                        height: 30,
+                        width: 30,
+                        padding: 0.5,
+                        border: "2px solid rgba(255, 255, 255)",
+                        borderRadius: "7px",
+                        transition: "all 0.2s ease-in-out",
+                        color: "white",
+                        "&:hover": { backgroundColor: "white", color: "black" },
+                      }}
+                    />
+                  </Tooltip>
+                </label>
+                <Grid
+                  item
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    margin: 2,
+                    gap: 2,
+                  }}
+                >
+                  {filesUploaded.length > 0 ? (
+                    filesUploaded.map((file, index) => (
+                      <Tooltip
+                        arrow
+                        key={file.name}
+                        title={file.name}
+                        componentsProps={{
+                          tooltip: {
+                            sx: {
+                              backgroundColor: "white",
+                              color: "black",
+                              fontSize: 12,
+                              fontWeight: "bold",
+                            },
+                          },
+                          arrow: { sx: { color: "white" } },
+                        }}
+                      >
+                        <Grid
+                          sx={{
+                            padding: 1,
+                            color: "white",
+                            display: "flex",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            "&:hover": {
+                              outline: "1.5px solid white",
+                              borderRadius: "7px",
+                            },
+                          }}
+                        >
+                          {/* Increase index just to display (not affected to actual index*/}
+                          {index + 1}
+                          <CancelIcon
+                            onClick={() => handleRemoveFile(file)}
+                            sx={{
+                              color: "#ff6865",
+                              cursor: "pointer",
+                              alignSelf: "flex-start",
+                              marginTop: -1,
+                              marginRight: -1,
+                              transition: "all 0.2s ease-in-out",
+                              "&:hover": {
+                                color: "red",
+                              },
+                            }}
+                          />
+                        </Grid>
+                      </Tooltip>
+                    ))
+                  ) : (
+                    <Typography
+                      sx={{ fontSize: 17, fontWeight: "bold", color: "white" }}
+                    >
+                      No files attached.
+                    </Typography>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
         </Grid>
       </DialogContent>
     </Dialog>
   );
 }
 
-export default withSnackbar(MailDialog);
+export default withAttachmentToggle(withSnackbar(MailDialog));
