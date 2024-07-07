@@ -129,12 +129,12 @@ function MailDialog({
         setLoading(false);
         if (resp.data) {
           console.log("resp.data", resp.data);
-          snackbar.showSnackbar("Mail Sent.", "success");
+          snackbar.showSnackbar("Mail sent successfully.", "success");
           onclose();
         }
         // snackbar.showSnackbar("Feature comming soon.", "info");
       } else {
-        snackbar.showSnackbar("Please enter all the fields.", "error");
+        snackbar.showSnackbar("Please fill all the fields.", "error");
       }
     } catch (err) {
       setLoading(false);
@@ -202,7 +202,7 @@ function MailDialog({
               value={contactDetails.name}
               name="name"
               onChange={handleChange}
-              label={errors.name ? "Enter valid name." : "Enter Name"}
+              label={errors.name ? "Enter valid name." : "Enter Name *"}
               error={!!errors.name}
               // onBlur={handleValidity}
             />
@@ -216,7 +216,7 @@ function MailDialog({
               value={contactDetails.email}
               name="email"
               onChange={handleChange}
-              label={errors.email ? "Enter valid E-Mail." : "Enter E-Mail"}
+              label={errors.email ? "Enter valid E-Mail." : "Enter E-Mail *"}
               error={!!errors.email}
               // onBlur={handleValidity}
             />
@@ -228,7 +228,7 @@ function MailDialog({
               variant="standard"
               name="subject"
               onChange={handleChange}
-              label="Enter Subject"
+              label="Enter Subject *"
             />
             <TextField
               multiline
@@ -239,7 +239,7 @@ function MailDialog({
               variant="standard"
               name="message"
               onChange={handleChange}
-              label="Enter Enter Message"
+              label="Enter Enter Message *"
             />
           </Grid>
           <Grid
