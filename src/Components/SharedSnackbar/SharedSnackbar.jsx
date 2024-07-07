@@ -37,11 +37,14 @@ export const SnackbarProvider = ({ children }) => {
       >
         <Alert
           sx={{
-            backgroundColor: "transparent",
-            color: theme.palette[snackbarSeverity].main,
-            border: `3px solid ${theme.palette[snackbarSeverity].main}`,
+            backgroundColor: theme.palette[snackbarSeverity].main,
+            color: "white",
+            // border: `2px solid white`,
             borderRadius: "10px",
             fontWeight: "bold",
+            "& .MuiAlert-icon": {
+              color: "white", // Change the color of the icon here
+            },
           }}
           severity={snackbarSeverity}
         >
