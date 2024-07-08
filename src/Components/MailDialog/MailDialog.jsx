@@ -19,7 +19,6 @@ import axios from "axios";
 import "./MailDialog.css";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
-import fs from "node:fs";
 import { withAttachmentToggle } from "./attachmentContext";
 
 function MailDialog({

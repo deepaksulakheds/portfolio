@@ -27,7 +27,7 @@ function Header(props) {
     {
       name: "call",
       icon: <Call fontSize="medium" />,
-      ref: "callto:1234",
+      ref: null,
       toolTip: "Call",
     },
     {
@@ -80,7 +80,26 @@ function Header(props) {
           }}
         >
           {contacts.map((contact) => (
-            <Tooltip key={contact.name} title={contact.toolTip}>
+            <Tooltip
+              arrow
+              key={contact.name}
+              title={contact.toolTip}
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: "white",
+                    color: "black",
+                    fontSize: 12,
+                    fontWeight: "bold",
+                  },
+                },
+                arrow: {
+                  sx: {
+                    color: "white",
+                  },
+                },
+              }}
+            >
               <IconButton
                 target="blank"
                 sx={{

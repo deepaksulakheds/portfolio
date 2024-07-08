@@ -43,7 +43,7 @@ export const SnackbarProvider = ({ children }) => {
             borderRadius: "10px",
             fontWeight: "bold",
             "& .MuiAlert-icon": {
-              color: "white", // Change the color of the icon here
+              color: "white",
             },
           }}
           severity={snackbarSeverity}
