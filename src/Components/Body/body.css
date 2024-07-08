@@ -26,6 +26,7 @@
 }
 .menuList:hover {
   color: rgb(50, 201, 243);
+  filter: drop-shadow(0 0 3px rgb(50, 201, 243));
 }
 
 .selectedTitle {
