@@ -61,6 +61,32 @@ function MailDialog({
   };
 
   const handleFilesUpload = async (event) => {
+    // const files = [];
+    // for (const file of Array.from(event.target.files)) {
+    //   const buffer = await file.arrayBuffer();
+    //   // console.log("buffer", buffer);
+    //   // const bytes = new Uint8Array(buffer);
+    //   // files.push({
+    //   //   fileName: file.name,
+    //   //   Uint8Array: file.text(),
+    //   // });
+    //   const encrypted = CryptoJS.AES.encrypt(
+    //     JSON.stringify(buffer),
+    //     import.meta.env.VITE_APP_AES_SECRET
+    //   ).toString();
+    //   console.log("encrypted", encrypted);
+
+    //   const resp = await axios.request({
+    //     method: "post",
+    //     maxBodyLength: Infinity,
+    //     url: import.meta.env.VITE_APP_BACKEND_URL,
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     data: JSON.stringify({ payload: encrypted }),
+    //   });
+    // }
+
     if (event.target.files.length) {
       if (Array.from(event.target.files).length > 5) {
         snackbar.showSnackbar("Max 5 files allowed.", "error");
@@ -293,7 +319,6 @@ function MailDialog({
           {attachmentToggle.isAttachmentEnabled && (
             <Grid>
               <input
-                onKeyDown={(e) => console.log("e", e)}
                 type="file"
                 multiple
                 accept="*.jpg"
@@ -330,6 +355,7 @@ function MailDialog({
                         borderRadius: "7px",
                         transition: "all 0.2s ease-in-out",
                         color: "white",
+                        cursor: "pointer",
                         "&:hover": { backgroundColor: "white", color: "black" },
                       }}
                     />
