@@ -13,9 +13,9 @@
 
 .image {
   cursor: pointer;
-  padding: 20px;
-  height: 90px;
-  width: 90px;
+  padding: 16px;
+  height: 95px;
+  width: 95px;
   margin-right: 20px;
   border-radius: 50%;
   background: linear-gradient(
