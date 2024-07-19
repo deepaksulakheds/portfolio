@@ -7,11 +7,13 @@ import ProjectsComponent from "../Projects/ProjectsComponent";
 import ExperienceComponent from "../ExperienceComponent/ExperienceComponent";
 import { Box } from "@mui/system";
 import { MenuOutlined } from "@mui/icons-material";
+import { CertificatesComponent } from "../CertificatesComponent/CertificatesComponent";
 
 const menuList = [
   { name: "About", icon: "👋" },
-  { name: "Projects", icon: "🗂️" },
   { name: "Experience", icon: "🌟" },
+  // { name: "Certificates", icon: "🗂️" }, // Uncomment to enable certificates section.
+  { name: "Projects", icon: "🗂️" },
   { name: "Resume", icon: "🌟" },
 ];
 
@@ -152,6 +154,8 @@ function Body(props) {
           <ProjectsComponent />
         ) : selectedMenu.includes("Experience") ? (
           <ExperienceComponent />
+        ) : selectedMenu.includes("Certificates") ? (
+          <CertificatesComponent />
         ) : (
           0
         )}
