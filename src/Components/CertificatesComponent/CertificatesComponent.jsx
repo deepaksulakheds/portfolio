@@ -43,8 +43,6 @@ function CourseCard(props) {
         followCursor
         title={props.courseName}
         arrow
-        enterDelay={500}
-        leaveDelay={200}
         placement="top"
         componentsProps={{
           tooltip: {
