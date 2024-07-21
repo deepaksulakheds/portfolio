@@ -15,7 +15,7 @@ const certs = [
     certURL: "https://www.coursera.org/verify/D2P97VJKEKHA",
   },
   {
-    courseName: "DevOps on AWS: Code, Build, and Test",
+    courseName: "DevOps on AWS: Release and Deploy",
     platform: "Coursera",
     certURL: "https://www.coursera.org/verify/5L27XF7CU7RU",
   },
@@ -74,15 +74,32 @@ function CourseCard(props) {
         {props.platform}
       </Typography>
       <Grid container sx={{ marginTop: "15px" }}>
-        <IconButton href={props.certURL} target="_blank">
-          <WorkspacePremiumIcon
-            sx={{
-              color: "white",
-              transition: "all ease-in-out 0.2s",
-              // "&:hover": { color: "red" },
-            }}
-          />
-        </IconButton>
+        <Tooltip
+          title="View Certificate"
+          arrow
+          placement="right"
+          componentsProps={{
+            tooltip: {
+              sx: {
+                backgroundColor: "white",
+                color: "black",
+                fontSize: 14,
+                fontWeight: "bold",
+              },
+            },
+            arrow: { sx: { color: "white" } },
+          }}
+        >
+          <IconButton href={props.certURL} target="_blank">
+            <WorkspacePremiumIcon
+              sx={{
+                color: "white",
+                transition: "all ease-in-out 0.2s",
+                // "&:hover": { color: "red" },
+              }}
+            />
+          </IconButton>
+        </Tooltip>
       </Grid>
     </Grid>
   );
