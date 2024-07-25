@@ -307,7 +307,7 @@ function MailDialog({
                 },
               }}
               onClick={(e) => handleSubmit(e)}
-              disabled={!!(errors.name || errors.email)}
+              disabled={!!(errors.name || errors.email || loading)}
             >
               {loading ? (
                 <CircularProgress size={25} sx={{ color: "white" }} />
