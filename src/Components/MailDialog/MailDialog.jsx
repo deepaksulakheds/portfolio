@@ -280,6 +280,7 @@ function MailDialog({
                 width: 90,
                 border: "2px solid white",
                 borderRadius: "7px",
+                textTransform: "none",
                 color: "white",
                 ...(secretMailAlert && { fontWeight: "bold" }),
                 "&:hover": { backgroundColor: "white", color: "black" },
@@ -292,6 +293,7 @@ function MailDialog({
               sx={{
                 height: 40,
                 width: 90,
+                textTransform: "none",
                 border: !!(errors.name || errors.email)
                   ? "2px solid rgba(255, 255, 255,0.4)"
                   : "2px solid rgba(255, 255, 255)",
@@ -312,7 +314,7 @@ function MailDialog({
               {loading ? (
                 <CircularProgress size={25} sx={{ color: "white" }} />
               ) : (
-                "Submit"
+                "Send"
               )}
             </Button>
           </Grid>

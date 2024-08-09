@@ -35,7 +35,7 @@ function Header(props) {
       icon: <Mail fontSize="medium" />,
       // ref: "mailto:deepaksulakheds@gmail.com",
       onclick: (e) => setMailDialogVisible(!mailDialogVisible),
-      toolTip: "Deepaksulakheds@gmail.com",
+      toolTip: "Contact Me",
     },
     {
       name: "location",
