@@ -219,9 +219,16 @@ function MailDialog({
           <Grid>
             <TextField
               InputLabelProps={{
-                style: { color: errors.name ? "red" : "white" },
+                style: {
+                  color: errors.name ? "red" : "rgba(255,255,255,0.6)",
+                  font: "Ubuntu",
+                },
               }}
-              InputProps={{ style: { color: errors.name ? "red" : "white" } }}
+              InputProps={{
+                style: {
+                  color: errors.name ? "red" : "white",
+                },
+              }}
               variant="standard"
               fullWidth
               value={contactDetails.name}
@@ -233,9 +240,15 @@ function MailDialog({
             />
             <TextField
               InputLabelProps={{
-                style: { color: errors.email ? "red" : "white" },
+                style: {
+                  color: errors.email ? "red" : "rgba(255,255,255,0.6)",
+                },
               }}
-              InputProps={{ style: { color: errors.email ? "red" : "white" } }}
+              InputProps={{
+                style: {
+                  color: errors.email ? "red" : "rgba(255,255,255,0.6)",
+                },
+              }}
               fullWidth
               variant="standard"
               value={contactDetails.email}
@@ -246,7 +259,7 @@ function MailDialog({
               // onBlur={handleValidity}
             />
             <TextField
-              InputLabelProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
               InputProps={{ style: { color: "white" } }}
               fullWidth
               value={contactDetails.subject}
@@ -257,7 +270,7 @@ function MailDialog({
             />
             <TextField
               multiline
-              InputLabelProps={{ style: { color: "white" } }}
+              InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
               InputProps={{ style: { color: "white" } }}
               fullWidth
               value={contactDetails.message}
@@ -282,7 +295,10 @@ function MailDialog({
                 borderRadius: "7px",
                 textTransform: "none",
                 color: "white",
-                ...(secretMailAlert && { fontWeight: "bold" }),
+                ...(secretMailAlert && {
+                  fontWeight: "bold",
+                  textTransform: "uppercase",
+                }),
                 "&:hover": { backgroundColor: "white", color: "black" },
               }}
               onClick={onclose}
@@ -299,7 +315,10 @@ function MailDialog({
                   : "2px solid rgba(255, 255, 255)",
                 borderRadius: "7px",
                 color: "white",
-                ...(secretMailAlert && { fontWeight: "bold" }),
+                ...(secretMailAlert && {
+                  fontWeight: "bold",
+                  textTransform: "uppercase",
+                }),
                 "&:hover": { backgroundColor: "white", color: "black" },
                 "&:disabled": {
                   color: "rgba(255, 255, 255,0.4)",

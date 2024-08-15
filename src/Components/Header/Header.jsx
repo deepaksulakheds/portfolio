@@ -57,8 +57,8 @@ function Header(props) {
       />
       <Grid>
         <Typography
-          variant="h4"
-          sx={{ fontWeight: "bold", marginBlock: "5px" }}
+          variant="h5"
+          sx={{ fontSize: "2rem", fontWeight: "550", marginBlock: "5px" }}
         >
           Deepak Sulakhe
         </Typography>
@@ -68,6 +68,7 @@ function Header(props) {
           style={{
             color: "white",
             cursor: "text",
+            fontWeight: "500",
             background: "rgba(255, 255, 255, 0.13)",
           }}
         />
@@ -103,6 +104,7 @@ function Header(props) {
               <IconButton
                 target="blank"
                 sx={{
+                  padding: "0.4rem",
                   transition: "all ease-in-out 0.2s",
                   color: "white",
                   "&:hover": {
