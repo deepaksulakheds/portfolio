@@ -244,11 +244,7 @@ function MailDialog({
                   color: errors.email ? "red" : "rgba(255,255,255,0.6)",
                 },
               }}
-              InputProps={{
-                style: {
-                  color: errors.email ? "red" : "rgba(255,255,255,0.6)",
-                },
-              }}
+              InputProps={{ style: { color: errors.email ? "red" : "white" } }}
               fullWidth
               variant="standard"
               value={contactDetails.email}

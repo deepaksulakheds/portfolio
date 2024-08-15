@@ -9,9 +9,9 @@
 }
 
 .navBar {
-  gap: 15px;
+  gap: 12px;
   transition: all ease-in-out 0.5s;
-  padding: 8px;
+  padding: 6px;
   border-radius: 0 15px;
   box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5.5px);
