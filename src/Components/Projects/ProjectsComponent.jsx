@@ -2,6 +2,7 @@ import { GitHub } from "@mui/icons-material";
 import { Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import "./projectComponent.css";
+import { Box, Container } from "@mui/system";
 
 const projData = [
   {
@@ -18,7 +19,8 @@ const projData = [
   },
   {
     title: "Face Recognition using LBPH",
-    techUsed: "Python, OpenCV, Haar-Cascade Classifier, LBPH Algorithm",
+    techUsed:
+      "Python, OpenCV, Haar-Cascade Classifier, LBPH Algorithm, Nympy, Pandas",
     image: "./icons/face-rec.jpg",
     path: "https://github.com/deepaksulakheds/Face-Recognition-using-LBPH",
   },
@@ -30,7 +32,7 @@ const projData = [
   },
   {
     title: "Fruits Classification using CNN",
-    techUsed: "Python, Deep Learning, CNN",
+    techUsed: "Python, Deep Learning, CNN, Kaggle, Numpy",
     image: "./icons/fruits.jpg",
     path: "#",
   },
@@ -43,7 +45,7 @@ function ProjectsComponent(props) {
         <Grid key={project.title} width={300}>
           <Grid
             sx={{
-              marginBottom: 1,
+              // marginBottom: 1,
               borderRadius: 3,
               height: 150,
               width: 300,
@@ -56,6 +58,7 @@ function ProjectsComponent(props) {
               },
             }}
           >
+            {/* <Container style={{ padding: 0 }}> */}
             <img
               src={project.image}
               alt={project.title}
@@ -66,31 +69,35 @@ function ProjectsComponent(props) {
                 objectFit: "cover",
               }}
             />
+            {/* </Container> */}
           </Grid>
-          <Grid
-            style={{
-              fontWeight: "bold",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {project.title}
-            <IconButton
-              sx={{
-                color: "white",
-                "&:hover": {
-                  color: "black",
-                  backgroundColor: "rgba(255, 255, 255)",
-                },
+          <Grid sx={{ padding: "0.4rem" }}>
+            <Grid
+              style={{
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
-              target="blank"
-              href={project.path}
             >
-              <GitHub />
-            </IconButton>
+              <Typography> {project.title}</Typography>
+              <IconButton
+                sx={{
+                  padding: "0.3rem",
+                  color: "white",
+                  "&:hover": {
+                    color: "black",
+                    backgroundColor: "rgba(255, 255, 255)",
+                  },
+                }}
+                target="blank"
+                href={project.path}
+              >
+                <GitHub />
+              </IconButton>
+            </Grid>
+            <Typography sx={{ fontSize: 12.5 }}>{project.techUsed}</Typography>
           </Grid>
-          <Typography>{project.techUsed}</Typography>
         </Grid>
       ))}
     </Grid>

@@ -49,7 +49,7 @@ function CourseCard(props) {
             sx: {
               backgroundColor: "white",
               color: "black",
-              fontSize: 14,
+              // fontSize: 14,
               fontWeight: "bold",
             },
           },
@@ -58,8 +58,8 @@ function CourseCard(props) {
       >
         <Typography
           sx={{
-            fontSize: 18,
-            fontWeight: "bold",
+            fontSize: 14,
+            fontWeight: 500,
             textWrap: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -68,7 +68,7 @@ function CourseCard(props) {
           {props.courseName}
         </Typography>
       </Tooltip>
-      <Typography sx={{ paddingLeft: 1, fontSize: 16 }}>
+      <Typography sx={{ paddingLeft: 1, fontSize: 13 }}>
         {props.platform}
       </Typography>
       <Grid container sx={{ marginTop: "15px" }}>
@@ -81,7 +81,7 @@ function CourseCard(props) {
               sx: {
                 backgroundColor: "white",
                 color: "black",
-                fontSize: 14,
+                // fontSize: 14,
                 fontWeight: "bold",
               },
             },

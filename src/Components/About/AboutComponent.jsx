@@ -47,7 +47,7 @@ function AboutComponent(props) {
   return (
     <Grid className="aboutContainer">
       <Grid>
-        <Typography variant="h6">
+        <Typography variant="p" sx={{ fontSize: "1.12rem" }}>
           To be a part of an organization that provides ample opportunities for
           professional and personal growth, where i can use my skills for the
           success of the organization with continuous learning and dedication.
@@ -55,7 +55,7 @@ function AboutComponent(props) {
       </Grid>
       <Grid className="skillsList">
         <Grid>
-          <h2
+          <h3
             style={{
               marginTop: "25px",
               textDecoration: "underline",
@@ -65,7 +65,7 @@ function AboutComponent(props) {
             // variant="h6"
           >
             Skills
-          </h2>
+          </h3>
         </Grid>
         <Grid className="skillContainer">
           {skills.map((skill, index) => (
