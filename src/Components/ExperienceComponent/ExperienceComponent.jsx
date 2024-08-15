@@ -76,6 +76,11 @@ const educationData = [
     institute: "JSS SMI UG & PG Studies.",
     place: "Dharwad | KA",
   },
+  // {
+  //   course: "Pre University (PCMCs)",
+  //   institute: "KVSR Comp. PU College.",
+  //   place: "Gadag | KA",
+  // },
 ];
 export function ExperienceComponent({ attachmentToggle }) {
   return (
@@ -214,11 +219,11 @@ function CustomEducationTimeLineItem({ course, place, institute, index }) {
         {index == educationData.length - 1 ? null : <TimelineConnector />}
       </TimelineSeparator>
       <TimelineContent sx={{ marginTop: -2, marginBottom: "12px" }}>
-        <Typography component="h5" sx={{ fontSize: 18, fontWeight: "bold" }}>
+        <Typography component="p" sx={{ fontSize: 16, fontWeight: 600 }}>
           {course}
         </Typography>
-        <Typography>-&nbsp;{institute}</Typography>
-        <Typography sx={{ fontSize: 16 }}>&nbsp;&nbsp;{place}</Typography>
+        <Typography sx={{ fontSize: 14 }}>-&nbsp;{institute}</Typography>
+        <Typography sx={{ fontSize: 12.5 }}>&nbsp;&nbsp;{place}</Typography>
       </TimelineContent>
     </TimelineItem>
   );
@@ -239,9 +244,9 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
         }}
       >
         <Typography
-          component="h5"
+          component="p"
           sx={{
-            fontSize: 18,
+            fontSize: 16,
             padding: "8px",
             width: "fit-content",
             fontWeight: "bold",
@@ -254,10 +259,10 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
         <Grid sx={{ marginTop: "10px", marginLeft: "10px" }}>
           {titlesList.map((title) => (
             <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
-              <Typography sx={{ fontSize: 17, fontWeight: "bold" }}>
+              <Typography sx={{ fontSize: 15, fontWeight: "bold" }}>
                 - {title.designation}
               </Typography>
-              <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
+              <Typography sx={{ fontSize: 12.5, marginLeft: 2 }}>
                 {title.duration}, ({" "}
                 {title.timePeriod.years() > 0 &&
                   `${title.timePeriod.years()} Y`}
