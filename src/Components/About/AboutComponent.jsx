@@ -47,7 +47,7 @@ function AboutComponent(props) {
   return (
     <Grid className="aboutContainer">
       <Grid>
-        <Typography variant="p" sx={{ fontSize: "1.12rem" }}>
+        <Typography variant="p" sx={{ fontSize: "1.1rem" }}>
           To be a part of an organization that provides ample opportunities for
           professional and personal growth, where i can use my skills for the
           success of the organization with continuous learning and dedication.

@@ -45,7 +45,8 @@
 .skillContent {
   margin: auto;
   margin-left: 2px;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  /* font-weight: 300; */
 }
 
 .subSkill {
