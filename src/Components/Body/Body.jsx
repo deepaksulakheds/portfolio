@@ -72,7 +72,7 @@ function Body(props) {
                 selectedMenu.includes(menu.name)
                   ? {
                       color: "rgb(50, 201, 243)",
-                      filter: " drop-shadow(0px 0px 3px rgb(50, 201, 243))",
+                      filter: " drop-shadow(0px 0px 2px rgb(50, 201, 243))",
                     }
                   : null
               }
