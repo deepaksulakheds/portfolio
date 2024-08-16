@@ -259,10 +259,10 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
         <Grid sx={{ marginTop: "10px", marginLeft: "10px" }}>
           {titlesList.map((title) => (
             <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
-              <Typography sx={{ fontSize: 15, fontWeight: "bold" }}>
-                - {title.designation}
+              <Typography sx={{ fontSize: 15.5, fontWeight: "bold" }}>
+                •&nbsp;&nbsp;{title.designation}
               </Typography>
-              <Typography sx={{ fontSize: 12.5, marginLeft: 2 }}>
+              <Typography sx={{ fontSize: 13, marginLeft: 2 }}>
                 {title.duration}, ({" "}
                 {title.timePeriod.years() > 0 &&
                   `${title.timePeriod.years()} Y`}

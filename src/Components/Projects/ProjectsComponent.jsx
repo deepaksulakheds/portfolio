@@ -34,7 +34,7 @@ const projData = [
     title: "Fruits Classification using CNN",
     techUsed: "Python, Deep Learning, CNN, Kaggle, Numpy",
     image: "./icons/fruits.jpg",
-    path: "#",
+    path: "https://github.com/deepaksulakheds/fruits-classification-cnn",
   },
 ];
 
@@ -50,10 +50,9 @@ function ProjectsComponent(props) {
               height: 150,
               width: 300,
               overflow: "hidden",
-              transition: "transform 0.3s ease",
+              transition: "all 0.3s ease-in-out",
               ":hover>img": {
                 transform: "scale(1.1)",
-                borderRadius: 3,
                 transition: "all 0.3s ease-in-out",
               },
             }}
@@ -67,6 +66,7 @@ function ProjectsComponent(props) {
                 height: "100%",
                 width: "100%",
                 objectFit: "cover",
+                transition: "all 0.3s ease-in-out",
               }}
             />
             {/* </Container> */}
@@ -74,13 +74,14 @@ function ProjectsComponent(props) {
           <Grid sx={{ padding: "0.4rem" }}>
             <Grid
               style={{
-                fontWeight: "bold",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <Typography> {project.title}</Typography>
+              <Typography sx={{ fontWeight: "500" }}>
+                {project.title}
+              </Typography>
               <IconButton
                 sx={{
                   padding: "0.3rem",
@@ -96,7 +97,7 @@ function ProjectsComponent(props) {
                 <GitHub />
               </IconButton>
             </Grid>
-            <Typography sx={{ fontSize: 12.5 }}>{project.techUsed}</Typography>
+            <Typography sx={{ fontSize: 13 }}>{project.techUsed}</Typography>
           </Grid>
         </Grid>
       ))}
