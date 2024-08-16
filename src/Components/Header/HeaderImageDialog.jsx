@@ -21,7 +21,7 @@ export default function HeaderImageDialog({ imageDialogVisible, onClose }) {
       <img
         src="./deepak.jpg"
         style={{
-          padding: "40px",
+          padding: "30px",
           // height: "85%",
           borderRadius: "50%",
           backgroundColor: "rgba(255, 255, 255, 0.3)",
