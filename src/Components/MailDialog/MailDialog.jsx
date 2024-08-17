@@ -200,8 +200,15 @@ function MailDialog({
       >
         Contact Me
       </DialogTitle>
-      <Grid style={{ display: "flex", justifyContent: "center" }}>
-        <Divider color="white" width="90%" />
+      <Grid
+        style={{ display: "flex", justifyContent: "center", color: "white" }}
+      >
+        <Divider
+          color="white"
+          sx={{ color: "white", backgroundColor: "white" }}
+          style={{ color: "white" }}
+          width="90%"
+        />
       </Grid>
       <DialogContent
         sx={{
