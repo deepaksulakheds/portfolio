@@ -243,7 +243,7 @@ function MailDialog({
               onChange={handleChange}
               label={errors.name ? "Enter valid name." : "Enter Name *"}
               error={!!errors.name}
-              // onBlur={handleValidity}
+            // onBlur={handleValidity}
             />
             <TextField
               InputLabelProps={{
@@ -259,7 +259,7 @@ function MailDialog({
               onChange={handleChange}
               label={errors.email ? "Enter valid E-Mail." : "Enter E-Mail *"}
               error={!!errors.email}
-              // onBlur={handleValidity}
+            // onBlur={handleValidity}
             />
             <TextField
               InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
@@ -298,8 +298,8 @@ function MailDialog({
                 borderRadius: "7px",
                 textTransform: "none",
                 color: "white",
+                fontWeight: "bold",
                 ...(secretMailAlert && {
-                  fontWeight: "bold",
                   textTransform: "uppercase",
                 }),
                 "&:hover": { backgroundColor: "white", color: "black" },
@@ -318,8 +318,8 @@ function MailDialog({
                   : "2px solid rgba(255, 255, 255)",
                 borderRadius: "7px",
                 color: "white",
+                fontWeight: "bold",
                 ...(secretMailAlert && {
-                  fontWeight: "bold",
                   textTransform: "uppercase",
                 }),
                 "&:hover": { backgroundColor: "white", color: "black" },
