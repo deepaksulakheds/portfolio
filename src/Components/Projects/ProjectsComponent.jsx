@@ -42,7 +42,16 @@ function ProjectsComponent(props) {
   return (
     <Grid className="projectContainer">
       {projData.map((project) => (
-        <Grid key={project.title} width={300}>
+        <Grid
+          key={project.title}
+          sx={{
+            ":hover > div > img": {
+              transform: "scale(1.15)",
+              transition: "all 0.3s ease-in-out",
+            },
+          }}
+          width={300}
+        >
           <Grid
             sx={{
               // marginBottom: 1,
@@ -51,10 +60,6 @@ function ProjectsComponent(props) {
               width: 300,
               overflow: "hidden",
               transition: "all 0.3s ease-in-out",
-              ":hover>img": {
-                transform: "scale(1.1)",
-                transition: "all 0.3s ease-in-out",
-              },
             }}
           >
             {/* <Container style={{ padding: 0 }}> */}
