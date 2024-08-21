@@ -44,6 +44,7 @@ h4,
 h5,
 h6,
 input,
+button,
 .MuiTextField-root input::placeholder,
 .MuiInputLabel-root {
   font-family: Ubuntu !important;
