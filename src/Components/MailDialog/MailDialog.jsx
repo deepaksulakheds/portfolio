@@ -190,12 +190,12 @@ function MailDialog({
         style: {
           borderRadius: "10px",
           background: "#2A2A2A",
-          border: "2px solid rgba(255, 255, 255)",
+          border: "1px solid rgba(255,255,255,.4)",
         },
       }}
     >
       <DialogTitle
-        sx={{ color: "white", fontWeight: "bold" }}
+        sx={{ color: "white", fontWeight: "bold", padding: "18px 20px" }}
         onClick={secretMailAlertHandler}
       >
         Contact Me
@@ -207,7 +207,7 @@ function MailDialog({
           color="white"
           sx={{ color: "white", backgroundColor: "white" }}
           style={{ color: "white" }}
-          width="90%"
+          width="92%"
         />
       </Grid>
       <DialogContent
@@ -228,12 +228,34 @@ function MailDialog({
               InputLabelProps={{
                 style: {
                   color: errors.name ? "red" : "rgba(255,255,255,0.6)",
-                  font: "Ubuntu",
                 },
               }}
               InputProps={{
                 style: {
                   color: errors.name ? "red" : "white",
+                },
+              }}
+              sx={{
+                "& .MuiInput-underline:before": {
+                  borderBottom: "1px solid",
+                  borderBottomColor: errors.name
+                    ? "red"
+                    : "rgba(255,255,255,0.3)", // Error color or default color
+                },
+                "& .MuiInput-underline:hover": {
+                  borderBottomColor: "rgba(255,255,255,0.5)", // Error color or default color
+                },
+                "& .MuiInput-underline:hover:before": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: errors.name
+                    ? "red"
+                    : "rgba(255,255,255,0.3)", // Error color or default color
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: errors.name
+                    ? "red"
+                    : "rgba(255,255,255,0.3)", // Error color or default color
                 },
               }}
               variant="standard"
@@ -243,7 +265,7 @@ function MailDialog({
               onChange={handleChange}
               label={errors.name ? "Enter valid name." : "Enter Name *"}
               error={!!errors.name}
-            // onBlur={handleValidity}
+              // onBlur={handleValidity}
             />
             <TextField
               InputLabelProps={{
@@ -252,6 +274,29 @@ function MailDialog({
                 },
               }}
               InputProps={{ style: { color: errors.email ? "red" : "white" } }}
+              sx={{
+                "& .MuiInput-underline:before": {
+                  borderBottom: "1px solid",
+                  borderBottomColor: errors.email
+                    ? "red"
+                    : "rgba(255,255,255,0.3)",
+                },
+                "& .MuiInput-underline:hover": {
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                },
+                "& .MuiInput-underline:hover:before": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: errors.email
+                    ? "red"
+                    : "rgba(255,255,255,0.3)",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: errors.email
+                    ? "red"
+                    : "rgba(255,255,255,0.3)",
+                },
+              }}
               fullWidth
               variant="standard"
               value={contactDetails.email}
@@ -259,11 +304,28 @@ function MailDialog({
               onChange={handleChange}
               label={errors.email ? "Enter valid E-Mail." : "Enter E-Mail *"}
               error={!!errors.email}
-            // onBlur={handleValidity}
+              // onBlur={handleValidity}
             />
             <TextField
               InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
               InputProps={{ style: { color: "white" } }}
+              sx={{
+                "& .MuiInput-underline:before": {
+                  borderBottom: "1px solid",
+                  borderBottomColor: "rgba(255,255,255,0.3)",
+                },
+                "& .MuiInput-underline:hover": {
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                },
+                "& .MuiInput-underline:hover:before": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: "rgba(255,255,255,0.3)",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: "rgba(255,255,255,0.3)",
+                },
+              }}
               fullWidth
               value={contactDetails.subject}
               variant="standard"
@@ -275,6 +337,23 @@ function MailDialog({
               multiline
               InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
               InputProps={{ style: { color: "white" } }}
+              sx={{
+                "& .MuiInput-underline:before": {
+                  borderBottom: "1px solid",
+                  borderBottomColor: "rgba(255,255,255,0.3)",
+                },
+                "& .MuiInput-underline:hover": {
+                  borderBottomColor: "rgba(255,255,255,0.5)",
+                },
+                "& .MuiInput-underline:hover:before": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: "rgba(255,255,255,0.3)",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottom: "2px solid",
+                  borderBottomColor: "rgba(255,255,255,0.3)",
+                },
+              }}
               fullWidth
               value={contactDetails.message}
               variant="standard"
@@ -294,7 +373,7 @@ function MailDialog({
               sx={{
                 height: 40,
                 width: 90,
-                border: "2px solid white",
+                border: "1px solid rgba(255,255,255,.6)",
                 borderRadius: "7px",
                 textTransform: "none",
                 color: "white",
@@ -314,8 +393,8 @@ function MailDialog({
                 width: 90,
                 textTransform: "none",
                 border: !!(errors.name || errors.email)
-                  ? "2px solid rgba(255, 255, 255,0.4)"
-                  : "2px solid rgba(255, 255, 255)",
+                  ? "1px solid rgba(255,0,0,.6)"
+                  : "1px solid rgba(255,255,255,.6)",
                 borderRadius: "7px",
                 color: "white",
                 fontWeight: "bold",
@@ -324,10 +403,10 @@ function MailDialog({
                 }),
                 "&:hover": { backgroundColor: "white", color: "black" },
                 "&:disabled": {
-                  color: "rgba(255, 255, 255,0.4)",
-                },
-                "&:hover > *": {
-                  color: "black", // Change color when parent is hovered
+                  color:
+                    errors.name || errors.email
+                      ? "rgba(255, 0, 0,0.8)"
+                      : "rgba(255,255,255,.6)",
                 },
               }}
               onClick={(e) => handleSubmit(e)}
