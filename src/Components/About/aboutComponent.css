@@ -2,10 +2,6 @@
   animation: grow 1s;
 }
 
-.skillList {
-  display: flex;
-}
-
 .skillContainer {
   display: flex;
   /* gap: 1vw; */
@@ -31,7 +27,7 @@
   flex-wrap: wrap;
   /* max-width: 18vw; */
   width: clamp(230px, 25vw, 350px);
-  gap: 5px;
+  gap: 2px;
   color: white;
 }
 
