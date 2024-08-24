@@ -21,65 +21,80 @@ const experienceData = [
     titlesList: [
       {
         designation: "Software Engineer 1",
-        // description: "asd",
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: moment.duration(
           moment().endOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY")) + 1 // add 1 sec for correct day
         ),
+        descriptions: [
+          `Developed backend services and APIs with Node.js, 
+          contributing to the core functionality projects.
+          Collaborated in integration of APIs.`,
+          `Designing and optimizing database schemas and queries to enhance performance and scalability.`,
+        ],
       },
       {
         designation: "Full Stack Developer Intern",
-        // description: "asd",
         duration: "June 2023 - Aug 2023", // end.diff(start)
         timePeriod: moment.duration(
           moment("sep-2023", "MMM-YYYY").diff(moment("june-2023", "MMM-YYYY"))
         ),
+        descriptions: [
+          `Implemented frontend components
+          using React to create intuitive and
+          responsive user interfaces.`,
+          `Participated in code reviews, debugging,
+          and testing to ensure high-quality
+          software deliverables.`,
+        ],
       },
     ],
   },
 ];
 
-const experienceData1 = [
-  {
-    company: "Zeliot Connected Services Pvt. Ltd.",
-    titlesList: [
-      {
-        designation: "Software Engineer 1",
-        // description: "asd",
-        duration: "Sep 2023 - Present",
-        timePeriod: moment.duration(
-          moment().diff(moment("sep-2023", "D-MMM-YYYY"))
-        ),
-      },
-      {
-        designation: "Full Stack Developer Intern",
-        // description: "asd",
-        duration: "June 2023 - Aug 2023",
-        timePeriod: moment.duration(
-          moment(moment("sep 2023", "D-MMM-YYYY")).diff(
-            moment("june 2023", "D-MMM-YYYY")
-          )
-        ),
-      },
-    ],
-  },
-];
+// const experienceData1 = [
+//   {
+//     company: "Zeliot Connected Services Pvt. Ltd.",
+//     titlesList: [
+//       {
+//         designation: "Software Engineer 1",
+//         // description: "asd",
+//         duration: "Sep 2023 - Present",
+//         timePeriod: moment.duration(
+//           moment().diff(moment("sep-2023", "D-MMM-YYYY"))
+//         ),
+//       },
+//       {
+//         designation: "Full Stack Developer Intern",
+//         // description: "asd",
+//         duration: "June 2023 - Aug 2023",
+//         timePeriod: moment.duration(
+//           moment(moment("sep 2023", "D-MMM-YYYY")).diff(
+//             moment("june 2023", "D-MMM-YYYY")
+//           )
+//         ),
+//       },
+//     ],
+//   },
+// ];
 
 const educationData = [
   {
     course: "Master of Computer Application",
     institute: "KLE Technological University.",
     place: "Hubballi | KA",
+    timePeriod: "Feb 2022 - Sep 2023",
   },
   {
     course: "Bachelor of Computer Application",
     institute: "JSS SMI UG & PG Studies.",
     place: "Dharwad | KA",
+    timePeriod: "Jun 2018 - Sep 2021",
   },
   // {
   //   course: "Pre University (PCMCs)",
   //   institute: "KVSR Comp. PU College.",
   //   place: "Gadag | KA",
+  //   timePeriod: "2014 - 2016",
   // },
 ];
 export function ExperienceComponent({ attachmentToggle }) {
@@ -165,11 +180,12 @@ export function ExperienceComponent({ attachmentToggle }) {
           <Grid item style={{ marginLeft: 12 }}>
             {educationData.map((education, index) => (
               <CustomEducationTimeLineItem
-                institute={education.institute}
                 key={index}
                 index={index}
+                institute={education.institute}
                 course={education.course}
                 place={education.place}
+                timePeriod={education.timePeriod}
               />
             ))}
           </Grid>
@@ -211,7 +227,13 @@ export function ExperienceComponent({ attachmentToggle }) {
   );
 }
 
-function CustomEducationTimeLineItem({ course, place, institute, index }) {
+function CustomEducationTimeLineItem({
+  course,
+  place,
+  institute,
+  index,
+  timePeriod,
+}) {
   return (
     <TimelineItem>
       <TimelineSeparator>
@@ -222,8 +244,13 @@ function CustomEducationTimeLineItem({ course, place, institute, index }) {
         <Typography component="p" sx={{ fontSize: 16, fontWeight: 600 }}>
           {course}
         </Typography>
-        <Typography sx={{ fontSize: 14 }}>-&nbsp;{institute}</Typography>
-        <Typography sx={{ fontSize: 12.5 }}>&nbsp;&nbsp;{place}</Typography>
+        <Typography sx={{ fontSize: 14, color: "#32C9F3" }}>
+          -&nbsp;{institute}
+        </Typography>
+        <Typography sx={{ fontSize: 12.5, color: "#32C9F3" }}>
+          &nbsp;&nbsp; {timePeriod}
+        </Typography>
+        <Typography sx={{ fontSize: 12.5 }}>&nbsp;&nbsp; {place}</Typography>
       </TimelineContent>
     </TimelineItem>
   );
@@ -259,10 +286,14 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
         <Grid sx={{ marginTop: "10px", marginLeft: "10px" }}>
           {titlesList.map((title) => (
             <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
-              <Typography sx={{ fontSize: 15.5, fontWeight: "bold" }}>
+              <Typography
+                sx={{ fontSize: 15.5, fontWeight: "bold", color: "#32C9F3" }}
+              >
                 •&nbsp;&nbsp;{title.designation}
               </Typography>
-              <Typography sx={{ fontSize: 13, marginLeft: 2 }}>
+              <Typography
+                sx={{ fontSize: 14, marginLeft: 2, color: "#32C9F3" }}
+              >
                 {title.duration}, ({" "}
                 {title.timePeriod.years() > 0 &&
                   `${title.timePeriod.years()} Y`}
@@ -281,6 +312,15 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
                 {title.timePeriod.days() > 0 && `${title.timePeriod.days()} D`}{" "}
                 )
               </Typography>
+              <Grid>
+                {title.descriptions.map((desc) => (
+                  <Typography
+                    sx={{ fontSize: 13.5, marginLeft: 2, maxWidth: 500 }}
+                  >
+                    - {desc}
+                  </Typography>
+                ))}
+              </Grid>
               {/* <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
                 {title?.description}
               </Typography> */}

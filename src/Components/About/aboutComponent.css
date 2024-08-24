@@ -30,7 +30,7 @@
   display: flex;
   flex-wrap: wrap;
   /* max-width: 18vw; */
-  width: clamp(150px, 18vw, 350px);
+  width: clamp(230px, 25vw, 350px);
   gap: 5px;
   color: white;
 }

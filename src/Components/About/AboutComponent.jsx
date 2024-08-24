@@ -8,9 +8,9 @@ const skills = [
     list: [
       { content: "React JS", icon: "./icons/react.svg" },
       { content: "Material UI", icon: "./icons/mui.svg" },
+      { content: "Bootstrap", icon: "./icons/bootstrap.svg" },
       { content: "HTML", icon: "./icons/html.svg" },
       { content: "CSS", icon: "./icons/css.svg" },
-      { content: "Bootstrap", icon: "./icons/bootstrap.svg" },
     ],
   },
   {
@@ -18,16 +18,18 @@ const skills = [
     list: [
       { content: "Node JS", icon: "./icons/nodejs.svg" },
       { content: "JavaScript", icon: "./icons/javascript.svg" },
-      { content: "Python", icon: "./icons/python.svg" },
       { content: "GraphQL", icon: "./icons/graphql.svg" },
-      { content: "C/C++", icon: "./icons/cpp.svg" },
+      { content: "REST APIs", icon: "./icons/rest-api1.svg" },
+      { content: "C / C++", icon: "./icons/cpp.svg" },
       { content: "Java", icon: "./icons/java.svg" },
+      { content: "Python", icon: "./icons/python.svg" },
     ],
   },
   {
     title: "Database",
     list: [
-      { content: "MySQL", icon: "./icons/mysql.svg" },
+      { content: "SQL", icon: "./icons/sql.svg" },
+      { content: "No SQL", icon: "./icons/no-sql.svg" },
       { content: "MongoDB", icon: "./icons/mongodb.svg" },
       { content: "PostgresSQL", icon: "./icons/pgsql.svg" },
       { content: "Redis", icon: "./icons/redis.svg" },
@@ -37,7 +39,7 @@ const skills = [
     title: "Others",
     list: [
       { content: "Git, Github & Gitlab", icon: "./icons/git.svg" },
-      { content: "ApolloServer", icon: "./icons/apollo.svg" },
+      { content: "ApolloServer", icon: "./icons/apollo-server.svg" },
       { content: "Docker", icon: "./icons/docker.svg" },
     ],
   },
@@ -48,9 +50,11 @@ function AboutComponent(props) {
     <Grid className="aboutContainer">
       <Grid>
         <Typography variant="p" sx={{ fontSize: "1.1rem" }}>
-          To be a part of an organization that provides ample opportunities for
-          professional and personal growth, where i can use my skills for the
-          success of the organization with continuous learning and dedication.
+          Passionate and results-driven Software Engineer with hands-on
+          experience in full stack development, including Node.js, React, and
+          various databases. Dedicated to creating high- quality software
+          solutions and improving user experiences. Eager to apply my skills and
+          knowledge in a dynamic environment.
         </Typography>
       </Grid>
       <Grid className="skillsList">
