@@ -406,14 +406,14 @@ function MailDialog({
                   color:
                     errors.name || errors.email
                       ? "rgba(255, 0, 0,0.8)"
-                      : "rgba(255,255,255,.6)",
+                      : "rgba(255,255,255)",
                 },
               }}
               onClick={(e) => handleSubmit(e)}
               disabled={!!(errors.name || errors.email || loading)}
             >
               {loading ? (
-                <CircularProgress size={25} sx={{ color: "white" }} />
+                <CircularProgress size={25} color="inherit" />
               ) : (
                 "Send"
               )}

@@ -241,16 +241,19 @@ function CustomEducationTimeLineItem({
         {index == educationData.length - 1 ? null : <TimelineConnector />}
       </TimelineSeparator>
       <TimelineContent sx={{ marginTop: -2, marginBottom: "12px" }}>
-        <Typography component="p" sx={{ fontSize: 16, fontWeight: 600 }}>
+        <Typography
+          component="p"
+          sx={{ fontSize: 16, fontWeight: 600, color: "#32C9F3" }}
+        >
           {course}
         </Typography>
         <Typography sx={{ fontSize: 14, color: "#32C9F3" }}>
           -&nbsp;{institute}
         </Typography>
-        <Typography sx={{ fontSize: 12.5, color: "#32C9F3" }}>
+        <Typography sx={{ fontSize: 13 }}>
           &nbsp;&nbsp; {timePeriod}
         </Typography>
-        <Typography sx={{ fontSize: 12.5 }}>&nbsp;&nbsp; {place}</Typography>
+        <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {place}</Typography>
       </TimelineContent>
     </TimelineItem>
   );
@@ -315,7 +318,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               <Grid>
                 {title.descriptions.map((desc) => (
                   <Typography
-                    sx={{ fontSize: 13.5, marginLeft: 2, maxWidth: 500 }}
+                    sx={{ fontSize: 14, marginLeft: 2, maxWidth: 500 }}
                   >
                     - {desc}
                   </Typography>
