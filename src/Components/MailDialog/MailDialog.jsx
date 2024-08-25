@@ -391,22 +391,18 @@ function MailDialog({
               sx={{
                 height: 40,
                 width: 90,
-                textTransform: "none",
-                border: !!(errors.name || errors.email)
-                  ? "1px solid rgba(255,0,0,.6)"
-                  : "1px solid rgba(255,255,255,.6)",
+                textTransform: secretMailAlert ? "uppercase" : "none",
                 borderRadius: "7px",
-                color: "white",
                 fontWeight: "bold",
-                ...(secretMailAlert && {
-                  textTransform: "uppercase",
-                }),
-                "&:hover": { backgroundColor: "white", color: "black" },
-                "&:disabled": {
-                  color:
-                    errors.name || errors.email
-                      ? "rgba(255, 0, 0,0.8)"
-                      : "rgba(255,255,255)",
+                border: !!(errors.name || errors.email)
+                  ? "1px solid rgba(255,0,0,1)"
+                  : "1px solid rgba(255,255,255,1)",
+                color: !!(errors.name || errors.email)
+                  ? "rgba(255,0,0,1) !important"
+                  : "rgba(255,255,255,1) !important",
+                "&:hover": {
+                  backgroundColor: "white !important",
+                  color: "black !important",
                 },
               }}
               onClick={(e) => handleSubmit(e)}
