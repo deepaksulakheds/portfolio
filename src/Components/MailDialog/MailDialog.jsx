@@ -13,13 +13,12 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
-import CryptoJS from "crypto-js";
 import { SEND_MAIL_QUERY } from "../queries";
-import axios from "axios";
 import "./MailDialog.css";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { withAttachmentToggle } from "./attachmentContext";
+import { useMutation } from "@apollo/client";
 
 function MailDialog({
   mailDialogVisible,
@@ -29,6 +28,8 @@ function MailDialog({
   attachmentToggle,
 }) {
   // console.log("attachmentToggle", attachmentToggle);
+  const [sendMail] = useMutation(SEND_MAIL_QUERY);
+
   const [contactDetails, setContactDetails] = useState({
     name: "",
     email: "",
@@ -123,7 +124,6 @@ function MailDialog({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("meta", import.meta.env.VITE_APP_BACKEND_URL);
     try {
       if (
         contactDetails.email &&
@@ -132,43 +132,25 @@ function MailDialog({
         contactDetails.subject
       ) {
         setLoading(true);
-        // await new Promise((resolve) => setTimeout(() => resolve(true), 10000));
-        // console.log("contactDetails", contactDetails);
-        const encryptedData = CryptoJS.AES.encrypt(
-          JSON.stringify({
-            query: SEND_MAIL_QUERY,
-            variables: { ...contactDetails, isSecretAlert: secretMailAlert },
-          }),
-          import.meta.env.VITE_APP_AES_SECRET
-        ).toString();
-        console.log("payload", { payload: encryptedData });
-        const resp = await axios.request({
-          method: "post",
-          maxBodyLength: Infinity,
-          url: import.meta.env.VITE_APP_BACKEND_URL,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: JSON.stringify({ payload: encryptedData }),
+        const resp = await sendMail({
+          variables: { ...contactDetails, isSecretAlert: secretMailAlert },
         });
-        setLoading(false);
-        if (resp.data) {
-          console.log("resp.data", resp.data);
+        if (resp.data && resp.data.sendMail.status == 200) {
           snackbar.showSnackbar("Mail sent successfully.", "success");
           onclose();
+        } else {
+          snackbar.showSnackbar(resp.data.sendMail.message, "error");
         }
-        // snackbar.showSnackbar("Feature comming soon.", "info");
+        setLoading(false);
       } else {
         snackbar.showSnackbar("Please fill all the fields.", "error");
       }
     } catch (err) {
       setLoading(false);
-      // console.log("Error", err);
-      if (err.message.toString().toLowerCase().includes("400")) {
-        // console.log("mailResp", err.response.data.message);
-        snackbar.showSnackbar(err.response.data.message, "error");
+      // console.log(err);
+      if (err.message.toString().toLowerCase().includes("401")) {
+        snackbar.showSnackbar("Request Unauthorized.", "error");
       } else {
-        // console.log("catch else", err);
         snackbar.showSnackbar(err.message, "error");
       }
     }
