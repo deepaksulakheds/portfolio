@@ -71,8 +71,8 @@ function Body(props) {
               style={
                 selectedMenu.includes(menu.name)
                   ? {
-                      color: "rgb(50, 201, 243)",
-                      filter: " drop-shadow(0px 0px 2px rgb(50, 201, 243))",
+                      color: "#aa89f2",
+                      filter: "drop-shadow(0px 0px 1px #aa89f2)",
                     }
                   : null
               }
@@ -113,7 +113,7 @@ function Body(props) {
             slotProps={{
               paper: {
                 style: {
-                  background: "#121212",
+                  background: "#080411",
                   border: "1px solid white",
                   borderRadius: "10px",
                 },
@@ -128,8 +128,8 @@ function Body(props) {
                 style={
                   selectedMenu.includes(menu.name)
                     ? {
-                        color: "rgb(50, 201, 243)",
-                        filter: " drop-shadow(0px 0px 1px rgb(50, 201, 243))",
+                        color: "#aa89f2",
+                        filter: " drop-shadow(0px 0px 1px #aa89f2)",
                       }
                     : {
                         color: "white",

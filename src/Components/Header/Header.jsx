@@ -88,15 +88,14 @@ function Header(props) {
               componentsProps={{
                 tooltip: {
                   sx: {
-                    backgroundColor: "white",
-                    color: "black",
+                    backgroundColor: "rgba(170, 137, 242, 0.7)",
                     fontSize: 12,
                     fontWeight: "bold",
                   },
                 },
                 arrow: {
                   sx: {
-                    color: "white",
+                    color: "rgba(170, 137, 242, 0.7)",
                   },
                 },
               }}
@@ -108,8 +107,7 @@ function Header(props) {
                   transition: "all ease-in-out 0.2s",
                   color: "white",
                   "&:hover": {
-                    color: "black",
-                    backgroundColor: "rgba(255, 255, 255)",
+                    boxShadow: "inset 0 -4px 20px rgba(170, 137, 242, 1)",
                   },
                 }}
                 href={contact?.ref}

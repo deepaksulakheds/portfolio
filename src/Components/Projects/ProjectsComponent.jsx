@@ -89,11 +89,11 @@ function ProjectsComponent(props) {
               </Typography>
               <IconButton
                 sx={{
-                  padding: "0.3rem",
+                  padding: "0.5rem",
                   color: "white",
+                  transition:"all ease-in-out 0.15s",
                   "&:hover": {
-                    color: "black",
-                    backgroundColor: "rgba(255, 255, 255)",
+                    boxShadow: "inset 0 -4px 20px rgba(170, 137, 242, 1)",
                   },
                 }}
                 target="blank"
