@@ -243,16 +243,14 @@ function CustomEducationTimeLineItem({
       <TimelineContent sx={{ marginTop: -2, marginBottom: "12px" }}>
         <Typography
           component="p"
-          sx={{ fontSize: 16, fontWeight: 600, color: "#32C9F3" }}
+          sx={{ fontSize: 16, fontWeight: 600, color: "#aa89f2" }}
         >
           {course}
         </Typography>
-        <Typography sx={{ fontSize: 14, color: "#32C9F3" }}>
+        <Typography sx={{ fontSize: 14, color: "#aa89f2" }}>
           -&nbsp;{institute}
         </Typography>
-        <Typography sx={{ fontSize: 13 }}>
-          &nbsp;&nbsp; {timePeriod}
-        </Typography>
+        <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {timePeriod}</Typography>
         <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {place}</Typography>
       </TimelineContent>
     </TimelineItem>
@@ -290,12 +288,12 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
           {titlesList.map((title) => (
             <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
               <Typography
-                sx={{ fontSize: 15.5, fontWeight: "bold", color: "#32C9F3" }}
+                sx={{ fontSize: 15.5, fontWeight: "bold", color: "#aa89f2" }}
               >
                 •&nbsp;&nbsp;{title.designation}
               </Typography>
               <Typography
-                sx={{ fontSize: 14, marginLeft: 2, color: "#32C9F3" }}
+                sx={{ fontSize: 14, marginLeft: 2, color: "#aa89f2" }}
               >
                 {title.duration}, ({" "}
                 {title.timePeriod.years() > 0 &&
@@ -318,6 +316,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               <Grid>
                 {title.descriptions.map((desc) => (
                   <Typography
+                    key={desc}
                     sx={{ fontSize: 14, marginLeft: 2, maxWidth: 500 }}
                   >
                     - {desc}
@@ -343,7 +342,7 @@ function CompanyCard({ companyName, titlesList }) {
         width: "18vw",
         minWidth: "320px",
         maxWidth: "380px",
-        backgroundColor: "#121212",
+        backgroundColor: "#080411",
         borderRadius: "20px",
         // padding: "5px 0px 15px 15px",
         padding: "10px",

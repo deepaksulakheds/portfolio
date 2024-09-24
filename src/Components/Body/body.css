@@ -5,7 +5,7 @@
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5.5px);
   -webkit-backdrop-filter: blur(5.5px);
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  /* border: 1px solid rgba(111, 65, 210, 0.4); */
 }
 
 .navBar {
@@ -13,10 +13,7 @@
   transition: all ease-in-out 0.5s;
   padding: 6px;
   border-radius: 0 15px;
-  box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5.5px);
-  -webkit-backdrop-filter: blur(5.5px);
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .menuList {
@@ -26,8 +23,8 @@
   transition: all ease-in-out 0.1s;
 }
 .menuList:hover {
-  color: rgb(50, 201, 243);
-  filter: drop-shadow(0 0 3px rgb(50, 201, 243));
+  color: rgba(170, 137, 242, 1);
+  filter: drop-shadow(0 0 3px rgba(170, 137, 242, 1));
 }
 
 .selectedTitle {

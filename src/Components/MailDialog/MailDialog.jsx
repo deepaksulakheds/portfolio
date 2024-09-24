@@ -167,12 +167,12 @@ function MailDialog({
     <Dialog
       open={mailDialogVisible}
       onClose={onclose}
-      sx={{ backdropFilter: "blur(10px)" }}
+      sx={{ backdropFilter: "blur(13px)" }}
       PaperProps={{
         style: {
           borderRadius: "10px",
-          background: "#2A2A2A",
-          border: "1px solid rgba(255,255,255,.4)",
+          background: "#211e29",
+          // border: " 1px solid rgba(111, 65, 210, 0.4)",
         },
       }}
     >
@@ -363,7 +363,9 @@ function MailDialog({
                 ...(secretMailAlert && {
                   textTransform: "uppercase",
                 }),
-                "&:hover": { backgroundColor: "white", color: "black" },
+                "&:hover": {
+                  boxShadow: "inset 0px 0px 28px rgba(170, 137, 242, 1)",
+                },
               }}
               onClick={onclose}
             >
@@ -378,13 +380,12 @@ function MailDialog({
                 fontWeight: "bold",
                 border: !!(errors.name || errors.email)
                   ? "1px solid rgba(255,0,0,1)"
-                  : "1px solid rgba(255,255,255,1)",
+                  : "1px solid rgba(255,255,255,0.6)",
                 color: !!(errors.name || errors.email)
                   ? "rgba(255,0,0,1) !important"
                   : "rgba(255,255,255,1) !important",
                 "&:hover": {
-                  backgroundColor: "white !important",
-                  color: "black !important",
+                  boxShadow: "inset 0px 0px 28px rgba(170, 137, 242, 1)",
                 },
               }}
               onClick={(e) => handleSubmit(e)}
@@ -418,13 +419,16 @@ function MailDialog({
                     componentsProps={{
                       tooltip: {
                         sx: {
-                          backgroundColor: "white",
-                          color: "black",
-                          fontSize: 14,
+                          backgroundColor: "rgba(170, 137, 242, 0.7)",
+                          fontSize: 12,
                           fontWeight: "bold",
                         },
                       },
-                      arrow: { sx: { color: "white" } },
+                      arrow: {
+                        sx: {
+                          color: "rgba(170, 137, 242, 0.7)",
+                        },
+                      },
                     }}
                   >
                     <FileUploadRoundedIcon
@@ -432,12 +436,15 @@ function MailDialog({
                         height: 30,
                         width: 30,
                         padding: 0.5,
-                        border: "2px solid rgba(255, 255, 255)",
+                        border: "1px solid rgba(255, 255, 255)",
                         borderRadius: "7px",
                         transition: "all 0.2s ease-in-out",
                         color: "white",
                         cursor: "pointer",
-                        "&:hover": { backgroundColor: "white", color: "black" },
+                        "&:hover": {
+                          boxShadow:
+                            "inset 0px 0px 28px rgba(170, 137, 242, 1)",
+                        },
                       }}
                     />
                   </Tooltip>
@@ -460,13 +467,12 @@ function MailDialog({
                         componentsProps={{
                           tooltip: {
                             sx: {
-                              backgroundColor: "white",
-                              color: "black",
+                              backgroundColor: "rgba(170, 137, 242, 0.7)",
                               fontSize: 12,
                               fontWeight: "bold",
                             },
                           },
-                          arrow: { sx: { color: "white" } },
+                          arrow: { sx: { color: "rgba(170, 137, 242, 0.7)" } },
                         }}
                       >
                         <Grid
