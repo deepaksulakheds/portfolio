@@ -8,7 +8,7 @@
   flex-wrap: wrap;
 }
 .skill {
-  transition: all ease-in-out 0.3s;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
   /* cursor: pointer; */
   padding: 7px;
   height: fit-content;
@@ -28,7 +28,7 @@
   /* max-width: 18vw; */
   width: clamp(230px, 25vw, 350px);
   gap: 2px;
-  color: white;
+  /* color: white; */
 }
 
 .skillIcon {

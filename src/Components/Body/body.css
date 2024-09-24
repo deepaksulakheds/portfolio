@@ -22,7 +22,7 @@
 .menuList {
   padding: 5px;
   cursor: pointer;
-  color: white;
+  /* color: white; */
   transition: all ease-in-out 0.1s;
 }
 .menuList:hover {

@@ -6,6 +6,10 @@ import { Call, GitHub, LinkedIn, LocationOn, Mail } from "@mui/icons-material";
 import MailDialog from "../MailDialog/MailDialog";
 import HeaderImageDialog from "./HeaderImageDialog";
 
+// src/components/ThemeToggleButton.jsx
+import { Button } from "@mui/material";
+import { useTheme, SwitchMUITheme } from "../../themeContext";
+
 function Header(props) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
   const [imageDialogVisible, setImageDialogVisible] = useState(false);
@@ -66,10 +70,11 @@ function Header(props) {
           onClick={(e) => setSecretAlert(!secretAlert)}
           label="Software Engineer 1"
           style={{
-            color: "white",
+            // color: "white",
             cursor: "text",
+            // border: "1px solid black",
             fontWeight: "500",
-            background: "rgba(255, 255, 255, 0.13)",
+            // background: "rgba(255, 255, 255, 0.13)",
           }}
         />
         <Grid
@@ -88,15 +93,15 @@ function Header(props) {
               componentsProps={{
                 tooltip: {
                   sx: {
-                    backgroundColor: "white",
-                    color: "black",
+                    // backgroundColor: "white",
+                    // color: "black",
                     fontSize: 12,
                     fontWeight: "bold",
                   },
                 },
                 arrow: {
                   sx: {
-                    color: "white",
+                    // color: "background.default",
                   },
                 },
               }}
@@ -106,11 +111,12 @@ function Header(props) {
                 sx={{
                   padding: "0.4rem",
                   transition: "all ease-in-out 0.2s",
-                  color: "white",
-                  "&:hover": {
-                    color: "black",
-                    backgroundColor: "rgba(255, 255, 255)",
-                  },
+                  backgroundColor: "inherit",
+                  color: "inherit",
+                  // "&:hover": {
+                  //   color: "color.default",
+                  //   backgroundColor: "backgroundColor.default",
+                  // },
                 }}
                 href={contact?.ref}
                 onClick={contact.onclick ? contact.onclick : null}
@@ -121,6 +127,7 @@ function Header(props) {
           ))}
         </Grid>
       </Grid>
+      <SwitchMUITheme />
       <MailDialog
         mailDialogVisible={mailDialogVisible}
         onclose={() => setMailDialogVisible(!mailDialogVisible)}

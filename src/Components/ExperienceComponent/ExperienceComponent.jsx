@@ -250,9 +250,7 @@ function CustomEducationTimeLineItem({
         <Typography sx={{ fontSize: 14, color: "#32C9F3" }}>
           -&nbsp;{institute}
         </Typography>
-        <Typography sx={{ fontSize: 13 }}>
-          &nbsp;&nbsp; {timePeriod}
-        </Typography>
+        <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {timePeriod}</Typography>
         <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {place}</Typography>
       </TimelineContent>
     </TimelineItem>
@@ -318,6 +316,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               <Grid>
                 {title.descriptions.map((desc) => (
                   <Typography
+                    key={desc}
                     sx={{ fontSize: 14, marginLeft: 2, maxWidth: 500 }}
                   >
                     - {desc}

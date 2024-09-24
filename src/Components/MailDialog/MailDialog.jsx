@@ -171,26 +171,19 @@ function MailDialog({
       PaperProps={{
         style: {
           borderRadius: "10px",
-          background: "#2A2A2A",
+          // background: "#2A2A2A",
           border: "1px solid rgba(255,255,255,.4)",
         },
       }}
     >
       <DialogTitle
-        sx={{ color: "white", fontWeight: "bold", padding: "18px 20px" }}
+        sx={{ fontWeight: "bold", padding: "18px 20px" }}
         onClick={secretMailAlertHandler}
       >
         Contact Me
       </DialogTitle>
-      <Grid
-        style={{ display: "flex", justifyContent: "center", color: "white" }}
-      >
-        <Divider
-          color="white"
-          sx={{ color: "white", backgroundColor: "white" }}
-          style={{ color: "white" }}
-          width="92%"
-        />
+      <Grid style={{ display: "flex", justifyContent: "center" }}>
+        <Divider color="white" width="92%" />
       </Grid>
       <DialogContent
         sx={{

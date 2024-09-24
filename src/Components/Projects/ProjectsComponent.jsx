@@ -90,11 +90,13 @@ function ProjectsComponent(props) {
               <IconButton
                 sx={{
                   padding: "0.3rem",
-                  color: "white",
-                  "&:hover": {
-                    color: "black",
-                    backgroundColor: "rgba(255, 255, 255)",
-                  },
+                  backgroundColor: "inherit",
+                  color: "inherit",
+                  // color: "white",
+                  // "&:hover": {
+                  //   color: "black",
+                  //   backgroundColor: "rgba(255, 255, 255)",
+                  // },
                 }}
                 target="blank"
                 href={project.path}

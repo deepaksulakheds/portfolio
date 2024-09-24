@@ -91,7 +91,7 @@ function Body(props) {
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
-            color="inherit"
+            // color="inherit"
             sx={{ padding: "6px" }}
           >
             <MenuOutlined />
@@ -113,7 +113,7 @@ function Body(props) {
             slotProps={{
               paper: {
                 style: {
-                  background: "#121212",
+                  // background: "#121212",
                   border: "1px solid white",
                   borderRadius: "10px",
                 },
@@ -131,9 +131,10 @@ function Body(props) {
                         color: "rgb(50, 201, 243)",
                         filter: " drop-shadow(0px 0px 1px rgb(50, 201, 243))",
                       }
-                    : {
-                        color: "white",
-                      }
+                    : null
+                  // {
+                  //     color: "white",
+                  //   }
                 }
                 className="menuList"
                 key={menu.name}
