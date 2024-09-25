@@ -66,6 +66,7 @@ function ProjectsComponent(props) {
             <img
               src={project.image}
               alt={project.title}
+              loading="lazy"
               style={{
                 borderRadius: 3,
                 height: "100%",
@@ -84,20 +85,21 @@ function ProjectsComponent(props) {
                 alignItems: "center",
               }}
             >
-              <Typography sx={{ fontWeight: "500" }}>
+              <Typography sx={{ fontWeight: "500", color: "#aa89f2" }}>
                 {project.title}
               </Typography>
               <IconButton
+                target="blank"
+                href={project.path}
                 sx={{
                   padding: "0.5rem",
                   color: "white",
-                  transition:"all ease-in-out 0.15s",
+                  transition: "all ease-in-out 0.15s",
                   "&:hover": {
-                    boxShadow: "inset 0 -4px 20px rgba(170, 137, 242, 1)",
+                    boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                    // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
                   },
                 }}
-                target="blank"
-                href={project.path}
               >
                 <GitHub />
               </IconButton>

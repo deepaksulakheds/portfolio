@@ -52,6 +52,7 @@ function Header(props) {
     >
       <img
         onClick={() => setImageDialogVisible(true)}
+        loading="lazy"
         src="./deepak.jpg"
         className="image"
       />
@@ -69,13 +70,15 @@ function Header(props) {
             color: "white",
             cursor: "text",
             fontWeight: "500",
-            background: "rgba(255, 255, 255, 0.13)",
+            border: "1px solid rgba(248, 246, 254, .2)",
+            // background: "rgba(25, 17, 51, 1)",
+            boxShadow: "inset 0px 0px 15px 8px rgba(255, 255, 255, 0.08)",
           }}
         />
         <Grid
           sx={{
             display: "flex",
-            gap: "10px",
+            gap: "6px",
             marginTop: "20px",
             flexWrap: "wrap",
           }}
@@ -88,14 +91,14 @@ function Header(props) {
               componentsProps={{
                 tooltip: {
                   sx: {
-                    backgroundColor: "rgba(170, 137, 242, 0.7)",
-                    fontSize: 12,
-                    fontWeight: "bold",
+                    backgroundColor: "transparent",
+                    boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
+                    fontSize: 13,
                   },
                 },
                 arrow: {
                   sx: {
-                    color: "rgba(170, 137, 242, 0.7)",
+                    color: "rgba(170, 137, 242, 0.6)",
                   },
                 },
               }}
@@ -103,11 +106,12 @@ function Header(props) {
               <IconButton
                 target="blank"
                 sx={{
-                  padding: "0.4rem",
-                  transition: "all ease-in-out 0.2s",
+                  padding: "0.5rem",
+                  transition: "all ease-in-out 0.15s",
                   color: "white",
                   "&:hover": {
-                    boxShadow: "inset 0 -4px 20px rgba(170, 137, 242, 1)",
+                    boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                    // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
                   },
                 }}
                 href={contact?.ref}

@@ -68,17 +68,17 @@ function Body(props) {
         <Grid className="navBar" sx={{ display: { xs: "none", md: "flex" } }}>
           {menuList.map((menu, index) => (
             <a
+              className="menuList"
+              key={menu.name}
+              onClick={(e) => handleMenuSelect(index)}
               style={
                 selectedMenu.includes(menu.name)
                   ? {
                       color: "#aa89f2",
-                      filter: "drop-shadow(0px 0px 1px #aa89f2)",
+                      filter: "drop-shadow(0px 0px 0.8px #aa89f2)",
                     }
                   : null
               }
-              className="menuList"
-              key={menu.name}
-              onClick={(e) => handleMenuSelect(index)}
             >
               {menu.name}
             </a>
@@ -92,7 +92,7 @@ function Body(props) {
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
             color="inherit"
-            sx={{ padding: "6px" }}
+            sx={{ padding: "4px" }}
           >
             <MenuOutlined />
           </IconButton>
@@ -125,19 +125,19 @@ function Body(props) {
           >
             {menuList.map((menu, index) => (
               <MenuItem
-                style={
+                className="menuList"
+                key={menu.name}
+                onClick={(e) => handleMenuSelect(index)}
+                sx={
                   selectedMenu.includes(menu.name)
                     ? {
                         color: "#aa89f2",
-                        filter: " drop-shadow(0px 0px 1px #aa89f2)",
+                        filter: " drop-shadow(0px 0px 0.8px #aa89f2)",
                       }
                     : {
                         color: "white",
                       }
                 }
-                className="menuList"
-                key={menu.name}
-                onClick={(e) => handleMenuSelect(index)}
               >
                 {menu.name}
               </MenuItem>
