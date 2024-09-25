@@ -24,7 +24,7 @@
 }
 .menuList:hover {
   color: rgba(170, 137, 242, 1);
-  filter: drop-shadow(0 0 3px rgba(170, 137, 242, 1));
+  filter: drop-shadow(0 0 0.8px rgba(170, 137, 242, 1));
 }
 
 .selectedTitle {

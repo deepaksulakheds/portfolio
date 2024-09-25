@@ -8,7 +8,6 @@ import {
   Button,
   Typography,
   CircularProgress,
-  IconButton,
   Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -364,7 +363,8 @@ function MailDialog({
                   textTransform: "uppercase",
                 }),
                 "&:hover": {
-                  boxShadow: "inset 0px 0px 28px rgba(170, 137, 242, 1)",
+                  boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                  // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
                 },
               }}
               onClick={onclose}
@@ -385,7 +385,8 @@ function MailDialog({
                   ? "rgba(255,0,0,1) !important"
                   : "rgba(255,255,255,1) !important",
                 "&:hover": {
-                  boxShadow: "inset 0px 0px 28px rgba(170, 137, 242, 1)",
+                  boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                  // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
                 },
               }}
               onClick={(e) => handleSubmit(e)}
