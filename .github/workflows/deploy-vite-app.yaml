@@ -39,7 +39,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20.13.1' # Use Node.js version 20.13.1
+          node-version: '20.17.0' # Use Node.js version 20.17.0
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
