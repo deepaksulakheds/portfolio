@@ -297,7 +297,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               >
                 {title.duration}, ({" "}
                 {title.timePeriod.years() > 0 &&
-                  `${title.timePeriod.years()} Y`}
+                  `${title.timePeriod.years()}Y`}
                 {/* Comma is added as required */}
                 {((title.timePeriod.years() > 0 &&
                   title.timePeriod.months() > 0) ||
@@ -305,12 +305,12 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
                     title.timePeriod.days() > 0)) &&
                   `, `}
                 {title.timePeriod.months() > 0 &&
-                  `${title.timePeriod.months()} M`}
+                  `${title.timePeriod.months()}M`}
                 {/* Comma is added as required */}
                 {title.timePeriod.months() > 0 &&
                   title.timePeriod.days() > 0 &&
                   `, `}
-                {title.timePeriod.days() > 0 && `${title.timePeriod.days()} D`}{" "}
+                {title.timePeriod.days() > 0 && `${title.timePeriod.days()}D`}{" "}
                 )
               </Typography>
               <Grid>
