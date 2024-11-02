@@ -146,9 +146,17 @@ function MailDialog({
       }
     } catch (err) {
       setLoading(false);
-      // console.log(err);
-      if (err.message.toString().toLowerCase().includes("401")) {
-        snackbar.showSnackbar("Request Unauthorized.", "error");
+      // console.log("dialog error", JSON.stringify(err, null, 2));
+      if (
+        err &&
+        err?.networkError &&
+        err?.networkError?.response &&
+        err?.networkError?.response?.data?.message
+      ) {
+        snackbar.showSnackbar(
+          err?.networkError?.response?.data?.message,
+          "error"
+        );
       } else {
         snackbar.showSnackbar(err.message, "error");
       }
