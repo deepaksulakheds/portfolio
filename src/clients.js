@@ -54,7 +54,9 @@ async function fetchResp(url, options) {
     return Promise.resolve(createResponseFromAxiosResp(resp, resp));
   } catch (err) {
     // console.error("Axios error:", err);
-    throw err;
+    // Destructure this for accurate server error message
+    const serverError = { ...err };
+    throw serverError;
   }
 }
 
@@ -70,13 +72,14 @@ function createResponseFromAxiosResp(axiosResp, data) {
 const authLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      authorization: encryptDataAES(
+      authorization: `Bearer ${encryptDataAES(
         JSON.stringify({
           name: operation.variables.name,
           email: operation.variables.email,
-          expiresAt: moment().unix() + 2 * 60,
+          expiresAt: moment().unix() + 2 * 60, // Valid for 2 mins
+          passKey: import.meta.env.VITE_APP_AUTH_PASSKEY || "",
         })
-      ), // Valid for 2 mins
+      )}`,
     },
   });
   return forward(operation);
