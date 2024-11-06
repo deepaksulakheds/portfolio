@@ -23,7 +23,7 @@ const experienceData = [
         designation: "Software Engineer 1",
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: moment.duration(
-          moment().endOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY")) + 1 // add 1 sec for correct day
+          moment().startOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY"))
         ),
         descriptions: [
           `Developed backend services and APIs with Node.js, 
@@ -296,8 +296,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
                 sx={{ fontSize: 14, marginLeft: 2, color: "#aa89f2" }}
               >
                 {title.duration}, ({" "}
-                {title.timePeriod.years() > 0 &&
-                  `${title.timePeriod.years()}Y`}
+                {title.timePeriod.years() > 0 && `${title.timePeriod.years()}Y`}
                 {/* Comma is added as required */}
                 {((title.timePeriod.years() > 0 &&
                   title.timePeriod.months() > 0) ||
@@ -310,8 +309,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
                 {title.timePeriod.months() > 0 &&
                   title.timePeriod.days() > 0 &&
                   `, `}
-                {title.timePeriod.days() > 0 && `${title.timePeriod.days()}D`}{" "}
-                )
+                {title.timePeriod.days() > 0 && `${title.timePeriod.days()}D`} )
               </Typography>
               <Grid>
                 {title.descriptions.map((desc) => (
