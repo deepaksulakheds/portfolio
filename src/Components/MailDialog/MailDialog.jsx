@@ -145,7 +145,7 @@ function MailDialog({
       }
     } catch (err) {
       setLoading(false);
-      // console.log("dialog error", JSON.stringify(err, null, 2));
+      console.log("dialog error", JSON.stringify(err, null, 2));
       if (
         err &&
         err?.networkError &&
