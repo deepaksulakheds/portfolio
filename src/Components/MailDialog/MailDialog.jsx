@@ -26,7 +26,6 @@ function MailDialog({
   secretAlert,
   attachmentToggle,
 }) {
-  // console.log("attachmentToggle", attachmentToggle);
   const [sendMail] = useMutation(SEND_MAIL_QUERY);
 
   const [contactDetails, setContactDetails] = useState({
@@ -395,6 +394,11 @@ function MailDialog({
                 "&:hover": {
                   boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
                   // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
+                },
+                "&:disabled": {
+                  pointerEvents: "unset",
+                  cursor: "not-allowed",
+                  boxShadow: "none",
                 },
               }}
               onClick={(e) => handleSubmit(e)}
