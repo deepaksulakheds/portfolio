@@ -2,9 +2,9 @@
 
 ## prerequisites
 
-### `node -> v20.15.0`
+### `node -> v20.18.0`
 
-### `npm -> v10.7.0`
+### `npm -> v10.8.2`
 
 ## Available Scripts
 
