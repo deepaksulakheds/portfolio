@@ -11,18 +11,19 @@ import {
   Tooltip,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
+// import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
 import { SEND_MAIL_QUERY } from "../queries";
 import "./MailDialog.css";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { withAttachmentToggle } from "./attachmentContext";
 import { useMutation } from "@apollo/client";
+import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 
 function MailDialog({
   mailDialogVisible,
   onclose,
-  snackbar,
+  notistackSnackbar,
   secretAlert,
   attachmentToggle,
 }) {
@@ -85,18 +86,33 @@ function MailDialog({
     //     data: JSON.stringify({ payload: encrypted }),
     //   });
     // }
-
     if (event.target.files.length) {
-      if (Array.from(event.target.files).length > 5) {
-        snackbar.showSnackbar("Max 5 files allowed.", "error");
+      if (
+        Array.from(event.target.files).length > 5 ||
+        Array.from(event.target.files).length + filesUploaded.length > 5
+      ) {
+        notistackSnackbar.showSnackbar("Max 5 files allowed.", "error");
       } else {
-        setFilesUploaded(Array.from(event.target.files));
+        for (const file of Array.from(event.target.files)) {
+          const existsIndex = filesUploaded.findIndex(
+            (f) => f.name === file.name
+          );
+          if (existsIndex >= 0) {
+            notistackSnackbar.showSnackbar(
+              `File: "${
+                file.name.length > 7 ? `${file.name.slice(0, 7)}...` : file.name
+              }" already uploaded at position ${existsIndex + 1}.`,
+              "error"
+            );
+          } else {
+            setFilesUploaded((prevFiles) => [...prevFiles, file]);
+          }
+        }
       }
     }
   };
 
   const handleRemoveFile = async (removedFile) => {
-    console.log("file", removedFile);
     setFilesUploaded(
       filesUploaded.filter((file) => file.name !== removedFile.name)
     );
@@ -134,14 +150,14 @@ function MailDialog({
           variables: { ...contactDetails, isSecretAlert: secretMailAlert },
         });
         if (resp.data && resp.data.sendMail.status == 200) {
-          snackbar.showSnackbar("Mail sent successfully.", "success");
+          notistackSnackbar.showSnackbar("Mail sent successfully.", "success");
           onclose();
         } else {
-          snackbar.showSnackbar(resp.data.sendMail.message, "error");
+          notistackSnackbar.showSnackbar(resp.data.sendMail.message, "error");
         }
         setLoading(false);
       } else {
-        snackbar.showSnackbar("Please fill all the fields.", "error");
+        notistackSnackbar.showSnackbar("Please fill all the fields.", "error");
       }
     } catch (err) {
       setLoading(false);
@@ -152,12 +168,12 @@ function MailDialog({
         err?.networkError?.response &&
         err?.networkError?.response?.data?.message
       ) {
-        snackbar.showSnackbar(
+        notistackSnackbar.showSnackbar(
           err?.networkError?.response?.data?.message,
           "error"
         );
       } else {
-        snackbar.showSnackbar(err.message, "error");
+        notistackSnackbar.showSnackbar(err.message, "error");
       }
     }
   };
@@ -511,6 +527,8 @@ function MailDialog({
                               cursor: "pointer",
                               alignSelf: "flex-start",
                               marginTop: -1,
+                              height: "1.1rem",
+                              width: "1.1rem",
                               marginRight: -1,
                               transition: "all 0.2s ease-in-out",
                               "&:hover": {
@@ -538,4 +556,4 @@ function MailDialog({
   );
 }
 
-export default withAttachmentToggle(withSnackbar(MailDialog));
+export default withAttachmentToggle(withNotistackSnackbar(MailDialog));
