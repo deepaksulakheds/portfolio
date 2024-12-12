@@ -1,15 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./header.css";
 import Grid from "@mui/system/Unstable_Grid/Grid";
 import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
-import { Call, GitHub, LinkedIn, LocationOn, Mail } from "@mui/icons-material";
+import {
+  Call,
+  GitHub,
+  LinkedIn,
+  LocationOn,
+  Mail,
+  Refresh,
+} from "@mui/icons-material";
 import MailDialog from "../MailDialog/MailDialog";
 import HeaderImageDialog from "./HeaderImageDialog";
+import moment from "moment";
+import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 
-function Header(props) {
+const getFormattedAge = () => {
+  const birthDate = moment("22-jun-1999", "D-MMM-YYYY");
+  const timePeriod = moment.duration(moment().diff(birthDate));
+
+  const timeComponents = [
+    timePeriod.years() > 0 && `${timePeriod.years()}Y`,
+    timePeriod.months() > 0 && `${timePeriod.months()}M`,
+    timePeriod.days() > 0 && `${timePeriod.days()}D`,
+    timePeriod.hours() > 0 && `${timePeriod.hours()}H`,
+    timePeriod.minutes() > 0 && `${timePeriod.minutes()}M`,
+  ].filter(Boolean);
+
+  return `${timeComponents.slice(0, 3).join(" - ")}, ${timeComponents
+    .slice(3, 5)
+    .join(" : ")}`;
+};
+
+function Header({ attachmentToggle }) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
   const [imageDialogVisible, setImageDialogVisible] = useState(false);
   const [secretAlert, setSecretAlert] = useState(false);
+
+  const optimizedAgeTooltip = useMemo(() => getFormattedAge(), []);
+
+  useEffect(() => {
+    const isAgeExists = contacts.some((contact) => contact.name === "age");
+    if (attachmentToggle.isAttachmentEnabled && !isAgeExists) {
+      setContacts((prevContacts) => {
+        return [
+          ...prevContacts,
+          {
+            name: "age",
+            icon: <Refresh fontSize="medium" />,
+            toolTip: optimizedAgeTooltip,
+          },
+        ];
+      });
+    } else if (!attachmentToggle.isAttachmentEnabled && isAgeExists) {
+      setContacts((prevContacts) => {
+        return prevContacts.filter((contact) => contact.name !== "age");
+      });
+    }
+  }, [attachmentToggle.isAttachmentEnabled]);
 
   const [contacts, setContacts] = useState([
     {
@@ -136,4 +184,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default withAttachmentToggle(Header);
