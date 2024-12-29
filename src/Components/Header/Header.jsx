@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./header.css";
 import Grid from "@mui/system/Unstable_Grid/Grid";
-import { Chip, IconButton, Tooltip, Typography } from "@mui/material";
+import { Chip, IconButton, Popover, Tooltip, Typography } from "@mui/material";
 import {
   Call,
   GitHub,
@@ -36,6 +36,7 @@ function Header({ attachmentToggle }) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
   const [imageDialogVisible, setImageDialogVisible] = useState(false);
   const [secretAlert, setSecretAlert] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const optimizedAgeTooltip = useMemo(() => getFormattedAge(), []);
 
@@ -48,7 +49,9 @@ function Header({ attachmentToggle }) {
           {
             name: "age",
             icon: <Refresh fontSize="medium" />,
-            toolTip: optimizedAgeTooltip,
+            onclick: (e) =>
+              setAnchorEl((prev) => (prev ? null : e.currentTarget)),
+            toolTip: null,
           },
         ];
       });
@@ -180,6 +183,32 @@ function Header({ attachmentToggle }) {
         imageDialogVisible={imageDialogVisible}
         onClose={() => setImageDialogVisible(!imageDialogVisible)}
       />
+      <Popover
+        open={Boolean(anchorEl)}
+        onClose={() => setAnchorEl(null)}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        slotProps={{
+          paper: {
+            sx: {
+              backgroundColor: "transparent",
+              boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
+              fontSize: 13,
+              color: "white",
+              padding: "8px",
+            },
+          },
+        }}
+      >
+        {optimizedAgeTooltip}
+      </Popover>
     </Grid>
   );
 }
