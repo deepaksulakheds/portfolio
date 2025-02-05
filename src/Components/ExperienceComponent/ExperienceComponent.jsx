@@ -26,10 +26,15 @@ const experienceData = [
           moment().startOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY"))
         ),
         descriptions: [
-          `Developed backend services and APIs with Node.js, 
+          `Developed backend services, pipelines, REST and GraphQL API(s) with Node.js, 
           contributing to the core functionality projects.
           Collaborated in integration of APIs.`,
-          `Designing and optimizing database schemas and queries to enhance performance and scalability.`,
+          `Designing and optimizing database schemas 
+          and queries to enhance performance 
+          and scalability.`,
+          `Identified and resolved security vulnerabilities through VAPT, 
+          implementing fixes and security best practices to ensure robust 
+          and secure backend services and APIs.`,
         ],
       },
       {
@@ -42,6 +47,9 @@ const experienceData = [
           `Implemented frontend components
           using React to create intuitive and
           responsive user interfaces.`,
+          `Integrated third-party APIs in backend systems, 
+          making sure data flowed smoothly with external systems 
+          while keeping the performance and reliability intact.`,
           `Participated in code reviews, debugging,
           and testing to ensure high-quality
           software deliverables.`,
@@ -290,7 +298,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               <Typography
                 sx={{ fontSize: 15.5, fontWeight: "bold", color: "#aa89f2" }}
               >
-                •&nbsp;&nbsp;{title.designation}
+                &#10687;&nbsp;&nbsp;{title.designation}
               </Typography>
               <Typography
                 sx={{ fontSize: 14, marginLeft: 2, color: "#aa89f2" }}
@@ -313,12 +321,20 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               </Typography>
               <Grid>
                 {title.descriptions.map((desc) => (
-                  <Typography
+                  <Grid
                     key={desc}
                     sx={{ fontSize: 14, marginLeft: 2, maxWidth: 500 }}
                   >
-                    - {desc}
-                  </Typography>
+                    <Grid style={{ display: "flex" }}>
+                      -
+                      <Typography
+                        key={desc}
+                        sx={{ fontSize: 14, marginLeft: 1.5, maxWidth: 500 }}
+                      >
+                        {desc}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 ))}
               </Grid>
               {/* <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
