@@ -50,3 +50,16 @@
     background-position: 0% 50%;
   }
 }
+
+.imageList {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: rgba(170, 137, 242, 0.3);
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.imageList:hover {
+  box-shadow: inset 0px 0px 220px 0px rgba(170, 137, 242, 1);
+}

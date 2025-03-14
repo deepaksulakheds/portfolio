@@ -189,12 +189,12 @@ function MailDialog({
     <Dialog
       open={mailDialogVisible}
       onClose={onclose}
-      sx={{ backdropFilter: "blur(13px)" }}
+      sx={{ backdropFilter: "blur(10px)" }}
       PaperProps={{
         style: {
           borderRadius: "10px",
           background: "#211e29",
-          // border: " 1px solid rgba(111, 65, 210, 0.4)",
+          border: " 0.5px solid rgba(255, 255, 255, 0.3)",
         },
       }}
     >
