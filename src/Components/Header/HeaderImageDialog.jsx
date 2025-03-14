@@ -77,6 +77,7 @@ export default function HeaderImageDialog({ imageDialogVisible, onClose }) {
               key={index}
               src={image}
               className="imageList"
+              loading="lazy"
               style={{
                 ...(image === selectedImage && {
                   boxShadow: "inset 0px 0px 220px 0px rgba(170, 137, 242, 1)",
