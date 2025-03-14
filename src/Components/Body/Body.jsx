@@ -19,11 +19,13 @@ const menuList = [
 
 function Body(props) {
   const [selectedMenu, setSelectedMenu] = useState(
-    menuList[0].name + " " + menuList[0].icon
+    sessionStorage.getItem("selectedMenu") ||
+      menuList[0].name + " " + menuList[0].icon
   );
 
   useEffect(() => {
     document.title = selectedMenu + " | Deepak Sulakhe";
+    sessionStorage.setItem("selectedMenu", selectedMenu);
   }, [selectedMenu]);
 
   const handleMenuSelect = (index) => {
