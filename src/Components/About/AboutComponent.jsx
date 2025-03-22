@@ -41,6 +41,7 @@ const skills = [
       { content: "Docker", icon: "./icons/docker.svg" },
       { content: "ApolloServer", icon: "./icons/apollo-server.svg" },
       { content: "Git", icon: "./icons/git.svg" },
+      { content: "Postman", icon: "./icons/postman.svg" },
       { content: "GitHub", icon: "./icons/github.svg" },
       { content: "GitLab", icon: "./icons/gitlab.svg" },
       { content: "Bitbucket", icon: "./icons/bitbucket.svg" },
