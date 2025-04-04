@@ -142,7 +142,7 @@ export function ExperienceComponent({ attachmentToggle }) {
               </Typography>
             </TimelineContent>
           </TimelineItem>
-          <Grid item style={{ marginLeft: 12 }}>
+          <Grid style={{ marginLeft: 12 }}>
             {experienceData.map((experience, index) => (
               <CustomExperienceTimeLineItem
                 company={experience.company}
@@ -185,7 +185,7 @@ export function ExperienceComponent({ attachmentToggle }) {
               </Typography>
             </TimelineContent>
           </TimelineItem>
-          <Grid item style={{ marginLeft: 12 }}>
+          <Grid style={{ marginLeft: 12 }}>
             {educationData.map((education, index) => (
               <CustomEducationTimeLineItem
                 key={index}

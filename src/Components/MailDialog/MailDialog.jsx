@@ -479,7 +479,7 @@ function MailDialog({
                   </Tooltip>
                 </label>
                 <Grid
-                  item
+                  // item
                   sx={{
                     display: "flex",
                     flexWrap: "wrap",
