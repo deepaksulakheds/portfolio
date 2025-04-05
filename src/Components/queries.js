@@ -20,9 +20,3 @@ export const SEND_MAIL_QUERY = gql`
     }
   }
 `;
-
-export const HELLO_QUERY = gql`
-  query Query {
-    queryHello
-  }
-`;

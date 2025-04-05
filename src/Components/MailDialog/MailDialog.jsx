@@ -190,11 +190,13 @@ function MailDialog({
       open={mailDialogVisible}
       onClose={onclose}
       sx={{ backdropFilter: "blur(10px)" }}
-      PaperProps={{
-        style: {
-          borderRadius: "10px",
-          background: "#211e29",
-          border: " 0.5px solid rgba(255, 255, 255, 0.3)",
+      slotProps={{
+        paper: {
+          style: {
+            borderRadius: "10px",
+            background: "#211e29",
+            border: " 0.5px solid rgba(255, 255, 255, 0.3)",
+          },
         },
       }}
     >
