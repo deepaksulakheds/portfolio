@@ -1,6 +1,6 @@
 import { CircularProgress, Grid, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import "./notesComponent.css";
+import "./NotesComponent.css";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { DELETE_NOTE, GET_NOTES } from "../queries";
 import { DeleteOutline, AddBox } from "@mui/icons-material";
