@@ -8,16 +8,20 @@ import ExperienceComponent from "../ExperienceComponent/ExperienceComponent";
 import { Box } from "@mui/system";
 import { MenuOutlined } from "@mui/icons-material";
 import { CertificatesComponent } from "../CertificatesComponent/CertificatesComponent";
+import { withAttachmentToggle } from "../MailDialog/attachmentContext";
+import NotesComponent from "../Notes/NotesComponent";
 
-const menuList = [
-  { name: "About", icon: "👋" },
-  { name: "Experience", icon: "🌟" },
-  // { name: "Certificates", icon: "🗂️" }, // Uncomment to enable certificates section.
-  { name: "Projects", icon: "🗂️" },
-  { name: "Resume", icon: "🌟" },
-];
+// const menuList = ;
 
 function Body(props) {
+  const [menuList, setMenuList] = useState([
+    { name: "About", icon: "👋" },
+    { name: "Experience", icon: "🌟" },
+    // { name: "Certificates", icon: "🗂️" }, // Uncomment to enable certificates section.
+    { name: "Projects", icon: "🗂️" },
+    { name: "Resume", icon: "🌟" },
+  ]);
+
   const [selectedMenu, setSelectedMenu] = useState(
     sessionStorage.getItem("selectedMenu") ||
       menuList[0].name + " " + menuList[0].icon
@@ -25,8 +29,18 @@ function Body(props) {
 
   useEffect(() => {
     document.title = selectedMenu + " | Deepak Sulakhe";
-    sessionStorage.setItem("selectedMenu", selectedMenu);
+    if (!selectedMenu.includes("Notes")) {
+      sessionStorage.setItem("selectedMenu", selectedMenu);
+    }
   }, [selectedMenu]);
+
+  useEffect(() => {
+    if (props.attachmentToggle.isAttachmentEnabled) {
+      setMenuList((prev) => [...prev, { name: "Notes", icon: "🗒" }]);
+    } else {
+      setMenuList((prev) => prev.filter((item) => item.name !== "Notes"));
+    }
+  }, [props.attachmentToggle.isAttachmentEnabled]);
 
   const handleMenuSelect = (index) => {
     // console.log(menuList[index]);
@@ -158,6 +172,8 @@ function Body(props) {
           <ExperienceComponent />
         ) : selectedMenu.includes("Certificates") ? (
           <CertificatesComponent />
+        ) : selectedMenu.includes("Notes") ? (
+          <NotesComponent />
         ) : (
           0
         )}
@@ -166,4 +182,4 @@ function Body(props) {
   );
 }
 
-export default Body;
+export default withAttachmentToggle(Body);
