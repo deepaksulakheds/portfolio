@@ -9,8 +9,12 @@ import NotesDialog from "./NotesDialog.jsx";
 
 function NotesComponent({ notistackSnackbar }) {
   const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
+    onError: (err) => {
+      notistackSnackbar.showSnackbar(err.message, "error");
+    },
     fetchPolicy: "network-only",
   });
+
   const [deleteNote] = useMutation(DELETE_NOTE);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
 
@@ -26,7 +30,7 @@ function NotesComponent({ notistackSnackbar }) {
   const removeNote = async (id) => {
     try {
       const delResp = await deleteNote({
-        variables: { deleteNoteId: parseInt(id) },
+        variables: { deleteNoteId: id },
       });
       // console.log("delResp", delResp);
       if (delResp.data.deleteNote.status == 200) {
@@ -53,10 +57,10 @@ function NotesComponent({ notistackSnackbar }) {
       <Grid sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {loading ? (
           <CircularProgress color="white" />
-        ) : data && data?.getAllNotes?.length === 0 ? (
-          <Typography>No notes.</Typography>
+        ) : data && data?.getAllNotes?.response.length === 0 ? (
+          <Typography sx={{ fontWeight: "500" }}>No Data Found.</Typography>
         ) : (
-          data?.getAllNotes?.map((note) => (
+          data?.getAllNotes?.response.map((note, index) => (
             <Grid
               key={note.id}
               sx={{
@@ -69,9 +73,9 @@ function NotesComponent({ notistackSnackbar }) {
               }}
               width={300}
             >
-              <Typography
-                sx={{ fontWeight: "500" }}
-              >{`${note.id}. ${note.note}`}</Typography>
+              <Typography sx={{ fontWeight: "500" }}>{`${index + 1}. ${
+                note.note
+              }`}</Typography>
               <IconButton
                 target="blank"
                 sx={{
