@@ -1,4 +1,10 @@
-import { CircularProgress, Grid, IconButton, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./NotesComponent.css";
 import { useLazyQuery, useMutation } from "@apollo/client";
@@ -53,7 +59,7 @@ function NotesComponent({ notistackSnackbar }) {
   }, []);
 
   return (
-    <Grid className="projectContainer">
+    <Grid>
       <Grid sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {loading ? (
           <CircularProgress color="white" />
@@ -73,9 +79,7 @@ function NotesComponent({ notistackSnackbar }) {
               }}
               width={300}
             >
-              <Typography sx={{ fontWeight: "500" }}>{`${index + 1}. ${
-                note.note
-              }`}</Typography>
+              <Typography sx={{ fontWeight: "500" }}>{note.note}</Typography>
               <IconButton
                 target="blank"
                 sx={{
@@ -94,21 +98,40 @@ function NotesComponent({ notistackSnackbar }) {
           ))
         )}
       </Grid>
-      <Grid container sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <IconButton
-          sx={{
-            alignSelf: "flex-end",
-            cursor: "pointer",
-            "&:hover": {
-              boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+      <Grid sx={{ marginTop: "10px" }}>
+        <Tooltip
+          arrow
+          title={"Add Note"}
+          componentsProps={{
+            tooltip: {
+              sx: {
+                backgroundColor: "transparent",
+                boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
+                fontSize: 13,
+              },
+            },
+            arrow: {
+              sx: {
+                color: "rgba(170, 137, 242, 0.6)",
+              },
             },
           }}
-          onClick={(e) =>
-            setNoteAnchorEl((prev) => (prev ? null : e.currentTarget))
-          }
         >
-          <AddBox sx={{ color: "white" }} />
-        </IconButton>
+          <IconButton
+            tooltip="Add Note"
+            sx={{
+              cursor: "pointer",
+              "&:hover": {
+                boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+              },
+            }}
+            onClick={(e) =>
+              setNoteAnchorEl((prev) => (prev ? null : e.currentTarget))
+            }
+          >
+            <AddBox sx={{ color: "white" }} />
+          </IconButton>
+        </Tooltip>
       </Grid>
       <NotesDialog
         noteAnchorEl={noteAnchorEl}

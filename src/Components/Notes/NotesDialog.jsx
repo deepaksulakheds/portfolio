@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -133,7 +134,7 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
             disabled={!note}
             onClick={handleAddNote}
           >
-            {loading ? "Loading..." : "Add"}
+            {loading ? <CircularProgress color="white" size={20} /> : "Add"}
           </Button>
         </Grid>
       </DialogContent>
