@@ -8,13 +8,17 @@ import {
   TextField,
 } from "@mui/material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_NOTE } from "../queries";
 
 function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
   const [note, setNote] = useState("");
   const [addNote, { data, loading, error }] = useMutation(ADD_NOTE);
+
+  useEffect(() => {
+    setNote("");
+  }, [noteAnchorEl]);
 
   const handleAddNote = async () => {
     try {

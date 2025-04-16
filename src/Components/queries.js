@@ -24,15 +24,19 @@ export const SEND_MAIL_QUERY = gql`
 export const GET_NOTES = gql`
   query GetAllNotes {
     getAllNotes {
-      id
-      note
-      createdAt
+      status
+      message
+      response {
+        id
+        note
+        createdAt
+      }
     }
   }
 `;
 
 export const DELETE_NOTE = gql`
-  mutation DeleteNote($deleteNoteId: Int!) {
+  mutation DeleteNote($deleteNoteId: String!) {
     deleteNote(id: $deleteNoteId) {
       status
       message
