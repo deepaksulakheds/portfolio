@@ -35,6 +35,7 @@ function NotesComponent({ notistackSnackbar }) {
 
   const removeNote = async (id) => {
     try {
+      notistackSnackbar.showSnackbar("Deleting...", "info");
       const delResp = await deleteNote({
         variables: { deleteNoteId: id },
       });
