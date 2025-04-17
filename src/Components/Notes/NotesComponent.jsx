@@ -60,7 +60,9 @@ function NotesComponent({ notistackSnackbar }) {
   }, []);
 
   return (
-    <Grid>
+    <Grid
+      sx={{ display: "flex", gap: "10px", justifyContent: "space-between" }}
+    >
       <Grid sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
         {loading ? (
           <CircularProgress color="white" />
@@ -74,7 +76,6 @@ function NotesComponent({ notistackSnackbar }) {
                 border: "0.5px solid rgba(255, 255, 255, 0.24)",
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "center",
                 padding: "15px",
                 borderRadius: "10px",
               }}
@@ -84,7 +85,7 @@ function NotesComponent({ notistackSnackbar }) {
               <IconButton
                 target="blank"
                 sx={{
-                  alignSelf: "flex-end",
+                  alignSelf: "flex-start",
                   padding: "0.2rem",
                   color: "white",
                   transition: "all ease-in-out 0.15s",
@@ -103,7 +104,7 @@ function NotesComponent({ notistackSnackbar }) {
         <Tooltip
           arrow
           title={"Add Note"}
-          componentsProps={{
+          slotProps={{
             tooltip: {
               sx: {
                 backgroundColor: "transparent",
@@ -119,7 +120,6 @@ function NotesComponent({ notistackSnackbar }) {
           }}
         >
           <IconButton
-            tooltip="Add Note"
             sx={{
               cursor: "pointer",
               "&:hover": {

@@ -447,7 +447,7 @@ function MailDialog({
                     arrow
                     placement="left"
                     title="Attach files."
-                    componentsProps={{
+                    slotProps={{
                       tooltip: {
                         sx: {
                           backgroundColor: "rgba(170, 137, 242, 0.7)",
@@ -495,7 +495,7 @@ function MailDialog({
                         arrow
                         key={file.name}
                         title={file.name}
-                        componentsProps={{
+                        slotProps={{
                           tooltip: {
                             sx: {
                               backgroundColor: "rgba(170, 137, 242, 0.7)",

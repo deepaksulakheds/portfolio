@@ -44,7 +44,7 @@ function CourseCard(props) {
         title={props.courseName}
         arrow
         placement="top"
-        componentsProps={{
+        slotProps={{
           tooltip: {
             sx: {
               backgroundColor: "white",
@@ -76,7 +76,7 @@ function CourseCard(props) {
           title="View Certificate"
           arrow
           placement="right"
-          componentsProps={{
+          slotProps={{
             tooltip: {
               sx: {
                 backgroundColor: "white",
