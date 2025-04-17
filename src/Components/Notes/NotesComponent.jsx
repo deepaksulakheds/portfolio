@@ -56,10 +56,7 @@ function NotesComponent({ notistackSnackbar }) {
         fetchNotes();
         setCheckedNotes([]);
       } else {
-        notistackSnackbar.showSnackbar(
-          "Please select at least one note.",
-          "error"
-        );
+        notistackSnackbar.showSnackbar("Please select note.", "error");
       }
     } catch (err) {
       // console.log("err", err);
@@ -78,7 +75,9 @@ function NotesComponent({ notistackSnackbar }) {
   };
 
   const handleClearSelection = () => {
-    setCheckedNotes([]);
+    if (checkedNotes.length > 0) {
+      setCheckedNotes([]);
+    }
     notistackSnackbar.showSnackbar("Selection cleared.", "info");
   };
 
@@ -106,9 +105,16 @@ function NotesComponent({ notistackSnackbar }) {
                 padding: "15px",
                 borderRadius: "10px",
               }}
-              width={300}
+              width={370}
             >
-              <Typography sx={{ fontWeight: "500" }}>{note.note}</Typography>
+              <Typography
+                sx={{
+                  fontWeight: "500",
+                  wordBreak: "break-word",
+                }}
+              >
+                {note.note}
+              </Typography>
               <IconButton
                 target="blank"
                 sx={{
