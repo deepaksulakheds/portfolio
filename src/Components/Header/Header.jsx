@@ -139,7 +139,7 @@ function Header({ attachmentToggle }) {
               arrow
               key={contact.name}
               title={contact.toolTip}
-              componentsProps={{
+              slotProps={{
                 tooltip: {
                   sx: {
                     backgroundColor: "transparent",

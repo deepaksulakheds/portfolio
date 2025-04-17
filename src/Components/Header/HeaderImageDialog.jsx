@@ -49,6 +49,7 @@ export default function HeaderImageDialog({ imageDialogVisible, onClose }) {
         style={{
           padding: "30px",
           // height: "85%",
+          aspectRatio: "1/1",
           borderRadius: "50%",
           backgroundColor: "rgba(255, 255, 255, 0.2)",
         }}
