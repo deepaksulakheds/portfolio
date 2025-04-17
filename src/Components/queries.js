@@ -43,9 +43,19 @@ export const DELETE_NOTE = gql`
     }
   }
 `;
+
 export const ADD_NOTE = gql`
   mutation AddNote($note: String!) {
     addNote(note: $note) {
+      status
+      message
+    }
+  }
+`;
+
+export const DELETE_MULTIPLE_NOTES = gql`
+  mutation DeleteMultipleNotes($ids: [String!]!) {
+    deleteMultipleNotes(ids: $ids) {
       status
       message
     }

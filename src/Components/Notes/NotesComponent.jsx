@@ -1,15 +1,15 @@
 import {
+  Checkbox,
   CircularProgress,
   Grid,
   IconButton,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./NotesComponent.css";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { DELETE_NOTE, GET_NOTES } from "../queries";
-import { DeleteOutline, AddBox } from "@mui/icons-material";
+import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
+import { AddBox, DisabledByDefault, Delete } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
 
@@ -21,8 +21,9 @@ function NotesComponent({ notistackSnackbar }) {
     fetchPolicy: "network-only",
   });
 
-  const [deleteNote] = useMutation(DELETE_NOTE);
+  const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
+  const [checkedNotes, setCheckedNotes] = useState([]);
 
   const fetchNotes = async () => {
     try {
@@ -33,26 +34,52 @@ function NotesComponent({ notistackSnackbar }) {
     }
   };
 
-  const removeNote = async (id) => {
+  const handleMultipleDelete = async () => {
     try {
-      notistackSnackbar.showSnackbar("Deleting...", "info");
-      const delResp = await deleteNote({
-        variables: { deleteNoteId: id },
-      });
-      // console.log("delResp", delResp);
-      if (delResp.data.deleteNote.status == 200) {
-        notistackSnackbar.showSnackbar("Note deleted successfully.", "success");
+      if (checkedNotes.length > 0) {
+        notistackSnackbar.showSnackbar("Deleting...", "info");
+        const delResp = await deleteMultipleNotes({
+          variables: { ids: checkedNotes },
+        });
+        // console.log("delResp", delResp);
+        if (delResp.data.deleteMultipleNotes.status == 200) {
+          notistackSnackbar.showSnackbar(
+            delResp.data.deleteMultipleNotes.message,
+            "success"
+          );
+        } else {
+          notistackSnackbar.showSnackbar(
+            delResp.data.deleteMultipleNotes.message,
+            "error"
+          );
+        }
+        fetchNotes();
+        setCheckedNotes([]);
       } else {
         notistackSnackbar.showSnackbar(
-          delResp.data.deleteNote.message,
+          "Please select at least one note.",
           "error"
         );
       }
-      fetchNotes();
     } catch (err) {
       // console.log("err", err);
       notistackSnackbar.showSnackbar(err.message, "error");
     }
+  };
+
+  const handleCheck = (id) => {
+    setCheckedNotes((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((note) => note !== id);
+      } else {
+        return [...prev, id];
+      }
+    });
+  };
+
+  const handleClearSelection = () => {
+    setCheckedNotes([]);
+    notistackSnackbar.showSnackbar("Selection cleared.", "info");
   };
 
   useEffect(() => {
@@ -94,45 +121,58 @@ function NotesComponent({ notistackSnackbar }) {
                   },
                 }}
               >
-                <DeleteOutline onClick={(e) => removeNote(note.id)} />
+                {/* <DeleteOutline onClick={(e) => removeNote(note.id)} /> */}
+                <Checkbox
+                  sx={{
+                    color: "rgba(255, 255, 255, 0.6)",
+                    margin: 0,
+                    padding: 0,
+                    "&.Mui-checked": {
+                      color: "rgba(170, 137, 242, 1)",
+                    },
+                  }}
+                  checked={checkedNotes.includes(note.id)}
+                  onClick={(e) => handleCheck(note.id)}
+                />
               </IconButton>
             </Grid>
           ))
         )}
       </Grid>
-      <Grid sx={{ marginTop: "10px" }}>
-        <Tooltip
-          arrow
-          title={"Add Note"}
-          slotProps={{
-            tooltip: {
-              sx: {
-                backgroundColor: "transparent",
-                boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
-                fontSize: 13,
-              },
-            },
-            arrow: {
-              sx: {
-                color: "rgba(170, 137, 242, 0.6)",
-              },
+      <Grid sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>
+        <AddBox
+          sx={{
+            cursor: "pointer",
+            color: "white",
+            "&:hover": {
+              color: "rgba(170, 137, 242, 1)",
             },
           }}
-        >
-          <IconButton
-            sx={{
-              cursor: "pointer",
-              "&:hover": {
-                boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-              },
-            }}
-            onClick={(e) =>
-              setNoteAnchorEl((prev) => (prev ? null : e.currentTarget))
-            }
-          >
-            <AddBox sx={{ color: "white" }} />
-          </IconButton>
-        </Tooltip>
+          onClick={(e) =>
+            setNoteAnchorEl((prev) => (prev ? null : e.currentTarget))
+          }
+        />
+        <Delete
+          sx={{
+            cursor: "pointer",
+            color: "white",
+            "&:hover": {
+              color: "rgba(170, 137, 242, 1)",
+            },
+          }}
+          onClick={handleMultipleDelete}
+        />
+        <DisabledByDefault
+          sx={{
+            borderRadius: "50%",
+            cursor: "pointer",
+            color: "white",
+            "&:hover": {
+              color: "rgba(170, 137, 242, 1)",
+            },
+          }}
+          onClick={handleClearSelection}
+        />
       </Grid>
       <NotesDialog
         noteAnchorEl={noteAnchorEl}
