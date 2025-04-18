@@ -139,7 +139,7 @@ function NotesComponent({ notistackSnackbar }) {
         <Grid sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
           {loading ? (
             <CircularProgress color="white" />
-          ) : notesToDisplay === 0 ? (
+          ) : notesToDisplay.length === 0 ? (
             <Typography sx={{ fontWeight: "500" }}>No Data Found.</Typography>
           ) : (
             notesToDisplay.map((note, index) => (
