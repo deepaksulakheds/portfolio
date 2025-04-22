@@ -9,7 +9,12 @@ import React, { useEffect, useState } from "react";
 import "./NotesComponent.css";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
-import { AddBox, DisabledByDefault, Delete } from "@mui/icons-material";
+import {
+  AddBox,
+  DisabledByDefault,
+  Delete,
+  CopyAllRounded,
+} from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
 import moment from "moment";
@@ -109,6 +114,22 @@ function NotesComponent({ notistackSnackbar }) {
     }
   };
 
+  const handleCopy = async (note) => {
+    try {
+      const clipboardText = await navigator.clipboard.readText();
+      if (clipboardText == note) {
+        notistackSnackbar.showSnackbar("Note already copied.", "info");
+        return;
+      }
+
+      await navigator.clipboard.writeText(note);
+      notistackSnackbar.showSnackbar("Copied to clipboard.", "success");
+    } catch (error) {
+      // console.error("Clipboard error:", error);
+      notistackSnackbar.showSnackbar("Failed to copy note.", "error");
+    }
+  };
+
   useEffect(() => {
     fetchNotes();
   }, []);
@@ -161,7 +182,7 @@ function NotesComponent({ notistackSnackbar }) {
                 }}
                 width={370}
               >
-                <Grid>
+                <Grid width={350}>
                   <Typography
                     sx={{
                       fontWeight: "500",
@@ -181,22 +202,38 @@ function NotesComponent({ notistackSnackbar }) {
                     {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
                   </Typography>
                 </Grid>
-                <Checkbox
-                  sx={{
-                    alignSelf: "flex-start",
-                    color: "rgba(255, 255, 255, 0.6)",
-                    margin: 0,
-                    padding: "0.2rem",
-                    ":hover": {
-                      backgroundColor: "rgba(170, 137, 242, 0.4)",
-                    },
-                    "&.Mui-checked": {
-                      color: "rgba(170, 137, 242, 1)",
-                    },
-                  }}
-                  checked={checkedNotes.includes(note.id)}
-                  onClick={(e) => handleCheck(note.id)}
-                />
+                <Grid
+                  sx={{ display: "flex", gap: "15px", flexDirection: "column" }}
+                >
+                  <Checkbox
+                    sx={{
+                      alignSelf: "flex-start",
+                      color: "rgba(255, 255, 255, 0.6)",
+                      margin: 0,
+                      padding: "0.2rem",
+                      ":hover": {
+                        backgroundColor: "rgba(170, 137, 242, 0.4)",
+                      },
+                      "&.Mui-checked": {
+                        color: "rgba(170, 137, 242, 1)",
+                      },
+                    }}
+                    checked={checkedNotes.includes(note.id)}
+                    onClick={(e) => handleCheck(note.id)}
+                  />
+                  <CopyAllRounded
+                    sx={{
+                      padding: "0.2rem",
+                      cursor: "pointer",
+                      color: "rgba(255, 255, 255, 0.6)",
+                      borderRadius: "50%",
+                      ":hover": {
+                        backgroundColor: "rgba(170, 137, 242, 0.4)",
+                      },
+                    }}
+                    onClick={() => handleCopy(note.note)}
+                  />
+                </Grid>
               </Grid>
             ))
           )}
