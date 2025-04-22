@@ -149,7 +149,11 @@ function NotesComponent({ notistackSnackbar }) {
               <Grid
                 key={note.id}
                 sx={{
-                  border: "0.5px solid rgba(255, 255, 255, 0.24)",
+                  border: `0.5px solid ${
+                    checkedNotes.includes(note.id)
+                      ? "#aa89f2"
+                      : "rgba(255, 255, 255, 0.24)"
+                  }`,
                   display: "flex",
                   justifyContent: "space-between",
                   padding: "15px",
