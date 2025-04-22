@@ -12,6 +12,7 @@ import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
 import { AddBox, DisabledByDefault, Delete } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
+import moment from "moment";
 let displayedSelected = false;
 
 function NotesComponent({ notistackSnackbar }) {
@@ -156,15 +157,27 @@ function NotesComponent({ notistackSnackbar }) {
                 }}
                 width={370}
               >
-                <Typography
-                  sx={{
-                    fontWeight: "500",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {note.note}
-                </Typography>
-
+                <Grid>
+                  <Typography
+                    sx={{
+                      fontWeight: "500",
+                      fontSize: "18px",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {note.note}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                      fontWeight: "400",
+                      color: "rgba(170, 137, 242, 1)",
+                      userSelect: "none",
+                    }}
+                  >
+                    {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
+                  </Typography>
+                </Grid>
                 <Checkbox
                   sx={{
                     alignSelf: "flex-start",

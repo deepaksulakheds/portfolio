@@ -11,7 +11,7 @@ import {
 import Typography from "@mui/material/Typography";
 import { AutoStories, BusinessCenter } from "@mui/icons-material";
 import "./ExperienceComponent.css";
-import { Grid } from "@mui/material";
+import { Chip, Grid } from "@mui/material";
 import moment from "moment";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 
@@ -91,12 +91,14 @@ const educationData = [
     institute: "KLE Technological University.",
     place: "Hubballi | KA",
     timePeriod: "Feb 2022 - Sep 2023",
+    siteUrl: `https://www.kletech.ac.in/`,
   },
   {
     course: "Bachelor of Computer Application",
     institute: "JSS SMI UG & PG Studies.",
     place: "Dharwad | KA",
     timePeriod: "Jun 2018 - Sep 2021",
+    siteUrl: `http://jsssmiugpg.com/`,
   },
   // {
   //   course: "Pre University (PCMCs)",
@@ -194,6 +196,7 @@ export function ExperienceComponent({ attachmentToggle }) {
                 course={education.course}
                 place={education.place}
                 timePeriod={education.timePeriod}
+                siteUrl={education.siteUrl}
               />
             ))}
           </Grid>
@@ -241,6 +244,7 @@ function CustomEducationTimeLineItem({
   institute,
   index,
   timePeriod,
+  siteUrl,
 }) {
   return (
     <TimelineItem>
@@ -248,7 +252,7 @@ function CustomEducationTimeLineItem({
         <TimelineDot variant="outlined" sx={{ margin: 0 }} />
         {index == educationData.length - 1 ? null : <TimelineConnector />}
       </TimelineSeparator>
-      <TimelineContent sx={{ marginTop: -2, marginBottom: "12px" }}>
+      <TimelineContent sx={{ marginTop: -2, marginBottom: "28px" }}>
         <Typography
           component="p"
           sx={{ fontSize: 16, fontWeight: 600, color: "#aa89f2" }}
@@ -260,6 +264,21 @@ function CustomEducationTimeLineItem({
         </Typography>
         <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {timePeriod}</Typography>
         <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {place}</Typography>
+        <Chip
+          label={`Visit Site`}
+          size="small"
+          sx={{
+            fontWeight: "500",
+            backgroundColor: "rgba(170, 137, 242, 1)",
+            ":hover": {
+              backgroundColor: "rgb(97, 65, 167)",
+              color: "white",
+            },
+          }}
+          onClick={() => {
+            window.open(siteUrl, "_blank");
+          }}
+        />
       </TimelineContent>
     </TimelineItem>
   );

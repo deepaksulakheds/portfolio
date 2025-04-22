@@ -46,6 +46,7 @@ const skills = [
       { content: "GitLab", icon: "./icons/gitlab.svg" },
       { content: "Bitbucket", icon: "./icons/bitbucket.svg" },
       { content: "Jira", icon: "./icons/jira.svg" },
+      { content: "Figma", icon: "./icons/figma.svg" },
     ],
   },
 ];
