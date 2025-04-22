@@ -3,7 +3,6 @@ import {
   Chip,
   CircularProgress,
   Grid,
-  IconButton,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -13,7 +12,7 @@ import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
 import { AddBox, DisabledByDefault, Delete } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
-let displayedAll = false;
+let displayedSelected = false;
 
 function NotesComponent({ notistackSnackbar }) {
   const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
@@ -34,6 +33,7 @@ function NotesComponent({ notistackSnackbar }) {
       // console.log("resp", resp.data.getAllNotes.response);
       if (resp?.data?.getAllNotes?.response?.length > 0) {
         setNotesToDisplay(resp.data.getAllNotes.response);
+        displayedSelected = false;
       } else {
         setNotesToDisplay([]);
       }
@@ -87,7 +87,7 @@ function NotesComponent({ notistackSnackbar }) {
     if (checkedNotes.length > 0) {
       setCheckedNotes([]);
       setNotesToDisplay(data.getAllNotes.response);
-      displayedAll = false;
+      displayedSelected = false;
     }
     notistackSnackbar.showSnackbar("Selection cleared.", "info");
   };
@@ -99,12 +99,12 @@ function NotesComponent({ notistackSnackbar }) {
     // console.log("isAllSelected", isAllSelected);
     if (isAllSelected) {
       setNotesToDisplay(data.getAllNotes.response);
-      displayedAll = false;
+      displayedSelected = false;
     } else {
       setNotesToDisplay(
         checkedNotes.map((id) => notesToDisplay.find((note) => note.id === id))
       );
-      displayedAll = true;
+      displayedSelected = true;
     }
   };
 
@@ -116,7 +116,9 @@ function NotesComponent({ notistackSnackbar }) {
     <Grid>
       <Chip
         sx={{
-          backgroundColor: displayedAll ? "rgba(170, 137, 242, 1)" : "white",
+          backgroundColor: displayedSelected
+            ? "rgba(170, 137, 242, 1)"
+            : "white",
           fontWeight: "bold",
           marginBottom: "12px",
           transition: "all ease-in-out .2s",
@@ -162,33 +164,23 @@ function NotesComponent({ notistackSnackbar }) {
                 >
                   {note.note}
                 </Typography>
-                <IconButton
-                  target="blank"
+
+                <Checkbox
                   sx={{
                     alignSelf: "flex-start",
+                    color: "rgba(255, 255, 255, 0.6)",
+                    margin: 0,
                     padding: "0.2rem",
-                    color: "white",
-                    transition: "all ease-in-out 0.15s",
-                    "&:hover": {
-                      boxShadow:
-                        "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                    ":hover": {
+                      backgroundColor: "rgba(170, 137, 242, 0.4)",
+                    },
+                    "&.Mui-checked": {
+                      color: "rgba(170, 137, 242, 1)",
                     },
                   }}
-                >
-                  {/* <DeleteOutline onClick={(e) => removeNote(note.id)} /> */}
-                  <Checkbox
-                    sx={{
-                      color: "rgba(255, 255, 255, 0.6)",
-                      margin: 0,
-                      padding: 0,
-                      "&.Mui-checked": {
-                        color: "rgba(170, 137, 242, 1)",
-                      },
-                    }}
-                    checked={checkedNotes.includes(note.id)}
-                    onClick={(e) => handleCheck(note.id)}
-                  />
-                </IconButton>
+                  checked={checkedNotes.includes(note.id)}
+                  onClick={(e) => handleCheck(note.id)}
+                />
               </Grid>
             ))
           )}
