@@ -47,6 +47,7 @@ const skills = [
       { content: "Bitbucket", icon: "./icons/bitbucket.svg" },
       { content: "Jira", icon: "./icons/jira.svg" },
       { content: "Figma", icon: "./icons/figma.svg" },
+      { content: "Canva", icon: "./icons/canva.svg" },
     ],
   },
 ];
