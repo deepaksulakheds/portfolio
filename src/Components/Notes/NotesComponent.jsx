@@ -165,7 +165,6 @@ function NotesComponent({ notistackSnackbar }) {
                   <Typography
                     sx={{
                       fontWeight: "500",
-                      fontSize: "18px",
                       wordBreak: "break-word",
                     }}
                   >
