@@ -113,15 +113,8 @@ function NotesComponent({ notistackSnackbar }) {
       displayedSelected = true;
     }
   };
-
   const handleCopy = async (note) => {
     try {
-      const clipboardText = await navigator.clipboard.readText();
-      if (clipboardText == note) {
-        notistackSnackbar.showSnackbar("Note already copied.", "info");
-        return;
-      }
-
       await navigator.clipboard.writeText(note);
       notistackSnackbar.showSnackbar("Copied to clipboard.", "success");
     } catch (error) {
