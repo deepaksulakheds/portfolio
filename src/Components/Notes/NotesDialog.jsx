@@ -127,11 +127,13 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
                 pointerEvents: "unset",
                 cursor: "not-allowed",
                 boxShadow: "none",
-                color: "red",
-                border: "1px solid red",
+                color: !note ? `red` : `rgba(255, 255, 255, 0.3)`,
+                border: `1px solid ${
+                  !note ? `red` : `rgba(255, 255, 255, 0.3)`
+                }`,
               },
             }}
-            disabled={!note}
+            disabled={!note || loading}
             onClick={handleAddNote}
           >
             {loading ? <CircularProgress color="white" size={20} /> : "Add"}

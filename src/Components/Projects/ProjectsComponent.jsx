@@ -1,38 +1,65 @@
 import { GitHub } from "@mui/icons-material";
-import { Grid, IconButton, Typography } from "@mui/material";
+import { Chip, Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import "./projectComponent.css";
-import { Box, Container } from "@mui/system";
 
 const projData = [
   {
     title: "Telematic Analytics - Zeliot",
-    techUsed: "JavaScript, NodeJS, React JS, GraphQL, ApolloServer",
+    techUsed: [
+      "JavaScript",
+      " NodeJS",
+      " React JS",
+      `MUI`,
+      " GraphQL",
+      " ApolloServer",
+    ],
     image: "./icons/fleet.jpg",
     path: "https://github.com/deepaksulakheds/Zeliot_Telematic_Project",
   },
   {
     title: "Dashboard - Zeliot Analytics",
-    techUsed: "React JS, Node JS, Apollo-Server, MUI, HTML, CSS, ",
+    techUsed: [
+      "React JS",
+      " Node JS",
+      " Apollo-Server",
+      " MUI",
+      " HTML",
+      " CSS",
+    ],
     image: "./icons/dashboard.png",
     path: "https://github.com/deepaksulakheds/Zeliot-Analytics-Dashboard",
   },
   {
     title: "Face Recognition using LBPH",
-    techUsed:
-      "Python, OpenCV, Haar-Cascade Classifier, LBPH Algorithm, Nympy, Pandas",
+    techUsed: [
+      "Python",
+      " OpenCV",
+      " Nympy",
+      " Pandas",
+      " Haar-Cascade Classifier",
+      " LBPH Algorithm",
+    ],
     image: "./icons/face-rec.jpg",
     path: "https://github.com/deepaksulakheds/Face-Recognition-using-LBPH",
   },
   {
     title: "Rice Mill Management System",
-    techUsed: "HTML, CSS, PHP, Bootstrap 5, WAMP",
+    techUsed: ["HTML", " CSS", " PHP", " Bootstrap 5", " WAMP"],
     image: "./icons/riceMill.jpeg",
     path: "#",
   },
   {
     title: "Fruits Classification using CNN",
-    techUsed: "Python, Deep Learning, CNN, Kaggle, Numpy",
+    techUsed: [
+      "Python",
+      " Deep Learning",
+      " CNN",
+      " Kaggle",
+      " Numpy",
+      `Matplotlib`,
+      `Seaborn`,
+    ],
     image: "./icons/fruits.jpg",
     path: "https://github.com/deepaksulakheds/fruits-classification-cnn",
   },
@@ -77,12 +104,13 @@ function ProjectsComponent(props) {
             />
             {/* </Container> */}
           </Grid>
-          <Grid sx={{ padding: "0.4rem" }}>
+          <Grid sx={{ padding: "0.2rem" }}>
             <Grid
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                margin: "0.5rem 0",
               }}
             >
               <Typography sx={{ fontWeight: "500", color: "#aa89f2" }}>
@@ -92,19 +120,33 @@ function ProjectsComponent(props) {
                 target="blank"
                 href={project.path}
                 sx={{
-                  padding: "0.5rem",
+                  padding: "0",
                   color: "white",
                   transition: "all ease-in-out 0.15s",
                   "&:hover": {
-                    boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-                    // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
+                    color: "#aa89f2",
                   },
                 }}
               >
                 <GitHub />
               </IconButton>
             </Grid>
-            <Typography sx={{ fontSize: 13 }}>{project.techUsed}</Typography>
+            <Grid>
+              {project.techUsed.map((tech, index) => (
+                <Chip
+                  key={index}
+                  label={tech}
+                  size="small"
+                  style={{
+                    color: "white",
+                    cursor: "text",
+                    margin: "2px",
+                    fontWeight: "400",
+                    border: "1px solid rgba(248, 246, 254, .2)",
+                  }}
+                />
+              ))}
+            </Grid>
           </Grid>
         </Grid>
       ))}
