@@ -14,10 +14,12 @@ import {
   DisabledByDefault,
   Delete,
   CopyAllRounded,
+  CheckCircle,
 } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
 import moment from "moment";
+
 let displayedSelected = false;
 
 function NotesComponent({ notistackSnackbar }) {
@@ -32,6 +34,8 @@ function NotesComponent({ notistackSnackbar }) {
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
   const [checkedNotes, setCheckedNotes] = useState([]);
   const [notesToDisplay, setNotesToDisplay] = useState([]);
+  const [copied, setCopied] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const fetchNotes = async () => {
     try {
@@ -52,7 +56,7 @@ function NotesComponent({ notistackSnackbar }) {
   const handleMultipleDelete = async () => {
     try {
       if (checkedNotes.length > 0) {
-        notistackSnackbar.showSnackbar("Deleting...", "info");
+        setDeleteLoading(true);
         const delResp = await deleteMultipleNotes({
           variables: { ids: checkedNotes },
         });
@@ -77,6 +81,7 @@ function NotesComponent({ notistackSnackbar }) {
       // console.log("err", err);
       notistackSnackbar.showSnackbar(err.message, "error");
     }
+    setDeleteLoading(false);
   };
 
   const handleCheck = (id) => {
@@ -115,8 +120,12 @@ function NotesComponent({ notistackSnackbar }) {
   };
   const handleCopy = async (note) => {
     try {
-      await navigator.clipboard.writeText(note);
-      notistackSnackbar.showSnackbar("Copied to clipboard.", "success");
+      await navigator.clipboard.writeText(note.note);
+
+      setCopied(note.id);
+      setTimeout(() => {
+        setCopied(false);
+      }, 4000);
     } catch (error) {
       // console.error("Clipboard error:", error);
       notistackSnackbar.showSnackbar("Failed to copy note.", "error");
@@ -214,18 +223,27 @@ function NotesComponent({ notistackSnackbar }) {
                     checked={checkedNotes.includes(note.id)}
                     onClick={(e) => handleCheck(note.id)}
                   />
-                  <CopyAllRounded
-                    sx={{
-                      padding: "0.2rem",
-                      cursor: "pointer",
-                      color: "rgba(255, 255, 255, 0.6)",
-                      borderRadius: "50%",
-                      ":hover": {
-                        backgroundColor: "rgba(170, 137, 242, 0.4)",
-                      },
-                    }}
-                    onClick={() => handleCopy(note.note)}
-                  />
+                  {copied && copied === note.id ? (
+                    <CheckCircle
+                      sx={{
+                        padding: "0.2rem",
+                        color: "rgba(255, 255, 255, 0.6)",
+                      }}
+                    />
+                  ) : (
+                    <CopyAllRounded
+                      sx={{
+                        padding: "0.2rem",
+                        cursor: "pointer",
+                        color: "rgba(255, 255, 255, 0.6)",
+                        borderRadius: "50%",
+                        ":hover": {
+                          backgroundColor: "rgba(170, 137, 242, 0.4)",
+                        },
+                      }}
+                      onClick={() => handleCopy(note)}
+                    />
+                  )}
                 </Grid>
               </Grid>
             ))
@@ -244,16 +262,21 @@ function NotesComponent({ notistackSnackbar }) {
               setNoteAnchorEl((prev) => (prev ? null : e.currentTarget))
             }
           />
-          <Delete
-            sx={{
-              cursor: "pointer",
-              color: "white",
-              "&:hover": {
-                color: "rgba(170, 137, 242, 1)",
-              },
-            }}
-            onClick={handleMultipleDelete}
-          />
+          {deleteLoading ? (
+            <CircularProgress color="white" size={23} />
+          ) : (
+            <Delete
+              sx={{
+                cursor: "pointer",
+                color: "white",
+                "&:hover": {
+                  color: "rgba(170, 137, 242, 1)",
+                },
+              }}
+              onClick={handleMultipleDelete}
+            />
+          )}
+
           <DisabledByDefault
             sx={{
               borderRadius: "50%",
