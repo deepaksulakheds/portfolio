@@ -19,6 +19,7 @@ import {
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
 import moment from "moment";
+import { Masonry } from "@mui/lab";
 
 let displayedSelected = false;
 
@@ -162,7 +163,11 @@ function NotesComponent({ notistackSnackbar }) {
           transition: "all ease-in-out .2s",
         }}
       >
-        <Grid sx={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+        <Masonry
+          // sequential
+          columns={{ xs: 1, sm: 2, md: 2, lg: 3 }}
+          spacing={2}
+        >
           {loading ? (
             <CircularProgress color="white" />
           ) : notesToDisplay.length === 0 ? (
@@ -175,20 +180,20 @@ function NotesComponent({ notistackSnackbar }) {
                   border: `0.5px solid ${
                     checkedNotes.includes(note.id)
                       ? "#aa89f2"
-                      : "rgba(255, 255, 255, 0.24)"
+                      : "rgba(255, 255, 255, 0.4)"
                   }`,
+                  wordBreak: "break-word",
                   display: "flex",
                   justifyContent: "space-between",
-                  padding: "15px",
+                  padding: "12px",
                   borderRadius: "10px",
                 }}
-                width={370}
               >
-                <Grid width={350}>
+                <Grid width={"95%"}>
                   <Typography
                     sx={{
                       fontWeight: "500",
-                      wordBreak: "break-word",
+                      whiteSpace: "pre-line",
                     }}
                   >
                     {note.note}
@@ -248,7 +253,7 @@ function NotesComponent({ notistackSnackbar }) {
               </Grid>
             ))
           )}
-        </Grid>
+        </Masonry>
         <Grid sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>
           <AddBox
             sx={{
