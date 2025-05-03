@@ -187,6 +187,7 @@ function MailDialog({
 
   return (
     <Dialog
+      disableRestoreFocus
       open={mailDialogVisible}
       onClose={onclose}
       sx={{ backdropFilter: "blur(10px)" }}
@@ -231,6 +232,7 @@ function MailDialog({
         >
           <Grid>
             <TextField
+              autoFocus
               InputLabelProps={{
                 style: {
                   color: errors.name ? "red" : "rgba(255,255,255,0.6)",

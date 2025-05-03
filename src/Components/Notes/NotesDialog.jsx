@@ -41,6 +41,7 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
   };
   return (
     <Dialog
+      disableRestoreFocus
       open={noteAnchorEl}
       onClose={onClose}
       fullWidth
@@ -78,6 +79,7 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
         }}
       >
         <TextField
+          autoFocus
           multiline
           InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
           InputProps={{ style: { color: "white" } }}
