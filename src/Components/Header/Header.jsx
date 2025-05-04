@@ -110,7 +110,7 @@ function Header({ attachmentToggle }) {
       <Grid>
         <Typography
           variant="h5"
-          sx={{ fontSize: "2rem", fontWeight: "550", marginBlock: "5px" }}
+          sx={{ fontSize: "1.8rem", fontWeight: "550", marginBlock: "5px" }}
         >
           Deepak Sulakhe
         </Typography>
@@ -130,7 +130,7 @@ function Header({ attachmentToggle }) {
           sx={{
             display: "flex",
             gap: "6px",
-            marginTop: "20px",
+            marginTop: "5px",
             flexWrap: "wrap",
           }}
         >
