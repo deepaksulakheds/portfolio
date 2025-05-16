@@ -37,19 +37,29 @@ function NotesComponent({ notistackSnackbar }) {
   const [notesToDisplay, setNotesToDisplay] = useState([]);
   const [copied, setCopied] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [allRespNotes, setAllRespNotes] = useState([]);
 
   const fetchNotes = async () => {
     try {
       const resp = await getNotes();
       // console.log("resp", resp.data.getAllNotes.response);
       if (resp?.data?.getAllNotes?.response?.length > 0) {
-        setNotesToDisplay(resp.data.getAllNotes.response);
+        const urlNotes = resp?.data?.getAllNotes?.response?.map((note) => {
+          let isUrl = false;
+          try {
+            new URL(note?.note);
+            isUrl = true;
+          } catch (e) {}
+          return { ...note, isUrl };
+        });
+        setAllRespNotes(urlNotes);
+        setNotesToDisplay(urlNotes);
         displayedSelected = false;
       } else {
         setNotesToDisplay([]);
       }
     } catch (err) {
-      // console.log("err", err);
+      console.log("err", err);
       notistackSnackbar.showSnackbar(err.message, "error");
     }
   };
@@ -98,7 +108,7 @@ function NotesComponent({ notistackSnackbar }) {
   const handleClearSelection = () => {
     if (checkedNotes.length > 0) {
       setCheckedNotes([]);
-      setNotesToDisplay(data.getAllNotes.response);
+      setNotesToDisplay(allRespNotes);
       displayedSelected = false;
     }
     notistackSnackbar.showSnackbar("Selection cleared.", "info");
@@ -110,7 +120,7 @@ function NotesComponent({ notistackSnackbar }) {
     );
     // console.log("isAllSelected", isAllSelected);
     if (isAllSelected) {
-      setNotesToDisplay(data.getAllNotes.response);
+      setNotesToDisplay(allRespNotes);
       displayedSelected = false;
     } else {
       setNotesToDisplay(
@@ -190,24 +200,55 @@ function NotesComponent({ notistackSnackbar }) {
                 }}
               >
                 <Grid width={"95%"}>
-                  <Typography
-                    sx={{
-                      fontWeight: "500",
-                      whiteSpace: "pre-line",
-                    }}
-                  >
-                    {note.note}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: "400",
-                      color: "rgba(170, 137, 242, 1)",
-                      userSelect: "none",
-                    }}
-                  >
-                    {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
-                  </Typography>
+                  {note.isUrl ? (
+                    <>
+                      <a
+                        href={note.note}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Typography
+                          sx={{
+                            fontWeight: "500",
+                            whiteSpace: "pre-line",
+                          }}
+                        >
+                          {note.note}
+                        </Typography>
+                      </a>
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "rgba(170, 137, 242, 1)",
+                          userSelect: "none",
+                        }}
+                      >
+                        {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        sx={{
+                          fontWeight: "500",
+                          whiteSpace: "pre-line",
+                        }}
+                      >
+                        {note.note}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "rgba(170, 137, 242, 1)",
+                          userSelect: "none",
+                        }}
+                      >
+                        {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
+                      </Typography>
+                    </>
+                  )}
                 </Grid>
                 <Grid
                   sx={{ display: "flex", gap: "15px", flexDirection: "column" }}
