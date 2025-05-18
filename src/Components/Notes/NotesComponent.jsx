@@ -224,7 +224,7 @@ function NotesComponent({ notistackSnackbar }) {
                           userSelect: "none",
                         }}
                       >
-                        {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
+                        {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
                       </Typography>
                     </>
                   ) : (
@@ -245,7 +245,7 @@ function NotesComponent({ notistackSnackbar }) {
                           userSelect: "none",
                         }}
                       >
-                        {moment.unix(note.createdAt).format("hh:mm A D/MM/YY")}
+                        {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
                       </Typography>
                     </>
                   )}
