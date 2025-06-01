@@ -17,6 +17,7 @@ const skills = [
     title: "Backend",
     list: [
       { content: "Node JS", icon: "./icons/nodejs.svg" },
+      { content: "Express JS", icon: "./icons/expressjs.svg" },
       { content: "JavaScript", icon: "./icons/javascript.svg" },
       { content: "GraphQL", icon: "./icons/graphql.svg" },
       { content: "REST APIs", icon: "./icons/rest-api1.svg" },
