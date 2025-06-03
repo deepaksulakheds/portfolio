@@ -1,5 +1,4 @@
 import { Grid, Typography } from "@mui/material";
-import React from "react";
 import "./aboutComponent.css";
 
 const skills = [
@@ -7,6 +6,7 @@ const skills = [
     title: "Frontend",
     list: [
       { content: "React JS", icon: "./icons/react.svg" },
+      { content: "Vite", icon: "./icons/vite.svg" },
       { content: "Material UI", icon: "./icons/mui.svg" },
       { content: "Bootstrap", icon: "./icons/bootstrap.svg" },
       { content: "HTML", icon: "./icons/html.svg" },
