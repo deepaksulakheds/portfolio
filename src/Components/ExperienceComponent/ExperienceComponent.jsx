@@ -12,19 +12,18 @@ import Typography from "@mui/material/Typography";
 import { AutoStories, BusinessCenter } from "@mui/icons-material";
 import "./ExperienceComponent.css";
 import { Chip, Grid } from "@mui/material";
-import moment from "moment";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
+import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
 
 const experienceData = [
   {
     company: "Zeliot Connected Services Pvt. Ltd.",
+    totalTimePeriod: getFormattedTimePeriod("1-jun-2023", "present"),
     titlesList: [
       {
         designation: "Software Engineer 1",
         duration: "Sep 2023 - Present", // present.diff(start)
-        timePeriod: moment.duration(
-          moment().startOf("day").diff(moment("1-sep-2023", "D-MMM-YYYY"))
-        ),
+        timePeriod: getFormattedTimePeriod("1-sep-2023", "present"),
         descriptions: [
           `Developed backend services, pipelines, REST and GraphQL API(s) with Node.js, 
           contributing to the core functionality projects.
@@ -40,9 +39,7 @@ const experienceData = [
       {
         designation: "Full Stack Developer Intern",
         duration: "June 2023 - Aug 2023", // end.diff(start)
-        timePeriod: moment.duration(
-          moment("sep-2023", "MMM-YYYY").diff(moment("june-2023", "MMM-YYYY"))
-        ),
+        timePeriod: getFormattedTimePeriod("1-jun-2023", "1-sep-2023"),
         descriptions: [
           `Implemented frontend components
           using React to create intuitive and
@@ -150,6 +147,7 @@ export function ExperienceComponent({ attachmentToggle }) {
                 company={experience.company}
                 key={index}
                 titlesList={experience.titlesList}
+                totalTimePeriod={experience.totalTimePeriod}
                 index={index}
               />
             ))}
@@ -284,7 +282,12 @@ function CustomEducationTimeLineItem({
   );
 }
 
-function CustomExperienceTimeLineItem({ company, titlesList, index }) {
+function CustomExperienceTimeLineItem({
+  company,
+  titlesList,
+  totalTimePeriod,
+  index,
+}) {
   return (
     <TimelineItem>
       <TimelineSeparator>
@@ -298,19 +301,37 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
           marginBottom: index == educationData.length - 1 ? null : "20px",
         }}
       >
-        <Typography
-          component="p"
+        <Grid
           sx={{
-            fontSize: 16,
-            padding: "8px",
-            width: "fit-content",
-            fontWeight: "bold",
             border: "1px solid white",
             borderRadius: 2,
+            width: "fit-content",
           }}
         >
-          {company}
-        </Typography>
+          <Typography
+            component="p"
+            sx={{
+              fontSize: 16,
+              padding: "8px",
+              paddingBottom: "0",
+              width: "fit-content",
+              fontWeight: "bold",
+            }}
+          >
+            {company}
+          </Typography>
+          <Typography
+            component="p"
+            sx={{
+              fontSize: 12,
+              padding: "0px 0px 8px 8px",
+              color: "#aa89f2",
+              fontWeight: "bold",
+            }}
+          >
+            - {totalTimePeriod}
+          </Typography>
+        </Grid>
         <Grid sx={{ marginTop: "10px", marginLeft: "10px" }}>
           {titlesList.map((title) => (
             <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
@@ -322,21 +343,7 @@ function CustomExperienceTimeLineItem({ company, titlesList, index }) {
               <Typography
                 sx={{ fontSize: 14, marginLeft: 2, color: "#aa89f2" }}
               >
-                {title.duration}, ({" "}
-                {title.timePeriod.years() > 0 && `${title.timePeriod.years()}Y`}
-                {/* Comma is added as required */}
-                {((title.timePeriod.years() > 0 &&
-                  title.timePeriod.months() > 0) ||
-                  (title.timePeriod.years() > 0 &&
-                    title.timePeriod.days() > 0)) &&
-                  `, `}
-                {title.timePeriod.months() > 0 &&
-                  `${title.timePeriod.months()}M`}
-                {/* Comma is added as required */}
-                {title.timePeriod.months() > 0 &&
-                  title.timePeriod.days() > 0 &&
-                  `, `}
-                {title.timePeriod.days() > 0 && `${title.timePeriod.days()}D`} )
+                {title.duration}, ( {title.timePeriod} )
               </Typography>
               <Grid>
                 {title.descriptions.map((desc) => (
