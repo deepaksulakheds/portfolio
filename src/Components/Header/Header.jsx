@@ -12,36 +12,22 @@ import {
 } from "@mui/icons-material";
 import MailDialog from "../MailDialog/MailDialog";
 import HeaderImageDialog from "./HeaderImageDialog";
-import moment from "moment";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
-
-const getFormattedAge = () => {
-  const birthDate = moment("22-jun-1999", "D-MMM-YYYY");
-  const timePeriod = moment.duration(moment().diff(birthDate));
-
-  const timeComponents = [
-    timePeriod.years() > 0 && `${timePeriod.years()}Y`,
-    timePeriod.months() > 0 && `${timePeriod.months()}M`,
-    timePeriod.days() > 0 && `${timePeriod.days()}D`,
-    timePeriod.hours() > 0 && `${timePeriod.hours()}H`,
-    timePeriod.minutes() > 0 && `${timePeriod.minutes()}M`,
-  ].filter(Boolean);
-
-  return `${timeComponents.slice(0, 3).join(" - ")}, ${timeComponents
-    .slice(3, 5)
-    .join(" : ")}`;
-};
+import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
 
 function Header({ attachmentToggle }) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
   const [imageDialogVisible, setImageDialogVisible] = useState(false);
   const [secretAlert, setSecretAlert] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-
-  const optimizedAgeTooltip = useMemo(() => getFormattedAge(), []);
+  const [age, setAge] = useState(
+    getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`)
+  );
 
   useEffect(() => {
+    let ageInterval = null;
     const isAgeExists = contacts.some((contact) => contact.name === "age");
+
     if (attachmentToggle.isAttachmentEnabled && !isAgeExists) {
       setContacts((prevContacts) => {
         return [
@@ -55,11 +41,21 @@ function Header({ attachmentToggle }) {
           },
         ];
       });
+
+      ageInterval = setInterval(() => {
+        setAge(getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`));
+      });
     } else if (!attachmentToggle.isAttachmentEnabled && isAgeExists) {
       setContacts((prevContacts) => {
         return prevContacts.filter((contact) => contact.name !== "age");
       });
+
+      clearInterval(ageInterval);
     }
+
+    return () => {
+      clearInterval(ageInterval);
+    };
   }, [attachmentToggle.isAttachmentEnabled]);
 
   const [contacts, setContacts] = useState([
@@ -207,7 +203,7 @@ function Header({ attachmentToggle }) {
           },
         }}
       >
-        {optimizedAgeTooltip}
+        {age}
       </Popover>
     </Grid>
   );
