@@ -40,6 +40,7 @@ const skills = [
   {
     title: "Others",
     list: [
+      { content: "Linux", icon: "./icons/linux.svg" },
       { content: "Docker", icon: "./icons/docker.svg" },
       { content: "Kubernetes", icon: "./icons/kubernetes.svg" },
       { content: "Git", icon: "./icons/git.svg" },
@@ -75,6 +76,8 @@ function AboutComponent(props) {
               textDecoration: "underline",
               textUnderlineOffset: "5px",
               textDecorationThickness: "0.1px",
+              fontSize: 22,
+              transition: "all ease-in-out 0.5s",
             }}
             // variant="h6"
           >
