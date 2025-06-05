@@ -35,10 +35,11 @@ const skills = [
       { content: "MongoDB", icon: "./icons/mongodb.svg" },
       { content: "PostgresSQL", icon: "./icons/pgsql.svg" },
       { content: "Redis", icon: "./icons/redis.svg" },
+      { content: "ORM / ODM", icon: "./icons/orm.svg" },
     ],
   },
   {
-    title: "Others",
+    title: "Other Techs",
     list: [
       { content: "Linux", icon: "./icons/linux.svg" },
       { content: "Docker", icon: "./icons/docker.svg" },
