@@ -28,12 +28,13 @@ const experienceData = [
           `Developed backend services, pipelines, REST and GraphQL API(s) with Node.js, 
           contributing to the core functionality projects.
           Collaborated in integration of APIs.`,
-          `Designing and optimizing database schemas 
-          and queries to enhance performance 
-          and scalability.`,
+          `Designing, optimizing and restructuring database schemas 
+          and queries to enhance performance and scalability.`,
           `Identified and resolved security vulnerabilities through VAPT, 
           implementing fixes and security best practices to ensure robust 
           and secure backend services and APIs.`,
+          `Designed and implemented Redis-based caching strategies in microservices and APIs to 
+          optimize performance, reduce response latency, and improve scalability.`,
         ],
       },
       {
