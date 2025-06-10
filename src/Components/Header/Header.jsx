@@ -38,6 +38,9 @@ function Header({ attachmentToggle }) {
             onclick: (e) =>
               setAnchorEl((prev) => (prev ? null : e.currentTarget)),
             toolTip: null,
+            style: {
+              boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+            },
           },
         ];
       });
@@ -161,6 +164,7 @@ function Header({ attachmentToggle }) {
                     boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
                     // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
                   },
+                  ...(anchorEl && contact.style),
                 }}
                 href={contact?.ref}
                 onClick={contact.onclick ? contact.onclick : null}
