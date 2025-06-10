@@ -25,11 +25,21 @@ const experienceData = [
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: getFormattedTimePeriod("1-sep-2023", "present"),
         descriptions: [
+          `Developing robust web applications using React and Node. Proven ability to build responsive,
+           user-friendly and high-performance web solutions using React.js. Skilled in 
+           component-based architecture and integrating with backend 
+           services with REST and GraphQL APIs.
+           Developing core features using React and MUI.`,
+          `Proven ability to translate design and protytpe into fully functional interface using
+           React, ensuring optimized and responsive user experience.`,
+          `Contributed significantly to various projects, including the end-to-end 
+          implementation features and a rich dashboard utilizing React and Material-UI 
+          for data visualization, UI development and consistent user experience.`,
           `Developed backend services, pipelines, REST and GraphQL API(s) with Node.js, 
           contributing to the core functionality projects.
           Collaborated in integration of APIs.`,
-          `Designing, optimizing and restructuring database schemas 
-          and queries to enhance performance and scalability.`,
+          `Designing, optimizing and restructuring database schemas and queries 
+          for efficient data management and enhance performance and scalability.`,
           `Identified and resolved security vulnerabilities through VAPT, 
           implementing fixes and security best practices to ensure robust 
           and secure backend services and APIs.`,
@@ -42,6 +52,10 @@ const experienceData = [
         duration: "June 2023 - Aug 2023", // end.diff(start)
         timePeriod: getFormattedTimePeriod("1-jun-2023", "1-sep-2023"),
         descriptions: [
+          `<span style="font-weight: bold; text-decoration: underline; font-size: 15px">Telematic Analytics - Zeliot</span>, 
+          the internship project, developed during Full-Stack Development Internship, focuses on building a telematic
+          analytics platform with primary goal is to collect, process, analyze and visualize the
+          data from telematic devices, providing actionable insights and KPIs.`,
           `Implemented frontend components
           using React to create intuitive and
           responsive user interfaces.`,
@@ -354,12 +368,20 @@ function CustomExperienceTimeLineItem({
                   >
                     <Grid style={{ display: "flex" }}>
                       -
-                      <Typography
-                        key={desc}
-                        sx={{ fontSize: 14, marginLeft: 1.5, maxWidth: 500 }}
-                      >
-                        {desc}
-                      </Typography>
+                      {desc.includes("</") ? (
+                        <Typography
+                          key={desc}
+                          sx={{ fontSize: 14, marginLeft: 1.5, maxWidth: 500 }}
+                          dangerouslySetInnerHTML={{ __html: desc }}
+                        ></Typography>
+                      ) : (
+                        <Typography
+                          key={desc}
+                          sx={{ fontSize: 14, marginLeft: 1.5, maxWidth: 500 }}
+                        >
+                          {desc}
+                        </Typography>
+                      )}
                     </Grid>
                   </Grid>
                 ))}
