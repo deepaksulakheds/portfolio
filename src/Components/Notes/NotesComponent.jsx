@@ -106,11 +106,9 @@ function NotesComponent({ notistackSnackbar }) {
   };
 
   const handleClearSelection = () => {
-    if (checkedNotes.length > 0) {
-      setCheckedNotes([]);
-      setNotesToDisplay(allRespNotes);
-      displayedSelected = false;
-    }
+    setCheckedNotes([]);
+    setNotesToDisplay(allRespNotes);
+    displayedSelected = false;
     notistackSnackbar.showSnackbar("Selection cleared.", "info");
   };
 
@@ -162,7 +160,7 @@ function NotesComponent({ notistackSnackbar }) {
           },
         }}
         disabled={checkedNotes.length === 0}
-        label={`${checkedNotes.length} selected`}
+        label={`${checkedNotes.length} Selected / ${allRespNotes.length}`}
         onClick={toggleSelected}
       />
       <Grid
@@ -297,6 +295,7 @@ function NotesComponent({ notistackSnackbar }) {
         </Masonry>
         <Grid sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>
           <AddBox
+            titleAccess="Add new note"
             sx={{
               cursor: "pointer",
               color: "white",
@@ -312,6 +311,7 @@ function NotesComponent({ notistackSnackbar }) {
             <CircularProgress color="white" size={23} />
           ) : (
             <Delete
+              titleAccess="Delete Selected"
               sx={{
                 cursor: "pointer",
                 color: "white",
@@ -324,6 +324,7 @@ function NotesComponent({ notistackSnackbar }) {
           )}
 
           <DisabledByDefault
+            titleAccess="Clear Selection"
             sx={{
               borderRadius: "50%",
               cursor: "pointer",

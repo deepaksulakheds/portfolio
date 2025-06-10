@@ -98,6 +98,7 @@ function Header({ attachmentToggle }) {
       style={{ display: "flex", padding: "20px", alignItems: "center" }}
     >
       <img
+        title="View more images"
         onClick={() => setImageDialogVisible(true)}
         loading="lazy"
         src="./deepak.jpg"
