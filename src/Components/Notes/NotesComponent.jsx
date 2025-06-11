@@ -206,7 +206,14 @@ function NotesComponent({ notistackSnackbar }) {
                   borderRadius: "10px",
                 }}
               >
-                <Grid width={"95%"}>
+                <Grid
+                  width={"95%"}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
                   {note.isUrl ? (
                     <>
                       <a
