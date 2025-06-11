@@ -15,11 +15,13 @@ import {
   Delete,
   CopyAllRounded,
   CheckCircle,
+  EditNote,
 } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
 import moment from "moment";
 import { Masonry } from "@mui/lab";
+import EditNotesDialog from "./EditNotesDialog.jsx";
 
 let displayedSelected = false;
 
@@ -33,6 +35,8 @@ function NotesComponent({ notistackSnackbar }) {
 
   const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
+  const [editNoteAnchorEl, setEditNoteAnchorEl] = useState(null);
+  const [noteEditing, setNoteEditing] = useState(null);
   const [checkedNotes, setCheckedNotes] = useState([]);
   const [notesToDisplay, setNotesToDisplay] = useState([]);
   const [copied, setCopied] = useState(false);
@@ -139,6 +143,11 @@ function NotesComponent({ notistackSnackbar }) {
       // console.error("Clipboard error:", error);
       notistackSnackbar.showSnackbar("Failed to copy note.", "error");
     }
+  };
+
+  const handleEdit = async (note, e) => {
+    setNoteEditing(note);
+    setEditNoteAnchorEl(e.currentTarget);
   };
 
   useEffect(() => {
@@ -249,7 +258,7 @@ function NotesComponent({ notistackSnackbar }) {
                   )}
                 </Grid>
                 <Grid
-                  sx={{ display: "flex", gap: "15px", flexDirection: "column" }}
+                  sx={{ display: "flex", gap: "10px", flexDirection: "column" }}
                 >
                   <Checkbox
                     sx={{
@@ -288,6 +297,18 @@ function NotesComponent({ notistackSnackbar }) {
                       onClick={() => handleCopy(note)}
                     />
                   )}
+                  <EditNote
+                    sx={{
+                      padding: "0.2rem",
+                      cursor: "pointer",
+                      color: "rgba(255, 255, 255, 0.6)",
+                      borderRadius: "50%",
+                      ":hover": {
+                        backgroundColor: "rgba(170, 137, 242, 0.4)",
+                      },
+                    }}
+                    onClick={(e) => handleEdit(note, e)}
+                  />
                 </Grid>
               </Grid>
             ))
@@ -342,6 +363,14 @@ function NotesComponent({ notistackSnackbar }) {
           fetchNotes={fetchNotes}
         />
       </Grid>
+      {noteEditing && (
+        <EditNotesDialog
+          editAnchorEl={editNoteAnchorEl}
+          closeEditNote={() => setEditNoteAnchorEl(null)}
+          noteEditing={noteEditing}
+          fetchNotes={fetchNotes}
+        />
+      )}
     </Grid>
   );
 }

@@ -9,30 +9,45 @@ import {
   TextField,
 } from "@mui/material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
-import { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_NOTE } from "../queries";
+import { EDIT_NOTE } from "../queries";
+import { useEffect, useState } from "react";
 
-function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
-  const [note, setNote] = useState("");
-  const [addNote, { data, loading, error }] = useMutation(ADD_NOTE);
+function EditNotesDialog({
+  editAnchorEl,
+  closeEditNote,
+  noteEditing,
+  fetchNotes,
+  setNoteEditing,
+  notistackSnackbar,
+}) {
+  const [editNote, { data, loading, error }] = useMutation(EDIT_NOTE);
+  const [newNote, setNewNote] = useState("");
 
   useEffect(() => {
-    setNote("");
-  }, [noteAnchorEl]);
+    if (noteEditing) {
+      setNewNote(noteEditing);
+    }
+    return () => {
+      setNewNote("");
+    };
+  }, [noteEditing, editAnchorEl]);
 
-  const handleAddNote = async () => {
+  const handleEditNote = async () => {
     try {
-      const addResp = await addNote({
-        variables: { note: note },
+      const editResp = await editNote({
+        variables: { id: newNote.id, note: newNote.note },
       });
-      // console.log("addResp", addResp.data.addNote.status);
-      if (addResp.data.addNote.status == 200) {
-        notistackSnackbar.showSnackbar("Note added successfully.", "success");
+      // console.log("editResp", editResp.data);
+      if (editResp.data.updateNote.status == 200) {
+        notistackSnackbar.showSnackbar("Note edited successfully.", "success");
         fetchNotes();
-        onClose();
+        closeEditNote();
       } else {
-        notistackSnackbar.showSnackbar(addResp.data.addNote.message, "error");
+        notistackSnackbar.showSnackbar(
+          editResp.data.updateNote.message,
+          "error"
+        );
       }
     } catch (err) {
       console.log("err", err);
@@ -42,8 +57,8 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
   return (
     <Dialog
       disableRestoreFocus
-      open={noteAnchorEl}
-      onClose={onClose}
+      open={editAnchorEl}
+      onClose={closeEditNote}
       fullWidth
       sx={{ backdropFilter: "blur(10px)" }}
       slotProps={{
@@ -59,7 +74,7 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
       <DialogTitle
         sx={{ color: "white", fontWeight: "bold", padding: "18px 20px" }}
       >
-        Notes
+        Edit Note
       </DialogTitle>
       <Grid
         style={{ display: "flex", justifyContent: "center", color: "white" }}
@@ -79,7 +94,6 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
         }}
       >
         <TextField
-          autoFocus
           multiline
           InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
           InputProps={{ style: { color: "white" } }}
@@ -101,10 +115,10 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
             },
           }}
           fullWidth
-          value={note}
+          value={newNote.note}
           variant="standard"
           name="message"
-          onChange={(e) => setNote(e.target.value)}
+          onChange={(e) => setNewNote({ ...noteEditing, note: e.target.value })}
           label="Enter Note *"
         />
         <Grid
@@ -129,16 +143,18 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
                 pointerEvents: "unset",
                 cursor: "not-allowed",
                 boxShadow: "none",
-                color: !note ? `red` : `rgba(255, 255, 255, 0.3)`,
+                color: !newNote.note ? `red` : `rgba(255, 255, 255, 0.3)`,
                 border: `1px solid ${
-                  !note ? `red` : `rgba(255, 255, 255, 0.3)`
+                  !newNote.note ? `red` : `rgba(255, 255, 255, 0.3)`
                 }`,
               },
             }}
-            disabled={!note || loading}
-            onClick={handleAddNote}
+            disabled={
+              !newNote.note || loading || newNote.note === noteEditing.note
+            }
+            onClick={() => handleEditNote()}
           >
-            {loading ? <CircularProgress color="white" size={20} /> : "Add"}
+            {loading ? <CircularProgress color="white" size={20} /> : "Save"}
           </Button>
         </Grid>
       </DialogContent>
@@ -146,4 +162,4 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
   );
 }
 
-export default withNotistackSnackbar(NotesDialog);
+export default withNotistackSnackbar(EditNotesDialog);

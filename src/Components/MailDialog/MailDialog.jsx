@@ -367,7 +367,7 @@ function MailDialog({
               variant="standard"
               name="message"
               onChange={handleChange}
-              label="Enter Enter Message *"
+              label="Enter Message *"
             />
           </Grid>
           <Grid
