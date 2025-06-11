@@ -61,3 +61,12 @@ export const DELETE_MULTIPLE_NOTES = gql`
     }
   }
 `;
+
+export const EDIT_NOTE = gql`
+  mutation UpdateNote($id: String!, $note: String!) {
+    updateNote(id: $id, note: $note) {
+      status
+      message
+    }
+  }
+`;
