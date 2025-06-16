@@ -1,5 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import "./aboutComponent.css";
+import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
 
 const skills = [
   {
@@ -62,11 +63,16 @@ function AboutComponent(props) {
     <Grid className="aboutContainer">
       <Grid>
         <Typography variant="p" sx={{ fontSize: "1.1rem" }}>
-          Results-driven Software Engineer with hands-on experience in full
+          {`Results-driven Software Engineer with ${getFormattedTimePeriod(
+            `1-jun-2023`,
+            `present`,
+            `YM`,
+            true
+          )} of hands-on experience in full
           stack development, including Node.js, React, and various databases.
           Dedicated to creating high-quality software solutions and improving
           user experiences. Eager to apply my skills and knowledge in a dynamic
-          environment.
+          environment.`}
         </Typography>
       </Grid>
       <Grid className="skillsList">
