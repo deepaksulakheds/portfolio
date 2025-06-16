@@ -36,6 +36,7 @@ const skills = [
       { content: "MongoDB", icon: "./icons/mongodb.svg" },
       { content: "PostgresSQL", icon: "./icons/pgsql.svg" },
       { content: "Redis", icon: "./icons/redis.svg" },
+      { content: "Clickhouse", icon: "./icons/clickhouse.svg" },
       { content: "ORM / ODM", icon: "./icons/orm.svg" },
     ],
   },
