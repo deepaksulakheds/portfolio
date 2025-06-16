@@ -1,6 +1,11 @@
 import moment from "moment";
 
-export const getFormattedTimePeriod = (from, to, units = `YMD`) => {
+export const getFormattedTimePeriod = (
+  from,
+  to,
+  units = `YMD`,
+  decimalFormat = false
+) => {
   let validFrom, validTo;
 
   if (from.toLowerCase() === "present") {
@@ -38,6 +43,13 @@ export const getFormattedTimePeriod = (from, to, units = `YMD`) => {
   validFrom.add(minutes, "minutes");
 
   let seconds = validTo.diff(validFrom, "seconds");
+
+  if (decimalFormat) {
+    const datePart = [years > 0 && `${years}`, months > 0 && `${months}`]
+      .filter(Boolean)
+      .join(".");
+    return `${datePart}+ years`;
+  }
 
   const datePart = [
     years > 0 && `${years}Y`,
