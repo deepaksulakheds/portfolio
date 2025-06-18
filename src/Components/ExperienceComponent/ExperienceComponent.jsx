@@ -345,17 +345,17 @@ function CustomExperienceTimeLineItem({
                     sx={{ fontSize: 14, marginLeft: 2, maxWidth: 500 }}
                   >
                     <Grid style={{ display: "flex" }}>
-                      -
+                      ➛
                       {desc.includes("</") ? (
                         <Typography
                           key={desc}
-                          sx={{ fontSize: 14, marginLeft: 1.5, maxWidth: 500 }}
+                          sx={{ fontSize: 14, marginLeft: 0.7, maxWidth: 500 }}
                           dangerouslySetInnerHTML={{ __html: desc }}
                         ></Typography>
                       ) : (
                         <Typography
                           key={desc}
-                          sx={{ fontSize: 14, marginLeft: 1.5, maxWidth: 500 }}
+                          sx={{ fontSize: 14, marginLeft: 0.7, maxWidth: 500 }}
                         >
                           {desc}
                         </Typography>

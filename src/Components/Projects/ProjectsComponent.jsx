@@ -14,6 +14,7 @@ const projData = [
       " GraphQL",
       " ApolloServer",
     ],
+    description: `A telematics data visualization system for fleet analytics of Zeliot. Built with React and GraphQL.`,
     image: "./icons/fleet.jpg",
     path: "https://github.com/deepaksulakheds/Zeliot_Telematic_Project",
   },
@@ -27,8 +28,24 @@ const projData = [
       " HTML",
       " CSS",
     ],
+    description: `An interactive dashboard for vehicle data insights. Developed using React and Apollo Server.`,
     image: "./icons/dashboard.png",
     path: "https://github.com/deepaksulakheds/Zeliot-Analytics-Dashboard",
+  },
+  {
+    title: "Fruits Classification using CNN",
+    techUsed: [
+      `Python`,
+      `Deep Learning`,
+      `CNN`,
+      `Kaggle`,
+      `Numpy`,
+      `Matplotlib`,
+      `Seaborn`,
+    ],
+    description: `Identifies different types of fruits using a Convolutional Neural Network(CNN). Implemented using Python and visualized with Matplotlib.`,
+    image: "./icons/fruits.jpg",
+    path: "https://github.com/deepaksulakheds/fruits-classification-cnn",
   },
   {
     title: "Face Recognition using LBPH",
@@ -40,28 +57,16 @@ const projData = [
       " Haar-Cascade Classifier",
       " LBPH Algorithm",
     ],
+    description: `A face recognition system using the LBPH algorithm. Utilizes OpenCV and Haar cascades for detection.`,
     image: "./icons/face-rec.jpg",
     path: "https://github.com/deepaksulakheds/Face-Recognition-using-LBPH",
   },
   {
     title: "Rice Mill Management System",
     techUsed: ["HTML", " CSS", " PHP", " Bootstrap 5", " WAMP"],
+    description: `A web-based management system for rice mills. Handles customer data, inventory, sales efficiently.`,
     image: "./icons/riceMill.jpeg",
     path: "#",
-  },
-  {
-    title: "Fruits Classification using CNN",
-    techUsed: [
-      "Python",
-      " Deep Learning",
-      " CNN",
-      " Kaggle",
-      " Numpy",
-      `Matplotlib`,
-      `Seaborn`,
-    ],
-    image: "./icons/fruits.jpg",
-    path: "https://github.com/deepaksulakheds/fruits-classification-cnn",
   },
 ];
 
@@ -131,6 +136,17 @@ function ProjectsComponent(props) {
                 <GitHub />
               </IconButton>
             </Grid>
+            <Typography
+              sx={{
+                fontSize: 14,
+                fontWeight: 500,
+                marginBottom: "0.6rem",
+                marginLeft: ".5rem",
+                fontWeight: "400",
+              }}
+            >
+              {project.description}
+            </Typography>
             <Grid>
               {project.techUsed.map((tech, index) => (
                 <Chip
@@ -138,6 +154,7 @@ function ProjectsComponent(props) {
                   label={tech}
                   size="small"
                   style={{
+                    userSelect: "none",
                     color: "white",
                     cursor: "text",
                     margin: "2px",
