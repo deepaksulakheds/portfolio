@@ -139,7 +139,6 @@ function ProjectsComponent(props) {
             <Typography
               sx={{
                 fontSize: 14,
-                fontWeight: 500,
                 marginBottom: "0.6rem",
                 marginLeft: ".5rem",
                 fontWeight: "400",

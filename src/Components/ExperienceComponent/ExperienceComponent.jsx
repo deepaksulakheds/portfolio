@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Timeline,
   TimelineItem,
@@ -9,7 +8,12 @@ import {
   TimelineDot,
 } from "@mui/lab";
 import Typography from "@mui/material/Typography";
-import { AutoStories, BusinessCenter } from "@mui/icons-material";
+import {
+  AutoStories,
+  BusinessCenter,
+  SchoolRounded,
+  WorkspacePremium,
+} from "@mui/icons-material";
 import "./ExperienceComponent.css";
 import { Chip, Grid } from "@mui/material";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
@@ -48,7 +52,10 @@ const experienceData = [
     ],
   },
 ];
-
+const icons = [
+  <SchoolRounded fontSize="medium" />,
+  <WorkspacePremium fontSize="medium" />,
+];
 // const experienceData1 = [
 //   {
 //     company: "Zeliot Connected Services Pvt. Ltd.",
@@ -99,104 +106,105 @@ const educationData = [
 ];
 export function ExperienceComponent({ attachmentToggle }) {
   return (
-    <>
-      <Grid className="experienceContainer">
-        {/* Experience Timeline */}
-        <Timeline
-          sx={{
+    <Grid className="experienceContainer">
+      {/* Experience Timeline */}
+      <Timeline
+        sx={{
+          padding: 0,
+          [`& .${timelineItemClasses.root}:before`]: {
+            flex: 0,
             padding: 0,
-            [`& .${timelineItemClasses.root}:before`]: {
-              flex: 0,
-              padding: 0,
-            },
-          }}
-        >
-          <TimelineItem>
-            <TimelineSeparator>
-              <TimelineDot sx={{ margin: 0 }} variant="outlined">
-                <BusinessCenter
-                  onDoubleClick={() => attachmentToggle.toggleAttachment()}
-                />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography
-                sx={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  textDecoration: "underline",
-                  textUnderlineOffset: "5px",
-                  textDecorationThickness: "0.1px",
-                }}
-              >
-                Experience
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-          <Grid style={{ marginLeft: 12 }}>
-            {experienceData.map((experience, index) => (
-              <CustomExperienceTimeLineItem
-                company={experience.company}
-                key={index}
-                titlesList={experience.titlesList}
-                totalTimePeriod={experience.totalTimePeriod}
-                index={index}
+          },
+        }}
+      >
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot sx={{ margin: 0 }} variant="outlined">
+              <BusinessCenter
+                onDoubleClick={() => attachmentToggle.toggleAttachment()}
               />
-            ))}
-          </Grid>
-        </Timeline>
+            </TimelineDot>
+            <TimelineConnector />
+          </TimelineSeparator>
+          <TimelineContent>
+            <Typography
+              sx={{
+                fontSize: 18,
+                fontWeight: "bold",
+                textDecoration: "underline",
+                textUnderlineOffset: "5px",
+                textDecorationThickness: "0.1px",
+              }}
+            >
+              Experience
+            </Typography>
+          </TimelineContent>
+        </TimelineItem>
+        <Grid style={{ marginLeft: 12 }}>
+          {experienceData.map((experience, index) => (
+            <CustomExperienceTimeLineItem
+              company={experience.company}
+              key={index}
+              titlesList={experience.titlesList}
+              totalTimePeriod={experience.totalTimePeriod}
+              index={index}
+            />
+          ))}
+        </Grid>
+      </Timeline>
 
-        {/* Education Timeline */}
-        <Timeline
-          sx={{
+      {/* Education Timeline */}
+      <Timeline
+        sx={{
+          padding: 0,
+          [`& .${timelineItemClasses.root}:before`]: {
+            flex: 0,
             padding: 0,
-            [`& .${timelineItemClasses.root}:before`]: {
-              flex: 0,
-              padding: 0,
-            },
-          }}
-        >
-          <TimelineItem>
-            <TimelineSeparator>
-              <TimelineDot sx={{ margin: 0 }} variant="outlined">
-                <AutoStories />
-              </TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Typography
-                sx={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  textDecoration: "underline",
-                  textUnderlineOffset: "5px",
-                  textDecorationThickness: "0.1px",
-                }}
-              >
-                Education
-              </Typography>
-            </TimelineContent>
-          </TimelineItem>
-          <Grid style={{ marginLeft: 12 }}>
-            {educationData.map((education, index) => (
-              <CustomEducationTimeLineItem
-                key={index}
-                index={index}
-                institute={education.institute}
-                course={education.course}
-                place={education.place}
-                timePeriod={education.timePeriod}
-                siteUrl={education.siteUrl}
-              />
-            ))}
-          </Grid>
-        </Timeline>
-      </Grid>
+          },
+        }}
+      >
+        <TimelineItem>
+          <TimelineSeparator>
+            <TimelineDot sx={{ margin: 0 }} variant="outlined">
+              <AutoStories />
+            </TimelineDot>
+            {/* <TimelineConnector /> */}
+          </TimelineSeparator>
+          <TimelineContent>
+            <Typography
+              sx={{
+                fontSize: 18,
+                fontWeight: "bold",
+                textDecoration: "underline",
+                textUnderlineOffset: "5px",
+                textDecorationThickness: "0.1px",
+              }}
+            >
+              Education
+            </Typography>
+          </TimelineContent>
+        </TimelineItem>
+        <Grid style={{ marginTop: "-25px", marginLeft: "25px" }}>
+          {educationData.map((education, index) => (
+            <CustomEducationTimeLineItem
+              key={index}
+              index={index}
+              institute={education.institute}
+              course={education.course}
+              place={education.place}
+              timePeriod={education.timePeriod}
+              siteUrl={education.siteUrl}
+            />
+          ))}
+        </Grid>
+      </Timeline>
+    </Grid>
+  );
+}
 
-      {/* Do not Delete, company card is added */}
-
-      {/* <Grid
+{
+  /* Do not Delete, company card is added */
+  /* <Grid
         sx={{
           display: "flex",
           gap: 2,
@@ -224,9 +232,7 @@ export function ExperienceComponent({ attachmentToggle }) {
             titlesList={experience.titlesList}
           />
         ))}
-      </Grid> */}
-    </>
-  );
+      </Grid> */
 }
 
 function CustomEducationTimeLineItem({
@@ -239,37 +245,68 @@ function CustomEducationTimeLineItem({
 }) {
   return (
     <TimelineItem>
-      <TimelineSeparator>
-        <TimelineDot variant="outlined" sx={{ margin: 0 }} />
-        {index == educationData.length - 1 ? null : <TimelineConnector />}
-      </TimelineSeparator>
-      <TimelineContent sx={{ marginTop: -2, marginBottom: "28px" }}>
-        <Typography
-          component="p"
-          sx={{ fontSize: 16, fontWeight: 600, color: "#aa89f2" }}
-        >
-          {course}
-        </Typography>
-        <Typography sx={{ fontSize: 14, color: "#aa89f2" }}>
-          -&nbsp;{institute}
-        </Typography>
-        <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {timePeriod}</Typography>
-        <Typography sx={{ fontSize: 13 }}>&nbsp;&nbsp; {place}</Typography>
-        <Chip
-          label={`Visit Site`}
-          size="small"
-          sx={{
-            fontWeight: "500",
-            backgroundColor: "rgba(170, 137, 242, 1)",
-            ":hover": {
-              backgroundColor: "rgb(97, 65, 167)",
-              color: "white",
-            },
-          }}
-          onClick={() => {
-            window.open(siteUrl, "_blank");
-          }}
-        />
+      <TimelineContent>
+        <Grid sx={{ maxWidth: 500 }}>
+          <Grid
+            sx={{
+              height: "40px",
+              width: "40px",
+              border: "0.2px solid white",
+              borderRadius: "50%",
+              position: "absolute",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              top: "20px",
+              backgroundColor: "#201e29",
+            }}
+          >
+            {icons[index]}
+          </Grid>
+          <Grid
+            sx={{
+              marginTop: "10px",
+              marginLeft: "10px",
+              backgroundColor: "#393540",
+              borderRadius: "10px",
+            }}
+          >
+            <Grid
+              sx={{ marginLeft: "30px", marginTop: "20px", padding: "10px" }}
+            >
+              <Typography
+                component="p"
+                sx={{ fontSize: 16, fontWeight: 600, color: "#aa89f2" }}
+              >
+                {course}
+              </Typography>
+              <Typography sx={{ fontSize: 14, color: "#aa89f2" }}>
+                -&nbsp;{institute}
+              </Typography>
+              <Typography sx={{ fontSize: 13 }}>
+                &nbsp;&nbsp; {timePeriod}
+              </Typography>
+              <Typography sx={{ fontSize: 13 }}>
+                &nbsp;&nbsp; {place}
+              </Typography>
+              <Chip
+                label={`Visit Site`}
+                size="small"
+                sx={{
+                  fontWeight: "500",
+                  backgroundColor: "rgba(170, 137, 242, 1)",
+                  ":hover": {
+                    backgroundColor: "rgb(97, 65, 167)",
+                    color: "white",
+                  },
+                }}
+                onClick={() => {
+                  window.open(siteUrl, "_blank");
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
       </TimelineContent>
     </TimelineItem>
   );
