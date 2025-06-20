@@ -30,7 +30,7 @@ const experienceData = [
         timePeriod: getFormattedTimePeriod("1-sep-2023", "present"),
         descriptions: [
           `Developing robust web applications using React and Node. Proven ability to build responsive, user-friendly, and high-performance web solutions using React.js. Skilled in component-based architecture and integrating with backend services with REST and GraphQL APIs. Developing core features using React and MUI.`,
-          `Proven ability to translate design and prototype into a fully functional interface using React, ensuring an optimized and responsive user experience.`,
+          `Proven ability to translate designs and prototypes into fully functional, end-to-end modules using React.js, Node.js, REST, GraphQL, and various databases, including both SQL and NoSQL.`,
           `Contributed significantly to various projects, including the end-to-end implementation of features and a rich dashboard utilizing React and Material-UI for data visualization, UI development, and consistent user experience.`,
           `Developed backend services, pipelines, and REST and GraphQL APIs with Node.js, contributing to the core functionality projects. Collaborated in the integration of APIs.`,
           `Designing, optimizing, and restructuring database schemas and queries for efficient data management and enhanced performance and scalability.`,
