@@ -29,13 +29,13 @@ const experienceData = [
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: getFormattedTimePeriod("1-sep-2023", "present"),
         descriptions: [
-          `Developing robust web applications using React and Node. Proven ability to build responsive, user-friendly, and high-performance web solutions using React.js. Skilled in component-based architecture and integrating with backend services with REST and GraphQL APIs. Developing core features using React and MUI.`,
-          `Proven ability to translate designs and prototypes into fully functional, end-to-end modules using React.js, Node.js, REST, GraphQL, and various databases, including both SQL and NoSQL.`,
-          `Contributed significantly to various projects, including the end-to-end implementation of features and a rich dashboard utilizing React and Material-UI for data visualization, UI development, and consistent user experience.`,
+          `Developing responsive, high-performance web apps using React and Node.js. Skilled in component-based architecture, REST/GraphQL APIs integration, and MUI.`,
+          `Proven ability to translate designs and prototypes into fully functional, end-to-end modules using React.js, Node.js, REST, GraphQL, and various SQL & NoSQL databases.`,
+          `Contributed to multiple projects by implementing end-to-end features and creating a rich dashboard with React and Material-UI for data visualization and consistent UI.`,
           `Developed backend services, pipelines, and REST and GraphQL APIs with Node.js, contributing to the core functionality projects. Collaborated in the integration of APIs.`,
-          `Designing, optimizing, and restructuring database schemas and queries for efficient data management and enhanced performance and scalability.`,
+          `Designed, optimized, and restructured database schemas and queries for efficient data management, improved performance, and scalability.`,
           `Identified and resolved security vulnerabilities through VAPT, implementing fixes and security best practices to ensure robust and secure backend services and APIs.`,
-          `Designed and implemented Redis-based caching strategies in microservices and APIs to optimize performance, reduce response latency, and improve scalability.`,
+          `Implemented Redis-based caching in backend systems to boost performance and reduce latency.`,
         ],
       },
       {
@@ -43,7 +43,7 @@ const experienceData = [
         duration: "June 2023 - Aug 2023", // end.diff(start)
         timePeriod: getFormattedTimePeriod("1-jun-2023", "1-sep-2023"),
         descriptions: [
-          `<span style="font-weight: bold; text-decoration: underline; font-size: 15px">Telematic Analytics - Zeliot</span>, the internship project developed during the Full-Stack Development Internship, focuses on building a telematic analytics platform with the primary goal of collecting, processing, analyzing, and visualizing the data from telematic devices, providing actionable insights and KPIs.`,
+          `<span style="font-weight: bold; text-decoration: underline; font-size: 15px">Telematic Analytics - Zeliot</span>is an internship project from the Full-Stack Development Internship, focusing on creating a platform to collect, process, analyze, and visualize telematic device data, providing actionable insights and KPIs.`,
           `Implemented frontend components using React to create intuitive and responsive user interfaces.`,
           `Integrated third-party APIs in backend systems, making sure data flowed smoothly with external systems while maintaining the performance and reliability.`,
           `Participated in code reviews, debugging, and testing to ensure high-quality software deliverables.`,
@@ -97,12 +97,6 @@ const educationData = [
     timePeriod: "Jun 2018 - Sep 2021",
     siteUrl: `http://jsssmiugpg.com/`,
   },
-  // {
-  //   course: "Pre University (PCMCs)",
-  //   institute: "KVSR Comp. PU College.",
-  //   place: "Gadag | KA",
-  //   timePeriod: "2014 - 2016",
-  // },
 ];
 export function ExperienceComponent({ attachmentToggle }) {
   return (
@@ -245,7 +239,11 @@ function CustomEducationTimeLineItem({
 }) {
   return (
     <TimelineItem>
-      <TimelineContent>
+      <TimelineContent
+        sx={{
+          marginBottom: index == educationData.length - 1 ? null : "10px",
+        }}
+      >
         <Grid sx={{ maxWidth: 500 }}>
           <Grid
             sx={{
@@ -362,7 +360,7 @@ function CustomExperienceTimeLineItem({
             - {totalTimePeriod}
           </Typography>
         </Grid>
-        <Grid sx={{ marginTop: "10px", marginLeft: "10px" }}>
+        <Grid sx={{ marginTop: "10px", marginLeft: "3px" }}>
           {titlesList.map((title) => (
             <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
               <Typography
