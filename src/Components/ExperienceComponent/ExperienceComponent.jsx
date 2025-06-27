@@ -23,11 +23,13 @@ const experienceData = [
   {
     company: "Zeliot Connected Services Pvt. Ltd.",
     totalTimePeriod: getFormattedTimePeriod("1-jun-2023", "present"),
+    logoPath: "./icons/zeliot-1.png",
     titlesList: [
       {
         designation: "Software Engineer 1",
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: getFormattedTimePeriod("1-sep-2023", "present"),
+        location: `Bengaluru | KA | India`,
         descriptions: [
           `Developing responsive, high-performance web apps using React and Node.js. Skilled in component-based architecture, REST/GraphQL APIs integration, and MUI.`,
           `Proven ability to translate designs and prototypes into fully functional, end-to-end modules using React.js, Node.js, REST, GraphQL, and various SQL & NoSQL databases.`,
@@ -39,11 +41,12 @@ const experienceData = [
         ],
       },
       {
-        designation: "Full Stack Developer Intern",
+        designation: "Full Stack Developer - Intern",
         duration: "June 2023 - Aug 2023", // end.diff(start)
         timePeriod: getFormattedTimePeriod("1-jun-2023", "1-sep-2023"),
+        location: `Bengaluru | KA | India`,
         descriptions: [
-          `<span style="font-weight: bold; text-decoration: underline; font-size: 15px">Telematic Analytics - Zeliot</span>is an internship project from the Full-Stack Development Internship, focusing on creating a platform to collect, process, analyze, and visualize telematic device data, providing actionable insights and KPIs.`,
+          `Developed <span style="font-weight: bold; text-decoration: underline; font-size: 15px">Telematic Analytics - Zeliot</span> as a mini-project during my Full-Stack Development Internship, focusing on creating a platform to collect, process, analyze, and visualize telematic device data, providing actionable insights and KPIs.`,
           `Implemented frontend components using React to create intuitive and responsive user interfaces.`,
           `Integrated third-party APIs in backend systems, making sure data flowed smoothly with external systems while maintaining the performance and reliability.`,
           `Participated in code reviews, debugging, and testing to ensure high-quality software deliverables.`,
@@ -118,7 +121,6 @@ export function ExperienceComponent({ attachmentToggle }) {
                 onDoubleClick={() => attachmentToggle.toggleAttachment()}
               />
             </TimelineDot>
-            <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent>
             <Typography
@@ -135,13 +137,14 @@ export function ExperienceComponent({ attachmentToggle }) {
           </TimelineContent>
         </TimelineItem>
         <Grid style={{ marginLeft: 12 }}>
-          {experienceData.map((experience, index) => (
+          {experienceData.map((experience, companyIndex) => (
             <CustomExperienceTimeLineItem
               company={experience.company}
-              key={index}
+              key={companyIndex}
               titlesList={experience.titlesList}
               totalTimePeriod={experience.totalTimePeriod}
-              index={index}
+              companyIndex={companyIndex}
+              logoPath={experience.logoPath}
             />
           ))}
         </Grid>
@@ -178,7 +181,7 @@ export function ExperienceComponent({ attachmentToggle }) {
             </Typography>
           </TimelineContent>
         </TimelineItem>
-        <Grid style={{ marginTop: "-25px", marginLeft: "25px" }}>
+        <Grid style={{ marginTop: "-25px", marginLeft: "10px" }}>
           {educationData.map((education, index) => (
             <CustomEducationTimeLineItem
               key={index}
@@ -314,19 +317,17 @@ function CustomExperienceTimeLineItem({
   company,
   titlesList,
   totalTimePeriod,
-  index,
+  logoPath,
+  companyIndex,
 }) {
   return (
-    <TimelineItem>
-      <TimelineSeparator>
-        <TimelineDot variant="outlined" sx={{ margin: 0 }} />
-        {index == experienceData.length - 1 ? null : <TimelineConnector />}
-      </TimelineSeparator>
+    <TimelineItem title={company}>
       <TimelineContent
         sx={{
           paddingTop: 0,
           marginTop: "-10px",
-          marginBottom: index == educationData.length - 1 ? null : "20px",
+          marginBottom:
+            companyIndex == educationData.length - 1 ? null : "20px",
         }}
       >
         <Grid
@@ -334,76 +335,132 @@ function CustomExperienceTimeLineItem({
             border: "1px solid white",
             borderRadius: 2,
             width: "fit-content",
+            display: "flex",
           }}
         >
-          <Typography
-            component="p"
+          <Grid
             sx={{
-              fontSize: 16,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "5px",
+            }}
+          >
+            <img
+              src={logoPath}
+              alt={company}
+              title={company}
+              height="28px"
+              width="28px"
+            />
+          </Grid>
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
               padding: "8px",
-              paddingBottom: "0",
-              width: "fit-content",
-              fontWeight: "bold",
             }}
           >
-            {company}
-          </Typography>
-          <Typography
-            component="p"
-            sx={{
-              fontSize: 12,
-              padding: "0px 0px 8px 8px",
-              color: "#aa89f2",
-              fontWeight: "bold",
-            }}
-          >
-            - {totalTimePeriod}
-          </Typography>
+            <Typography
+              component="p"
+              sx={{
+                fontSize: 16,
+                paddingBottom: "0",
+                width: "fit-content",
+                fontWeight: "bold",
+              }}
+            >
+              {company}
+            </Typography>
+            <Typography
+              component="p"
+              sx={{
+                fontSize: 12,
+                color: "#aa89f2",
+                fontWeight: "bold",
+              }}
+            >
+              - {totalTimePeriod}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid sx={{ marginTop: "10px", marginLeft: "3px" }}>
-          {titlesList.map((title) => (
-            <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
-              <Typography
-                sx={{ fontSize: 15.5, fontWeight: "bold", color: "#aa89f2" }}
-              >
-                &#10687;&nbsp;&nbsp;{title.designation}
-              </Typography>
-              <Typography
-                sx={{ fontSize: 14, marginLeft: 2, color: "#aa89f2" }}
-              >
-                {title.duration}, ( {title.timePeriod} )
-              </Typography>
-              <Grid>
-                {title.descriptions.map((desc) => (
-                  <Grid
-                    key={desc}
-                    sx={{ fontSize: 14, marginLeft: 2, maxWidth: 500 }}
-                  >
-                    <Grid style={{ display: "flex" }}>
-                      ➛
-                      {desc.includes("</") ? (
-                        <Typography
+        <Grid sx={{ marginTop: "5px", marginLeft: "5px" }}>
+          <Timeline
+            sx={{
+              padding: 0,
+              [`& .${timelineItemClasses.root}:before`]: {
+                flex: 0,
+                padding: 0,
+              },
+            }}
+          >
+            {titlesList.map((title, titleIndex) => (
+              <TimelineItem key={title.designation}>
+                <TimelineSeparator>
+                  <TimelineDot
+                    style={{ backgroundColor: "#aa89f2", opacity: "0.6" }}
+                  />
+                  {titleIndex == titlesList.length - 1 ? null : (
+                    <TimelineConnector
+                      style={{ backgroundColor: "#aa89f2", opacity: "0.6" }}
+                    />
+                  )}
+                </TimelineSeparator>
+                <TimelineContent>
+                  <Grid key={title.designation} sx={{ marginBottom: "5px" }}>
+                    <Typography
+                      sx={{
+                        fontSize: 15.5,
+                        fontWeight: "bold",
+                        color: "#aa89f2",
+                      }}
+                    >
+                      {title.designation}
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 14, color: "#aa89f2", marginLeft: "5px" }}
+                    >
+                      {title.duration}, ( {title.timePeriod} )<br />
+                      {title.location}
+                    </Typography>
+                    <Grid>
+                      {title.descriptions.map((desc) => (
+                        <Grid
                           key={desc}
-                          sx={{ fontSize: 14, marginLeft: 0.7, maxWidth: 500 }}
-                          dangerouslySetInnerHTML={{ __html: desc }}
-                        ></Typography>
-                      ) : (
-                        <Typography
-                          key={desc}
-                          sx={{ fontSize: 14, marginLeft: 0.7, maxWidth: 500 }}
+                          sx={{ fontSize: 14, maxWidth: 500, display: "flex" }}
                         >
-                          {desc}
-                        </Typography>
-                      )}
+                          ➛
+                          {desc.includes("</") ? (
+                            <Typography
+                              key={desc}
+                              sx={{
+                                fontSize: 14,
+                                marginLeft: 0.7,
+                                maxWidth: 500,
+                              }}
+                              dangerouslySetInnerHTML={{ __html: desc }}
+                            ></Typography>
+                          ) : (
+                            <Typography
+                              key={desc}
+                              sx={{
+                                fontSize: 14,
+                                marginLeft: 0.7,
+                                maxWidth: 500,
+                              }}
+                            >
+                              {desc}
+                            </Typography>
+                          )}
+                        </Grid>
+                      ))}
                     </Grid>
                   </Grid>
-                ))}
-              </Grid>
-              {/* <Typography sx={{ fontSize: 16, marginLeft: 2 }}>
-                {title?.description}
-              </Typography> */}
-            </Grid>
-          ))}
+                </TimelineContent>
+              </TimelineItem>
+            ))}
+          </Timeline>
         </Grid>
       </TimelineContent>
     </TimelineItem>
