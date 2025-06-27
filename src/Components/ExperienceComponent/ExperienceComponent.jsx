@@ -398,13 +398,9 @@ function CustomExperienceTimeLineItem({
             {titlesList.map((title, titleIndex) => (
               <TimelineItem key={title.designation}>
                 <TimelineSeparator>
-                  <TimelineDot
-                    style={{ backgroundColor: "#aa89f2", opacity: "0.6" }}
-                  />
+                  <TimelineDot style={{ opacity: "0.6" }} />
                   {titleIndex == titlesList.length - 1 ? null : (
-                    <TimelineConnector
-                      style={{ backgroundColor: "#aa89f2", opacity: "0.6" }}
-                    />
+                    <TimelineConnector style={{ opacity: "0.6" }} />
                   )}
                 </TimelineSeparator>
                 <TimelineContent>
