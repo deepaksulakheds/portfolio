@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import {
   AutoStories,
   BusinessCenter,
+  Launch,
   SchoolRounded,
   WorkspacePremium,
 } from "@mui/icons-material";
@@ -24,12 +25,13 @@ const experienceData = [
     company: "Zeliot Connected Services Pvt. Ltd.",
     totalTimePeriod: getFormattedTimePeriod("1-jun-2023", "present"),
     logoPath: "./icons/zeliot-1.png",
+    companyUrl: "https://www.zeliot.in/",
     titlesList: [
       {
         designation: "Software Engineer 1",
         duration: "Sep 2023 - Present", // present.diff(start)
         timePeriod: getFormattedTimePeriod("1-sep-2023", "present"),
-        location: `Bengaluru | KA | India`,
+        location: `Bengaluru | KA | IN`,
         descriptions: [
           `Developing responsive, high-performance web apps using React and Node.js. Skilled in component-based architecture, REST/GraphQL APIs integration, and MUI.`,
           `Proven ability to translate designs and prototypes into fully functional, end-to-end modules using React.js, Node.js, REST, GraphQL, and various SQL & NoSQL databases.`,
@@ -44,7 +46,7 @@ const experienceData = [
         designation: "Full Stack Developer - Intern",
         duration: "June 2023 - Aug 2023", // end.diff(start)
         timePeriod: getFormattedTimePeriod("1-jun-2023", "1-sep-2023"),
-        location: `Bengaluru | KA | India`,
+        location: `Bengaluru | KA | IN`,
         descriptions: [
           `Developed <span style="font-weight: bold; text-decoration: underline; font-size: 15px">Telematic Analytics - Zeliot</span> as a mini-project during my Full-Stack Development Internship, focusing on creating a platform to collect, process, analyze, and visualize telematic device data, providing actionable insights and KPIs.`,
           `Implemented frontend components using React to create intuitive and responsive user interfaces.`,
@@ -89,14 +91,14 @@ const educationData = [
   {
     course: "Master of Computer Application",
     institute: "KLE Technological University.",
-    place: "Hubballi | KA",
+    place: "Hubballi | KA | IN",
     timePeriod: "Feb 2022 - Sep 2023",
     siteUrl: `https://www.kletech.ac.in/`,
   },
   {
     course: "Bachelor of Computer Application",
     institute: "JSS SMI UG & PG Studies.",
-    place: "Dharwad | KA",
+    place: "Dharwad | KA | IN",
     timePeriod: "Jun 2018 - Sep 2021",
     siteUrl: `http://jsssmiugpg.com/`,
   },
@@ -145,6 +147,7 @@ export function ExperienceComponent({ attachmentToggle }) {
               totalTimePeriod={experience.totalTimePeriod}
               companyIndex={companyIndex}
               logoPath={experience.logoPath}
+              companyUrl={experience.companyUrl}
             />
           ))}
         </Grid>
@@ -247,8 +250,20 @@ function CustomEducationTimeLineItem({
           marginBottom: index == educationData.length - 1 ? null : "10px",
         }}
       >
-        <Grid sx={{ maxWidth: 500 }}>
+        <Grid
+          title={course}
+          sx={{
+            maxWidth: 500,
+            // ":hover > .educationIcon": {
+            //   background: `linear-gradient(744deg,#af40ff,#5b42f3 60%,#00ddeb)`,
+            // },
+            ":hover > .educationIcon": {
+              animation: "pulse 1s infinite ease-in-out",
+            },
+          }}
+        >
           <Grid
+            className="educationIcon"
             sx={{
               height: "40px",
               width: "40px",
@@ -264,11 +279,13 @@ function CustomEducationTimeLineItem({
           >
             {icons[index]}
           </Grid>
+
           <Grid
             sx={{
               marginTop: "10px",
               marginLeft: "10px",
-              backgroundColor: "#393540",
+              backgroundColor: "#fff2",
+              // outline: "0.1px solid white",
               borderRadius: "10px",
             }}
           >
@@ -281,14 +298,14 @@ function CustomEducationTimeLineItem({
               >
                 {course}
               </Typography>
-              <Typography sx={{ fontSize: 14, color: "#aa89f2" }}>
+              <Typography sx={{ fontSize: 15, color: "#aa89f2" }}>
                 -&nbsp;{institute}
               </Typography>
               <Typography sx={{ fontSize: 13 }}>
-                &nbsp;&nbsp; {timePeriod}
+                &nbsp;&nbsp; {place}
               </Typography>
               <Typography sx={{ fontSize: 13 }}>
-                &nbsp;&nbsp; {place}
+                &nbsp;&nbsp; {timePeriod}
               </Typography>
               <Chip
                 label={`Visit Site`}
@@ -318,6 +335,7 @@ function CustomExperienceTimeLineItem({
   titlesList,
   totalTimePeriod,
   logoPath,
+  companyUrl,
   companyIndex,
 }) {
   return (
@@ -336,6 +354,7 @@ function CustomExperienceTimeLineItem({
             borderRadius: 2,
             width: "fit-content",
             display: "flex",
+            alignItems: "center",
           }}
         >
           <Grid
@@ -384,6 +403,19 @@ function CustomExperienceTimeLineItem({
               - {totalTimePeriod}
             </Typography>
           </Grid>
+          <Launch
+            titleAccess="Open URL"
+            fontSize="small"
+            sx={{
+              padding: "5px",
+              cursor: "pointer",
+              color: "white",
+              "&:hover": {
+                color: "rgba(170, 137, 242, 1)",
+              },
+            }}
+            onClick={(e) => window.open(companyUrl, "_blank")}
+          />
         </Grid>
         <Grid sx={{ marginTop: "5px", marginLeft: "5px" }}>
           <Timeline
