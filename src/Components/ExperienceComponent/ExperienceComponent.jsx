@@ -452,7 +452,7 @@ function CustomExperienceTimeLineItem({
                       {title.duration}, ( {title.timePeriod} )<br />
                       {title.location}
                     </Typography>
-                    <Grid>
+                    <Grid sx={{ marginTop: "6px" }}>
                       {title.descriptions.map((desc) => (
                         <Grid
                           key={desc}
@@ -465,7 +465,6 @@ function CustomExperienceTimeLineItem({
                               sx={{
                                 fontSize: 14,
                                 marginLeft: 0.7,
-                                maxWidth: 500,
                               }}
                               dangerouslySetInnerHTML={{ __html: desc }}
                             ></Typography>
@@ -475,7 +474,6 @@ function CustomExperienceTimeLineItem({
                               sx={{
                                 fontSize: 14,
                                 marginLeft: 0.7,
-                                maxWidth: 500,
                               }}
                             >
                               {desc}
