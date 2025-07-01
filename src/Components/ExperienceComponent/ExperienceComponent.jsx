@@ -488,6 +488,17 @@ function CustomExperienceTimeLineItem({
             ))}
           </Timeline>
         </Grid>
+        {/* {companyIndex == experienceData.length - 1 ? null : (
+          <Divider
+            orientation="horizontal"
+            sx={{
+              borderColor: "unset",
+              marginTop: "15px",
+              width: "80%",
+              opacity: "0.5",
+            }}
+          />
+        )} */}
       </TimelineContent>
     </TimelineItem>
   );
