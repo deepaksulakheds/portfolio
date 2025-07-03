@@ -69,9 +69,8 @@ function AboutComponent(props) {
             `present`,
             `YM`,
             true
-          )} of professional experience in full
-          stack development, including Node.js, React, and various databases.
-          Dedicated to creating high-quality software solutions and improving
+          )} of professional experience in full-stack development, including Node.js, 
+          React, and various databases. Dedicated to creating high-quality software solutions and improving
           user experiences. Eager to apply my skills and knowledge in a dynamic
           environment.`}
         </Typography>
