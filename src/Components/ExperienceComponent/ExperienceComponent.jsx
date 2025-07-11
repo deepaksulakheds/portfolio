@@ -37,9 +37,8 @@ const experienceData = [
           `Proven ability to translate designs and prototypes into fully functional, end-to-end modules using React.js, Node.js, REST, GraphQL, and various SQL & NoSQL databases.`,
           `Contributed to multiple projects by implementing end-to-end features and creating a rich dashboard with React and Material-UI for data visualization and consistent UI.`,
           `Developed backend services, pipelines, and REST and GraphQL APIs with Node.js, contributing to core functionality projects. Implemented automated report mailing system using cron jobs.`,
-          `Designed, optimized, and restructured database schemas and queries for efficient data management, improved performance, and scalability.`,
+          `Redesigned and optimized database schemas and queries for performance, scalability, and efficient data handling. Implemented Redis-based caching in backend systems to boost performance and reduce response times.`,
           `Identified and resolved security vulnerabilities through VAPT, implementing fixes and security best practices to ensure robust and secure backend services and APIs.`,
-          `Implemented Redis-based caching in backend systems to boost performance and reduce latency.`,
         ],
       },
       {
