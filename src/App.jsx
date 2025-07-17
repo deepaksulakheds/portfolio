@@ -6,17 +6,20 @@ import { AttachmentProvider } from "./Components/MailDialog/attachmentContext";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./clients.js";
 import { NotistackSnackbarProvider } from "./Components/SharedSnackbar/SharedSnackbar1";
+import { SecretProvider } from "./Contexts/SecretContext.jsx";
 
 function App() {
   return (
     <>
       <ApolloProvider client={client}>
-        <AttachmentProvider>
-          <NotistackSnackbarProvider>
-            <Header />
-            <Body />
-          </NotistackSnackbarProvider>
-        </AttachmentProvider>
+        <SecretProvider>
+          <AttachmentProvider>
+            <NotistackSnackbarProvider>
+              <Header />
+              <Body />
+            </NotistackSnackbarProvider>
+          </AttachmentProvider>
+        </SecretProvider>
       </ApolloProvider>
     </>
   );
