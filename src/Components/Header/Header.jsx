@@ -14,52 +14,58 @@ import MailDialog from "../MailDialog/MailDialog";
 import HeaderImageDialog from "./HeaderImageDialog";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
+import { useSecretContext } from "../../Contexts/SecretContext";
 
 function Header({ attachmentToggle }) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
   const [imageDialogVisible, setImageDialogVisible] = useState(false);
-  const [secretAlert, setSecretAlert] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [age, setAge] = useState(
     getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`)
   );
 
+  const secretContext = useSecretContext();
   useEffect(() => {
-    let ageInterval = null;
+    let ageInterval;
     const isAgeExists = contacts.some((contact) => contact.name === "age");
 
-    if (attachmentToggle.isAttachmentEnabled && !isAgeExists) {
-      setContacts((prevContacts) => {
-        return [
-          ...prevContacts,
-          {
-            name: "age",
-            icon: <Refresh fontSize="medium" />,
-            onclick: (e) =>
-              setAnchorEl((prev) => (prev ? null : e.currentTarget)),
-            toolTip: null,
-            style: {
-              boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-            },
+    if (
+      secretContext.secretEnabled &&
+      attachmentToggle.isAttachmentEnabled &&
+      !isAgeExists
+    ) {
+      setContacts((prevContacts) => [
+        ...prevContacts,
+        {
+          name: "age",
+          icon: <Refresh fontSize="medium" />,
+          onclick: (e) =>
+            setAnchorEl((prev) => (prev ? null : e.currentTarget)),
+          toolTip: null,
+          style: {
+            boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
           },
-        ];
-      });
+        },
+      ]);
 
       ageInterval = setInterval(() => {
         setAge(getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`));
-      });
-    } else if (!attachmentToggle.isAttachmentEnabled && isAgeExists) {
-      setContacts((prevContacts) => {
-        return prevContacts.filter((contact) => contact.name !== "age");
-      });
+      }, 1000);
+    } else if (
+      (!secretContext.secretEnabled || !attachmentToggle.isAttachmentEnabled) &&
+      isAgeExists
+    ) {
+      setContacts((prevContacts) =>
+        prevContacts.filter((contact) => contact.name !== "age")
+      );
 
       clearInterval(ageInterval);
     }
 
     return () => {
-      clearInterval(ageInterval);
+      if (ageInterval) clearInterval(ageInterval);
     };
-  }, [attachmentToggle.isAttachmentEnabled]);
+  }, [attachmentToggle.isAttachmentEnabled, secretContext.secretEnabled]);
 
   const [contacts, setContacts] = useState([
     {
@@ -95,6 +101,13 @@ function Header({ attachmentToggle }) {
     },
   ]);
 
+  const handleSecretToggle = () => {
+    if (attachmentToggle.isAttachmentEnabled) {
+      attachmentToggle.toggleAttachment();
+    }
+    secretContext.toggleSecret();
+  };
+
   return (
     <Grid
       className="headerContainer"
@@ -115,15 +128,19 @@ function Header({ attachmentToggle }) {
           Deepak Sulakhe
         </Typography>
         <Chip
-          onClick={(e) => setSecretAlert(!secretAlert)}
+          clickable
+          disableRipple
+          onDoubleClick={(e) => handleSecretToggle()}
           label="Software Engineer 1"
           style={{
             color: "white",
             cursor: "text",
-            fontWeight: "500",
-            border: "1px solid rgba(248, 246, 254, .2)",
-            // background: "rgba(25, 17, 51, 1)",
+            fontWeight: secretContext.secretEnabled ? "bold" : "400",
+            border: secretContext.secretEnabled
+              ? "1px solid rgba(248, 246, 254, 0.8)"
+              : "1px solid rgba(248, 246, 254, 0.2)",
             boxShadow: "inset 0px 0px 15px 8px rgba(255, 255, 255, 0.08)",
+            // background: "rgba(25, 17, 51, 1)", // kept commented as original
           }}
         />
         <Grid
@@ -178,7 +195,7 @@ function Header({ attachmentToggle }) {
       <MailDialog
         mailDialogVisible={mailDialogVisible}
         onclose={() => setMailDialogVisible(!mailDialogVisible)}
-        secretAlert={secretAlert}
+        secretAlert={secretContext.secretEnabled}
       />
       <HeaderImageDialog
         imageDialogVisible={imageDialogVisible}

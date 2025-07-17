@@ -10,10 +10,13 @@ import { MenuOutlined } from "@mui/icons-material";
 import { CertificatesComponent } from "../CertificatesComponent/CertificatesComponent";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 import NotesComponent from "../Notes/NotesComponent";
+import { useSecretContext } from "../../Contexts/SecretContext";
 
 // const menuList = ;
 
 function Body(props) {
+  const secretContext = useSecretContext();
+
   const [menuList, setMenuList] = useState([
     { name: "About", icon: "👋" },
     { name: "Experience", icon: "🌟" },
@@ -35,12 +38,23 @@ function Body(props) {
   }, [selectedMenu]);
 
   useEffect(() => {
-    if (props.attachmentToggle.isAttachmentEnabled) {
-      setMenuList((prev) => [...prev, { name: "Notes", icon: "🗒" }]);
-    } else {
-      setMenuList((prev) => prev.filter((item) => item.name !== "Notes"));
-    }
-  }, [props.attachmentToggle.isAttachmentEnabled]);
+    setMenuList((prev) => {
+      const hasNotes = prev.some((item) => item.name === "Notes");
+      const shouldHaveNotes =
+        props.attachmentToggle.isAttachmentEnabled &&
+        secretContext.secretEnabled;
+
+      if (shouldHaveNotes && !hasNotes) {
+        // Add Notes only if not present
+        return [...prev, { name: "Notes", icon: "🗒" }];
+      } else if (!shouldHaveNotes && hasNotes) {
+        // Remove Notes only if present
+        return prev.filter((item) => item.name !== "Notes");
+      }
+      // No changes needed
+      return prev;
+    });
+  }, [props.attachmentToggle.isAttachmentEnabled, secretContext.secretEnabled]);
 
   const handleMenuSelect = (index) => {
     // console.log(menuList[index]);

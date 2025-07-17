@@ -19,6 +19,7 @@ import "./ExperienceComponent.css";
 import { Chip, Grid } from "@mui/material";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
+import { useSecretContext } from "../../Contexts/SecretContext";
 
 const experienceData = [
   {
@@ -103,6 +104,8 @@ const educationData = [
   },
 ];
 export function ExperienceComponent({ attachmentToggle }) {
+  const secretContext = useSecretContext();
+
   return (
     <Grid className="experienceContainer">
       {/* Experience Timeline */}
@@ -119,7 +122,11 @@ export function ExperienceComponent({ attachmentToggle }) {
           <TimelineSeparator>
             <TimelineDot sx={{ margin: 0 }} variant="outlined">
               <BusinessCenter
-                onDoubleClick={() => attachmentToggle.toggleAttachment()}
+                onDoubleClick={() => {
+                  if (secretContext.secretEnabled) {
+                    attachmentToggle.toggleAttachment();
+                  }
+                }}
               />
             </TimelineDot>
           </TimelineSeparator>
