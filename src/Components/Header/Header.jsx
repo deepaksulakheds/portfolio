@@ -220,6 +220,7 @@ function Header({ attachmentToggle }) {
               boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
               fontSize: 13,
               color: "white",
+              marginTop: "5px",
               padding: "8px",
             },
           },
@@ -231,4 +232,4 @@ function Header({ attachmentToggle }) {
   );
 }
 
-export default withAttachmentToggle(Header);
+export default React.memo(withAttachmentToggle(Header));

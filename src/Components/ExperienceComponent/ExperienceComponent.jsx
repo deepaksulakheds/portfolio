@@ -307,10 +307,10 @@ function CustomEducationTimeLineItem({
               <Typography sx={{ fontSize: 15, color: "#aa89f2" }}>
                 -&nbsp;{institute}
               </Typography>
-              <Typography sx={{ fontSize: 13 }}>
+              <Typography sx={{ fontSize: 13, marginTop: "5px" }}>
                 &nbsp;&nbsp; {place}
               </Typography>
-              <Typography sx={{ fontSize: 13 }}>
+              <Typography sx={{ fontSize: 13, marginBottom: "5px" }}>
                 &nbsp;&nbsp; {timePeriod}
               </Typography>
               <Chip
