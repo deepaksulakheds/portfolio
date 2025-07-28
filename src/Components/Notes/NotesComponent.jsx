@@ -1,8 +1,10 @@
 import {
+  Autocomplete,
   Checkbox,
   Chip,
   CircularProgress,
   Grid,
+  TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -24,14 +26,31 @@ import { Masonry } from "@mui/lab";
 import EditNotesDialog from "./EditNotesDialog.jsx";
 
 let displayedSelected = false;
+var tagColorMap = {};
+
+const tagColors = [
+  "springgreen",
+  "cyan",
+  "mediumslateblue",
+  "yellow",
+  "white",
+  "orange",
+  "darkgray",
+  "peachpuff",
+  "lightseagreen",
+  "lightgreen",
+  "chocolate",
+  "coral",
+  "lightcoral",
+  "purple",
+  "indigo",
+  "blueviolet",
+];
 
 function NotesComponent({ notistackSnackbar }) {
-  const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
-    onError: (err) => {
-      notistackSnackbar.showSnackbar(err.message, "error");
-    },
-    fetchPolicy: "network-only",
-  });
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
@@ -42,6 +61,14 @@ function NotesComponent({ notistackSnackbar }) {
   const [copied, setCopied] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [allRespNotes, setAllRespNotes] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+
+  const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
+    onError: (err) => {
+      notistackSnackbar.showSnackbar(err.message, "error");
+    },
+    fetchPolicy: "network-only",
+  });
 
   const fetchNotes = async () => {
     try {
@@ -56,8 +83,20 @@ function NotesComponent({ notistackSnackbar }) {
           } catch (e) {}
           return { ...note, isUrl };
         });
+        const tags = urlNotes
+          .map((note) => note.tag)
+          .flat()
+          .filter((tag) => tag);
+
+        tagColorMap = await tags.reduce((acc, currTag, index) => {
+          const color = tagColors[index % tagColors.length];
+          acc[currTag] = color;
+          return acc;
+        }, {});
+
         setAllRespNotes(urlNotes);
         setNotesToDisplay(urlNotes);
+        setAllTags([...new Set(tags)]);
         displayedSelected = false;
       } else {
         setNotesToDisplay([]);
@@ -116,7 +155,7 @@ function NotesComponent({ notistackSnackbar }) {
     notistackSnackbar.showSnackbar("Selection cleared.", "info");
   };
 
-  const toggleSelected = () => {
+  const toggleDisplaySelected = () => {
     const isAllSelected = notesToDisplay.every((note) =>
       checkedNotes.includes(note.id)
     );
@@ -125,15 +164,21 @@ function NotesComponent({ notistackSnackbar }) {
       setNotesToDisplay(allRespNotes);
       displayedSelected = false;
     } else {
-      setNotesToDisplay(
-        checkedNotes.map((id) => notesToDisplay.find((note) => note.id === id))
+      setNotesToDisplay((prev) =>
+        prev.reduce((acc, note) => {
+          if (checkedNotes.includes(note.id)) {
+            acc.push(note);
+          }
+          return acc;
+        }, [])
       );
       displayedSelected = true;
     }
   };
+
   const handleCopy = async (note) => {
     try {
-      await navigator.clipboard.writeText(note.note);
+      navigator.clipboard.writeText(note.note);
 
       setCopied(note.id);
       setTimeout(() => {
@@ -150,28 +195,167 @@ function NotesComponent({ notistackSnackbar }) {
     setEditNoteAnchorEl(e.currentTarget);
   };
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+  const handleTagChange = async (newTags) => {
+    const baseNotes = displayedSelected
+      ? allRespNotes.filter((note) => checkedNotes.includes(note.id))
+      : allRespNotes;
+
+    if (newTags.length === 0) {
+      setNotesToDisplay(baseNotes);
+    } else {
+      const filteredNotes = baseNotes.filter((note) => {
+        if (newTags.includes("- Untagged -")) {
+          return newTags.includes(note.tag) || !note.tag;
+        }
+
+        return newTags.includes(note.tag);
+      });
+      setNotesToDisplay(filteredNotes);
+    }
+  };
 
   return (
     <Grid>
-      <Chip
+      <Grid
         sx={{
-          backgroundColor: displayedSelected
-            ? "rgba(170, 137, 242, 1)"
-            : "white",
-          fontWeight: "bold",
+          display: "flex",
+          alignItems: "flex-end",
           marginBottom: "12px",
-          transition: "all ease-in-out .2s",
-          ":hover": {
-            backgroundColor: "rgba(170, 137, 242, 1)",
-          },
+          gap: "12px",
+          flexWrap: "wrap",
         }}
-        disabled={checkedNotes.length === 0}
-        label={`${checkedNotes.length} Selected / ${allRespNotes.length}`}
-        onClick={toggleSelected}
-      />
+      >
+        <Autocomplete
+          options={[...allTags, "- Untagged -"]}
+          multiple
+          autoComplete
+          disabled={allRespNotes.length == 0}
+          onChange={(e, value) => handleTagChange(value)}
+          sx={{
+            minWidth: "200px",
+            "& .MuiSvgIcon-root": {
+              color: "white",
+            },
+
+            "& .MuiInputLabel-root": {
+              color: "rgba(255, 255, 255, 0.4)",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "rgba(255, 255, 255, 0.4)",
+            },
+            "& .MuiInput-underline:before": {
+              borderBottomColor: "#555",
+            },
+            "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+              borderBottomColor: "lightgray",
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "lightgray",
+            },
+          }}
+          slotProps={{
+            popper: {
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [0, 8],
+                  },
+                },
+              ],
+            },
+            paper: {
+              sx: {
+                backgroundColor: "#2c2c2e",
+                color: "white",
+                background: "#080411",
+                border: "1px solid white",
+                borderRadius: "10px",
+              },
+            },
+            listbox: {
+              sx: {
+                "& .MuiAutocomplete-option": {
+                  "&:hover": {
+                    backgroundColor: "#aa89f2",
+                    color: "#fff",
+                  },
+                  '&[aria-selected="true"]': {
+                    color: "#aa89f2",
+                  },
+                },
+              },
+            },
+            chip: {
+              sx: {
+                height: "fit-content",
+                color: "#fff",
+                border: "1px solid #fff",
+                fontWeight: "bold",
+                display: "flex",
+                justifyContent: "space-between",
+                "& .MuiChip-deleteIcon": {
+                  color: "#bbb",
+                  "&:hover": {
+                    color: "#aa89f2",
+                  },
+                },
+              },
+            },
+            root: {
+              // Styles for the TextField's root are now here
+              "& .MuiInputLabel-root": {
+                color: "lightgray", // default label color
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "lightgray", // focused label color
+              },
+              "& .MuiInput-underline:before": {
+                borderBottomColor: "#555", // default underline
+              },
+              "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                borderBottomColor: "lightgray", // hover underline
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "lightgray", // focused underline
+              },
+            },
+            clearIndicator: {
+              sx: {
+                visibility: "visible", // 👈 make it always visible
+                opacity: 1, // ensure it's not faded
+              },
+            },
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Filter by Tag"
+              InputProps={{
+                ...params.InputProps,
+                style: { color: "white" }, // Direct style for the input element
+              }}
+            />
+          )}
+        />
+        <Chip
+          sx={{
+            backgroundColor: displayedSelected
+              ? "rgba(170, 137, 242, 1)"
+              : "white",
+            fontWeight: "bold",
+            // marginBottom: "12px",
+            transition: "all ease-in-out .2s",
+            ":hover": {
+              backgroundColor: "rgba(170, 137, 242, 1)",
+            },
+          }}
+          disabled={checkedNotes.length === 0}
+          label={`${checkedNotes.length} Selected / ${notesToDisplay.length} Dispalyed / ${allRespNotes.length}`}
+          onClick={toggleDisplaySelected}
+        />
+      </Grid>
       <Grid
         sx={{
           display: "flex",
@@ -180,17 +364,17 @@ function NotesComponent({ notistackSnackbar }) {
           transition: "all ease-in-out .2s",
         }}
       >
-        <Masonry
-          // sequential
-          columns={{ xs: 1, sm: 2, md: 2, lg: 3 }}
-          spacing={2}
-        >
-          {loading ? (
-            <CircularProgress color="white" />
-          ) : notesToDisplay.length === 0 ? (
-            <Typography sx={{ fontWeight: "500" }}>No Data Found.</Typography>
-          ) : (
-            notesToDisplay.map((note, index) => (
+        {loading ? (
+          <CircularProgress color="white" />
+        ) : notesToDisplay.length === 0 ? (
+          <Typography sx={{ fontWeight: "500" }}>No Data Found.</Typography>
+        ) : (
+          <Masonry
+            // sequential
+            columns={{ xs: 1, sm: 2, md: 2, lg: 3 }}
+            spacing={2}
+          >
+            {notesToDisplay.map((note, index) => (
               <Grid
                 key={note.id}
                 sx={{
@@ -232,13 +416,29 @@ function NotesComponent({ notistackSnackbar }) {
                       </a>
                       <Typography
                         sx={{
-                          fontSize: "12px",
+                          fontSize: "12.5px",
                           fontWeight: "400",
                           color: "rgba(170, 137, 242, 1)",
                           userSelect: "none",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "5px",
                         }}
+                        component={"div"}
                       >
                         {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
+                        {note.tag && (
+                          <Chip
+                            sx={{
+                              backgroundColor: tagColorMap[note.tag],
+                              width: "fit-content",
+                              fontWeight: "bold",
+                              padding: 0,
+                              height: "fit-content",
+                            }}
+                            label={note.tag}
+                          />
+                        )}
                       </Typography>
                     </>
                   ) : (
@@ -253,13 +453,29 @@ function NotesComponent({ notistackSnackbar }) {
                       </Typography>
                       <Typography
                         sx={{
-                          fontSize: "12px",
+                          fontSize: "12.5px",
                           fontWeight: "400",
                           color: "rgba(170, 137, 242, 1)",
                           userSelect: "none",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "5px",
                         }}
+                        component={"div"}
                       >
                         {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
+                        {note.tag && (
+                          <Chip
+                            sx={{
+                              backgroundColor: tagColorMap[note.tag],
+                              width: "fit-content",
+                              fontWeight: "bold",
+                              padding: 0,
+                              height: "fit-content",
+                            }}
+                            label={note.tag}
+                          />
+                        )}
                       </Typography>
                     </>
                   )}
@@ -318,9 +534,9 @@ function NotesComponent({ notistackSnackbar }) {
                   />
                 </Grid>
               </Grid>
-            ))
-          )}
-        </Masonry>
+            ))}
+          </Masonry>
+        )}
         <Grid sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>
           <AddBox
             titleAccess="Add new note"
@@ -368,6 +584,7 @@ function NotesComponent({ notistackSnackbar }) {
           noteAnchorEl={noteAnchorEl}
           onClose={() => setNoteAnchorEl(null)}
           fetchNotes={fetchNotes}
+          allTags={allTags}
         />
       </Grid>
       {noteEditing && (
@@ -375,6 +592,7 @@ function NotesComponent({ notistackSnackbar }) {
           editAnchorEl={editNoteAnchorEl}
           closeEditNote={() => setEditNoteAnchorEl(null)}
           noteEditing={noteEditing}
+          allTags={allTags}
           fetchNotes={fetchNotes}
         />
       )}
@@ -382,4 +600,4 @@ function NotesComponent({ notistackSnackbar }) {
   );
 }
 
-export default withNotistackSnackbar(NotesComponent);
+export default React.memo(withNotistackSnackbar(NotesComponent));

@@ -30,6 +30,7 @@ export const GET_NOTES = gql`
         id
         note
         createdAt
+        tag
       }
     }
   }
@@ -45,8 +46,8 @@ export const DELETE_NOTE = gql`
 `;
 
 export const ADD_NOTE = gql`
-  mutation AddNote($note: String!) {
-    addNote(note: $note) {
+  mutation AddNote($note: String!, $tag: String) {
+    addNote(note: $note, tag: $tag) {
       status
       message
     }
@@ -63,8 +64,8 @@ export const DELETE_MULTIPLE_NOTES = gql`
 `;
 
 export const EDIT_NOTE = gql`
-  mutation UpdateNote($id: String!, $note: String!) {
-    updateNote(id: $id, note: $note) {
+  mutation UpdateNote($id: String!, $note: String!, $tag: String) {
+    updateNote(id: $id, note: $note, tag: $tag) {
       status
       message
     }

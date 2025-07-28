@@ -54,7 +54,11 @@ async function fetchResp(url, options) {
     return Promise.resolve(createResponseFromAxiosResp(resp, resp));
   } catch (err) {
     // console.error("Axios error:", err);
-    // Destructure this for accurate server error message
+    // if (err?.response?.data?.payload) {
+    //   console.log("err", decryptDataAES(err.response.data.payload));
+    // }
+
+    // // Destructure this for accurate server error message
     const serverError = { ...err };
     throw serverError;
   }
