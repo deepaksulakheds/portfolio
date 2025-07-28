@@ -1,30 +1,74 @@
 import {
+  Autocomplete,
   Button,
   CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
   Divider,
+  FormControl,
+  FormControlLabel,
   Grid,
+  Radio,
+  RadioGroup,
   TextField,
 } from "@mui/material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_NOTE } from "../queries";
 
-function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
-  const [note, setNote] = useState("");
+function NotesDialog({
+  noteAnchorEl,
+  onClose,
+  notistackSnackbar,
+  fetchNotes,
+  allTags,
+}) {
+  const [tagTypeSelection, setTagTypeSelection] = useState(null);
   const [addNote, { data, loading, error }] = useMutation(ADD_NOTE);
+  const [note, setNote] = useState({
+    note: "",
+    tag: "",
+  });
 
   useEffect(() => {
-    setNote("");
-  }, [noteAnchorEl]);
+    if (noteAnchorEl) {
+      setNote({ ...note, tag: "" });
+    } else {
+      setTagTypeSelection(null);
+    }
+
+    return () => {
+      setNote({
+        note: "",
+        tag: "",
+      });
+    };
+  }, [noteAnchorEl, tagTypeSelection]);
 
   const handleAddNote = async () => {
     try {
+      // Validation
+      if (tagTypeSelection == "select" && (!note.tag || note.tag == "")) {
+        notistackSnackbar.showSnackbar("Please select a tag.", "error");
+        return;
+      }
+      if (tagTypeSelection == "newTag" && (!note.tag || note.tag == "")) {
+        notistackSnackbar.showSnackbar("Please enter a Tag.", "error");
+        return;
+      }
+      if (!tagTypeSelection || tagTypeSelection == "") {
+        notistackSnackbar.showSnackbar("Please select a Tag Type.", "error");
+        return;
+      }
+      if (!note.note || note.note == "") {
+        notistackSnackbar.showSnackbar("Please enter a Note.", "error");
+        return;
+      }
+
       const addResp = await addNote({
-        variables: { note: note },
+        variables: { note: note.note, tag: note.tag ? note.tag : null },
       });
       // console.log("addResp", addResp.data.addNote.status);
       if (addResp.data.addNote.status == 200) {
@@ -39,6 +83,15 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
       notistackSnackbar.showSnackbar(err.message, "error");
     }
   };
+
+  const handleTagChange = async (e, newTag) => {
+    setNote({ ...note, tag: newTag });
+  };
+
+  const handleRadioChange = async (e) => {
+    setTagTypeSelection(e.target.value);
+  };
+
   return (
     <Dialog
       disableRestoreFocus
@@ -101,12 +154,206 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
             },
           }}
           fullWidth
-          value={note}
+          value={note.note}
           variant="standard"
           name="message"
-          onChange={(e) => setNote(e.target.value)}
+          onChange={(e) => setNote({ ...note, note: e.target.value })}
           label="Enter Note *"
         />
+
+        <FormControl>
+          <RadioGroup
+            name="tagTypeOptions"
+            value={tagTypeSelection}
+            onChange={handleRadioChange}
+            sx={{ display: "flex", flexDirection: "row" }}
+          >
+            <FormControlLabel
+              value="select"
+              control={
+                <Radio
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "#aa89f2",
+                    },
+                  }}
+                />
+              }
+              label="Select"
+              sx={{ color: "white" }}
+            />
+            <FormControlLabel
+              value="newTag"
+              control={
+                <Radio
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "#aa89f2",
+                    },
+                  }}
+                />
+              }
+              label="New Tag"
+              sx={{ color: "white" }}
+            />
+            <FormControlLabel
+              value="untagged"
+              control={
+                <Radio
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "#aa89f2",
+                    },
+                  }}
+                />
+              }
+              label="- Untagged -"
+              sx={{ color: "white" }}
+            />
+          </RadioGroup>
+        </FormControl>
+        {tagTypeSelection && tagTypeSelection === "select" ? (
+          <Autocomplete
+            options={allTags}
+            autoComplete
+            value={note.tag}
+            onChange={(e, value) => handleTagChange(e, value)}
+            sx={{
+              minWidth: "200px",
+              "& .MuiSvgIcon-root": {
+                color: "white",
+              },
+
+              "& .MuiInputLabel-root": {
+                color: "rgba(255, 255, 255, 0.4)",
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "rgba(255, 255, 255, 0.4)",
+              },
+              "& .MuiInput-underline:before": {
+                borderBottomColor: "#555",
+              },
+              "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                borderBottomColor: "lightgray",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottomColor: "lightgray",
+              },
+            }}
+            slotProps={{
+              popper: {
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, 8],
+                    },
+                  },
+                ],
+              },
+              paper: {
+                sx: {
+                  backgroundColor: "#2c2c2e",
+                  color: "white",
+                  background: "#080411",
+                  border: "1px solid white",
+                  borderRadius: "10px",
+                },
+              },
+              listbox: {
+                sx: {
+                  "& .MuiAutocomplete-option": {
+                    "&:hover": {
+                      backgroundColor: "#aa89f2",
+                      color: "#fff",
+                    },
+                    '&[aria-selected="true"]': {
+                      color: "#aa89f2",
+                    },
+                  },
+                },
+              },
+
+              root: {
+                "& .MuiInputLabel-root": {
+                  color: "lightgray",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "lightgray",
+                },
+                "& .MuiInput-underline:before": {
+                  borderBottomColor: "#555",
+                },
+                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "lightgray",
+                },
+                "& .MuiInput-underline:after": {
+                  borderBottomColor: "lightgray",
+                },
+              },
+              clearIndicator: {
+                sx: {
+                  visibility: "visible",
+                  opacity: 1,
+                },
+              },
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="standard"
+                label="Select Tag"
+                InputProps={{
+                  ...params.InputProps,
+                  style: { color: "white" },
+                }}
+              />
+            )}
+          />
+        ) : tagTypeSelection && tagTypeSelection === "newTag" ? (
+          <TextField
+            autoFocus
+            multiline
+            slotProps={{
+              input: {
+                style: {
+                  color: "white",
+                },
+              },
+              inputLabel: {
+                style: {
+                  color: "rgba(255,255,255,0.5)",
+                },
+              },
+            }}
+            fullWidth
+            value={note.tag}
+            variant="standard"
+            name="message"
+            onChange={(e) => setNote({ ...note, tag: e.target.value })}
+            label="Enter Tag "
+            sx={{
+              "& .MuiInput-underline:before": {
+                borderBottom: "1px solid",
+                borderBottomColor: "rgba(255,255,255,0.3)",
+              },
+              "& .MuiInput-underline:hover": {
+                borderBottomColor: "rgba(255,255,255,0.5)",
+              },
+              "& .MuiInput-underline:hover:before": {
+                borderBottom: "2px solid",
+                borderBottomColor: "rgba(255,255,255,0.3)",
+              },
+              "& .MuiInput-underline:after": {
+                borderBottom: "2px solid",
+                borderBottomColor: "rgba(255,255,255,0.3)",
+              },
+            }}
+          />
+        ) : null}
         <Grid
           sx={{
             display: "flex",
@@ -135,7 +382,7 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
                 }`,
               },
             }}
-            disabled={!note || loading}
+            disabled={!note.note || loading}
             onClick={handleAddNote}
           >
             {loading ? <CircularProgress color="white" size={20} /> : "Add"}
@@ -146,4 +393,4 @@ function NotesDialog({ noteAnchorEl, onClose, notistackSnackbar, fetchNotes }) {
   );
 }
 
-export default withNotistackSnackbar(NotesDialog);
+export default React.memo(withNotistackSnackbar(NotesDialog));
