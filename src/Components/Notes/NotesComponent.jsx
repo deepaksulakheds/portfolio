@@ -83,9 +83,10 @@ function NotesComponent({ notistackSnackbar }) {
           return { ...note, isUrl };
         });
         const tags = urlNotes
-          .map((note) => note.tag)
+          ?.map((note) => note.tag)
           .flat()
-          .filter((tag) => tag);
+          .filter((tag) => tag)
+          .sort();
 
         tagColorMap = await tags.reduce((acc, currTag, index) => {
           const color = tagColors[index % tagColors.length];
@@ -225,17 +226,17 @@ function NotesComponent({ notistackSnackbar }) {
         }}
       >
         <Autocomplete
-          options={[...allTags, "- Untagged -"]}
+          options={["- Untagged -", ...allTags]}
           multiple
           autoComplete
-          disabled={allRespNotes.length == 0}
+          disabled={allTags.length == 0}
           onChange={(e, value) => handleTagChange(value)}
+          disableCloseOnSelect
           sx={{
             minWidth: "200px",
             "& .MuiSvgIcon-root": {
               color: "white",
             },
-
             "& .MuiInputLabel-root": {
               color: "rgba(255, 255, 255, 0.4)",
             },
@@ -250,6 +251,16 @@ function NotesComponent({ notistackSnackbar }) {
             },
             "& .MuiInput-underline:after": {
               borderBottomColor: "lightgray",
+            },
+            "& .Mui-disabled": {
+              color: "rgba(255, 0, 0, 0.8)", // text color
+              WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+            },
+            "& .MuiInput-underline.Mui-disabled:before": {
+              borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+            },
+            "& .Mui-disabled .MuiSvgIcon-root": {
+              color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
             },
           }}
           slotProps={{
@@ -330,7 +341,7 @@ function NotesComponent({ notistackSnackbar }) {
             <TextField
               {...params}
               variant="standard"
-              label="Filter by Tag"
+              label={allTags.length === 0 ? "No tags available" : "Filter Tags"}
               InputProps={{
                 ...params.InputProps,
                 style: { color: "white" },

@@ -77,7 +77,11 @@ function EditNotesDialog({
       }
 
       const editResp = await editNote({
-        variables: { id: newNote.id, note: newNote.note, tag: newNote.tag },
+        variables: {
+          id: newNote.id,
+          note: newNote.note,
+          tag: newNote.tag ? newNote.tag : null,
+        },
       });
       // console.log("editResp", editResp.data);
       if (editResp.data.updateNote.status == 200) {
@@ -185,6 +189,7 @@ function EditNotesDialog({
           >
             <FormControlLabel
               value="select"
+              disabled={allTags.length == 0}
               control={
                 <Radio
                   sx={{
@@ -196,7 +201,19 @@ function EditNotesDialog({
                 />
               }
               label="Select"
-              sx={{ color: "white" }}
+              sx={{
+                color: "white",
+                "& .Mui-disabled": {
+                  color: "rgba(255, 0, 0, 0.8)", // text color
+                  WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+                },
+                "& .MuiInput-underline.Mui-disabled:before": {
+                  borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+                },
+                "& .Mui-disabled .MuiSvgIcon-root": {
+                  color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+                },
+              }}
             />
             <FormControlLabel
               value="newTag"
@@ -233,6 +250,7 @@ function EditNotesDialog({
         {tagTypeSelection && tagTypeSelection === "select" ? (
           <Autocomplete
             options={allTags}
+            disabled={allTags.length === 0}
             autoComplete
             value={newNote.tag}
             onChange={(e, value) => handleTagChange(e, value)}
@@ -241,7 +259,6 @@ function EditNotesDialog({
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
-
               "& .MuiInputLabel-root": {
                 color: "rgba(255, 255, 255, 0.4)",
               },
@@ -256,6 +273,16 @@ function EditNotesDialog({
               },
               "& .MuiInput-underline:after": {
                 borderBottomColor: "lightgray",
+              },
+              "& .Mui-disabled": {
+                color: "rgba(255, 0, 0, 0.8)", // text color
+                WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+              },
+              "& .MuiInput-underline.Mui-disabled:before": {
+                borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+              },
+              "& .Mui-disabled .MuiSvgIcon-root": {
+                color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
               },
             }}
             slotProps={{
@@ -320,7 +347,7 @@ function EditNotesDialog({
               <TextField
                 {...params}
                 variant="standard"
-                label="Select Tag"
+                label={allTags.length > 0 ? "Select Tag" : "No Tags, Crate Tag"}
                 InputProps={{
                   ...params.InputProps,
                   style: { color: "white" },
