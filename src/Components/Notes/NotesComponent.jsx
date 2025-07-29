@@ -48,10 +48,6 @@ const tagColors = [
 ];
 
 function NotesComponent({ notistackSnackbar }) {
-  useEffect(() => {
-    fetchNotes();
-  }, []);
-
   const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
   const [editNoteAnchorEl, setEditNoteAnchorEl] = useState(null);
@@ -62,13 +58,16 @@ function NotesComponent({ notistackSnackbar }) {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [allRespNotes, setAllRespNotes] = useState([]);
   const [allTags, setAllTags] = useState([]);
-
   const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
     onError: (err) => {
       notistackSnackbar.showSnackbar(err.message, "error");
     },
     fetchPolicy: "network-only",
   });
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   const fetchNotes = async () => {
     try {
@@ -334,7 +333,11 @@ function NotesComponent({ notistackSnackbar }) {
               label="Filter by Tag"
               InputProps={{
                 ...params.InputProps,
-                style: { color: "white" }, // Direct style for the input element
+                style: { color: "white" },
+                inputProps: {
+                  ...params.inputProps,
+                  readOnly: true,
+                },
               }}
             />
           )}
