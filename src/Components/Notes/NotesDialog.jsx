@@ -309,6 +309,10 @@ function NotesDialog({
                 InputProps={{
                   ...params.InputProps,
                   style: { color: "white" },
+                  inputProps: {
+                    ...params.inputProps,
+                    readOnly: true,
+                  },
                 }}
               />
             )}
