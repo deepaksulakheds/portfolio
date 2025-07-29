@@ -170,6 +170,7 @@ function NotesDialog({
           >
             <FormControlLabel
               value="select"
+              disabled={allTags.length == 0}
               control={
                 <Radio
                   sx={{
@@ -181,7 +182,19 @@ function NotesDialog({
                 />
               }
               label="Select"
-              sx={{ color: "white" }}
+              sx={{
+                color: "white",
+                "& .Mui-disabled": {
+                  color: "rgba(255, 0, 0, 0.8)", // text color
+                  WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+                },
+                "& .MuiInput-underline.Mui-disabled:before": {
+                  borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+                },
+                "& .Mui-disabled .MuiSvgIcon-root": {
+                  color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+                },
+              }}
             />
             <FormControlLabel
               value="newTag"
@@ -221,12 +234,12 @@ function NotesDialog({
             autoComplete
             value={note.tag}
             onChange={(e, value) => handleTagChange(e, value)}
+            disabled={allTags.length === 0}
             sx={{
               minWidth: "200px",
               "& .MuiSvgIcon-root": {
                 color: "white",
               },
-
               "& .MuiInputLabel-root": {
                 color: "rgba(255, 255, 255, 0.4)",
               },
@@ -241,6 +254,16 @@ function NotesDialog({
               },
               "& .MuiInput-underline:after": {
                 borderBottomColor: "lightgray",
+              },
+              "& .Mui-disabled": {
+                color: "rgba(255, 0, 0, 0.8)", // text color
+                WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+              },
+              "& .MuiInput-underline.Mui-disabled:before": {
+                borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+              },
+              "& .Mui-disabled .MuiSvgIcon-root": {
+                color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
               },
             }}
             slotProps={{
@@ -305,7 +328,7 @@ function NotesDialog({
               <TextField
                 {...params}
                 variant="standard"
-                label="Select Tag"
+                label={allTags.length > 0 ? "Select Tag" : "No Tags, Crate Tag"}
                 InputProps={{
                   ...params.InputProps,
                   style: { color: "white" },
