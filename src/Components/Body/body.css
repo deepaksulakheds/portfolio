@@ -1,8 +1,8 @@
 .bodyContainer {
   margin: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  /* background: rgba(255, 255, 255, 0.1); */
   border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
   backdrop-filter: blur(5.5px);
   -webkit-backdrop-filter: blur(5.5px);
   /* border: 1px solid rgba(111, 65, 210, 0.4); */
@@ -19,12 +19,8 @@
 .menuList {
   padding: 5px;
   cursor: pointer;
-  color: white;
+
   transition: all ease-in-out 0.1s;
-}
-.menuList:hover {
-  color: rgba(170, 137, 242, 1);
-  filter: drop-shadow(0 0 0.8px rgba(170, 137, 242, 1));
 }
 
 .selectedTitle {

@@ -24,6 +24,7 @@ import NotesDialog from "./NotesDialog.jsx";
 import moment from "moment";
 import { Masonry } from "@mui/lab";
 import EditNotesDialog from "./EditNotesDialog.jsx";
+import { useThemeContext } from "../../Contexts/ThemeContext.jsx";
 
 let displayedSelected = false;
 var tagColorMap = {};
@@ -48,6 +49,9 @@ const tagColors = [
 ];
 
 function NotesComponent({ notistackSnackbar }) {
+  // Contexts
+  const { themeContext } = useThemeContext();
+
   const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
   const [editNoteAnchorEl, setEditNoteAnchorEl] = useState(null);
@@ -235,32 +239,32 @@ function NotesComponent({ notistackSnackbar }) {
           sx={{
             minWidth: "200px",
             "& .MuiSvgIcon-root": {
-              color: "white",
+              color: themeContext.oppositeTheme,
             },
             "& .MuiInputLabel-root": {
-              color: "rgba(255, 255, 255, 0.4)",
+              color: themeContext.dullOppositeTheme,
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "rgba(255, 255, 255, 0.4)",
+              color: themeContext.dullOppositeTheme,
             },
             "& .MuiInput-underline:before": {
-              borderBottomColor: "#555",
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
             "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-              borderBottomColor: "lightgray",
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
             "& .MuiInput-underline:after": {
-              borderBottomColor: "lightgray",
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
             "& .Mui-disabled": {
-              color: "rgba(255, 0, 0, 0.8)", // text color
-              WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+              color: themeContext.disabledColor,
+              WebkitTextFillColor: themeContext.disabledColor,
             },
             "& .MuiInput-underline.Mui-disabled:before": {
-              borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+              borderBottomColor: themeContext.disabledColor,
             },
             "& .Mui-disabled .MuiSvgIcon-root": {
-              color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+              color: themeContext.disabledColor,
             },
           }}
           slotProps={{
@@ -276,10 +280,10 @@ function NotesComponent({ notistackSnackbar }) {
             },
             paper: {
               sx: {
-                backgroundColor: "#2c2c2e",
-                color: "white",
-                background: "#080411",
-                border: "1px solid white",
+                backgroundColor: themeContext.themeBackground,
+                background: themeContext.themeBackground,
+                color: themeContext.oppositeTheme,
+                border: `1px solid ${themeContext.oppositeTheme}`,
                 borderRadius: "10px",
               },
             },
@@ -287,11 +291,12 @@ function NotesComponent({ notistackSnackbar }) {
               sx: {
                 "& .MuiAutocomplete-option": {
                   "&:hover": {
-                    backgroundColor: "#aa89f2",
-                    color: "#fff",
+                    backgroundColor: themeContext.oppositeTheme,
+                    color: themeContext.themeBackground,
                   },
                   '&[aria-selected="true"]': {
-                    color: "#aa89f2",
+                    color: themeContext.themeColor,
+                    filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
                   },
                 },
               },
@@ -299,41 +304,40 @@ function NotesComponent({ notistackSnackbar }) {
             chip: {
               sx: {
                 height: "fit-content",
-                color: "#fff",
-                border: "1px solid #fff",
+                color: themeContext.bodyText,
+                border: `1px solid ${themeContext.dullThemeColor}`,
                 fontWeight: "bold",
                 display: "flex",
                 justifyContent: "space-between",
                 "& .MuiChip-deleteIcon": {
-                  color: "#bbb",
+                  color: themeContext.dullOppositeTheme,
                   "&:hover": {
-                    color: "#aa89f2",
+                    color: themeContext.oppositeTheme,
                   },
                 },
               },
             },
             root: {
-              // Styles for the TextField's root are now here
               "& .MuiInputLabel-root": {
-                color: "lightgray", // default label color
+                color: themeContext.dullOppositeTheme,
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "lightgray", // focused label color
+                color: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:before": {
-                borderBottomColor: "#555", // default underline
+                borderBottomColor: themeContext.oppositeTheme,
               },
               "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                borderBottomColor: "lightgray", // hover underline
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:after": {
-                borderBottomColor: "lightgray", // focused underline
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
             },
             clearIndicator: {
               sx: {
-                visibility: "visible", // 👈 make it always visible
-                opacity: 1, // ensure it's not faded
+                visibility: "visible",
+                opacity: 1,
               },
             },
           }}
@@ -344,7 +348,7 @@ function NotesComponent({ notistackSnackbar }) {
               label={allTags.length === 0 ? "No tags available" : "Filter Tags"}
               InputProps={{
                 ...params.InputProps,
-                style: { color: "white" },
+                style: { color: themeContext.oppositeTheme },
                 inputProps: {
                   ...params.inputProps,
                   readOnly: true,
@@ -355,14 +359,15 @@ function NotesComponent({ notistackSnackbar }) {
         />
         <Chip
           sx={{
+            color: themeContext.noThemeColor,
             backgroundColor: displayedSelected
-              ? "rgba(170, 137, 242, 1)"
-              : "white",
+              ? themeContext.oppositeTheme
+              : themeContext.dullOppositeTheme,
             fontWeight: "bold",
-            // marginBottom: "12px",
             transition: "all ease-in-out .2s",
             ":hover": {
-              backgroundColor: "rgba(170, 137, 242, 1)",
+              // backgroundColor: themeContext.chipShadow,
+              boxShadow: `inset 0px 0px 30px 10px ${themeContext.themeColor}`,
             },
           }}
           disabled={checkedNotes.length === 0}
@@ -379,9 +384,16 @@ function NotesComponent({ notistackSnackbar }) {
         }}
       >
         {loading ? (
-          <CircularProgress color="white" />
+          <CircularProgress
+            sx={{ color: themeContext.themeIcons }}
+            color={themeContext.themeIcons}
+          />
         ) : notesToDisplay.length === 0 ? (
-          <Typography sx={{ fontWeight: "500" }}>No Data Found.</Typography>
+          <Typography
+            sx={{ fontWeight: "500", color: themeContext.subTitleText }}
+          >
+            No Data Found.
+          </Typography>
         ) : (
           <Masonry
             // sequential
@@ -392,10 +404,10 @@ function NotesComponent({ notistackSnackbar }) {
               <Grid
                 key={note.id}
                 sx={{
-                  border: `0.5px solid ${
+                  border: `1px solid ${
                     checkedNotes.includes(note.id)
-                      ? "#aa89f2"
-                      : "rgba(255, 255, 255, 0.4)"
+                      ? themeContext.themeColor
+                      : themeContext.dullThemeColor
                   }`,
                   wordBreak: "break-word",
                   display: "flex",
@@ -418,11 +430,13 @@ function NotesComponent({ notistackSnackbar }) {
                         href={note.note}
                         target="_blank"
                         rel="noopener noreferrer"
+                        style={{ textDecorationColor: themeContext.themeColor }}
                       >
                         <Typography
                           sx={{
                             fontWeight: "500",
                             whiteSpace: "pre-line",
+                            color: themeContext.themeColor,
                           }}
                         >
                           {note.note}
@@ -432,7 +446,7 @@ function NotesComponent({ notistackSnackbar }) {
                         sx={{
                           fontSize: "12.5px",
                           fontWeight: "400",
-                          color: "rgba(170, 137, 242, 1)",
+                          color: themeContext.themeColor,
                           userSelect: "none",
                           display: "flex",
                           flexDirection: "column",
@@ -449,6 +463,7 @@ function NotesComponent({ notistackSnackbar }) {
                               fontWeight: "bold",
                               padding: 0,
                               height: "fit-content",
+                              color: themeContext.blackText,
                             }}
                             label={note.tag}
                           />
@@ -461,6 +476,7 @@ function NotesComponent({ notistackSnackbar }) {
                         sx={{
                           fontWeight: "500",
                           whiteSpace: "pre-line",
+                          color: themeContext.oppositeTheme,
                         }}
                       >
                         {note.note}
@@ -469,7 +485,7 @@ function NotesComponent({ notistackSnackbar }) {
                         sx={{
                           fontSize: "12.5px",
                           fontWeight: "400",
-                          color: "rgba(170, 137, 242, 1)",
+                          color: themeContext.themeColor,
                           userSelect: "none",
                           display: "flex",
                           flexDirection: "column",
@@ -486,6 +502,7 @@ function NotesComponent({ notistackSnackbar }) {
                               fontWeight: "bold",
                               padding: 0,
                               height: "fit-content",
+                              color: themeContext.blackText,
                             }}
                             label={note.tag}
                           />
@@ -500,14 +517,15 @@ function NotesComponent({ notistackSnackbar }) {
                   <Checkbox
                     sx={{
                       alignSelf: "flex-start",
-                      color: "rgba(255, 255, 255, 0.6)",
+                      color: themeContext.themeColor,
                       margin: 0,
                       padding: "0.2rem",
                       ":hover": {
-                        backgroundColor: "rgba(170, 137, 242, 0.4)",
+                        color: themeContext.dullOppositeTheme,
+                        backgroundColor: themeContext.dullOppositeTheme,
                       },
                       "&.Mui-checked": {
-                        color: "rgba(170, 137, 242, 1)",
+                        color: themeContext.themeColor,
                       },
                     }}
                     checked={checkedNotes.includes(note.id)}
@@ -517,7 +535,7 @@ function NotesComponent({ notistackSnackbar }) {
                     <CheckCircle
                       sx={{
                         padding: "0.2rem",
-                        color: "rgba(255, 255, 255, 0.6)",
+                        color: themeContext.themeColor,
                       }}
                     />
                   ) : (
@@ -525,10 +543,10 @@ function NotesComponent({ notistackSnackbar }) {
                       sx={{
                         padding: "0.2rem",
                         cursor: "pointer",
-                        color: "rgba(255, 255, 255, 0.6)",
+                        color: themeContext.themeColor,
                         borderRadius: "50%",
                         ":hover": {
-                          backgroundColor: "rgba(170, 137, 242, 0.4)",
+                          backgroundColor: themeContext.dullOppositeTheme,
                         },
                       }}
                       onClick={() => handleCopy(note)}
@@ -538,10 +556,10 @@ function NotesComponent({ notistackSnackbar }) {
                     sx={{
                       padding: "0.2rem",
                       cursor: "pointer",
-                      color: "rgba(255, 255, 255, 0.6)",
+                      color: themeContext.themeColor,
                       borderRadius: "50%",
                       ":hover": {
-                        backgroundColor: "rgba(170, 137, 242, 0.4)",
+                        backgroundColor: themeContext.dullOppositeTheme,
                       },
                     }}
                     onClick={(e) => handleEdit(note, e)}
@@ -556,9 +574,10 @@ function NotesComponent({ notistackSnackbar }) {
             titleAccess="Add new note"
             sx={{
               cursor: "pointer",
-              color: "white",
+              borderRadius: "5px",
+              color: themeContext.themeColor,
               "&:hover": {
-                color: "rgba(170, 137, 242, 1)",
+                backgroundColor: themeContext.dullOppositeTheme,
               },
             }}
             onClick={(e) =>
@@ -566,15 +585,20 @@ function NotesComponent({ notistackSnackbar }) {
             }
           />
           {deleteLoading ? (
-            <CircularProgress color="white" size={23} />
+            <CircularProgress
+              sx={{ color: themeContext.themeColor }}
+              color={themeContext.themeColor}
+              size={23}
+            />
           ) : (
             <Delete
               titleAccess="Delete Selected"
               sx={{
+                borderRadius: "5px",
                 cursor: "pointer",
-                color: "white",
+                color: themeContext.themeColor,
                 "&:hover": {
-                  color: "rgba(170, 137, 242, 1)",
+                  backgroundColor: themeContext.dullOppositeTheme,
                 },
               }}
               onClick={handleMultipleDelete}
@@ -584,11 +608,11 @@ function NotesComponent({ notistackSnackbar }) {
           <DisabledByDefault
             titleAccess="Clear Selection"
             sx={{
-              borderRadius: "50%",
+              borderRadius: "5px",
               cursor: "pointer",
-              color: "white",
+              color: themeContext.themeColor,
               "&:hover": {
-                color: "rgba(170, 137, 242, 1)",
+                backgroundColor: themeContext.dullOppositeTheme,
               },
             }}
             onClick={handleClearSelection}

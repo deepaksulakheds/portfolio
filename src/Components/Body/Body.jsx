@@ -1,4 +1,11 @@
-import { Grid, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Grid,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./body.css";
 import AboutComponent from "../About/AboutComponent";
@@ -11,11 +18,11 @@ import { CertificatesComponent } from "../CertificatesComponent/CertificatesComp
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 import NotesComponent from "../Notes/NotesComponent";
 import { useSecretContext } from "../../Contexts/SecretContext";
-
-// const menuList = ;
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 function Body(props) {
   const secretContext = useSecretContext();
+  const { themeContext } = useThemeContext();
 
   const [menuList, setMenuList] = useState([
     { name: "About", icon: "👋" },
@@ -73,7 +80,10 @@ function Body(props) {
   };
 
   return (
-    <Grid className="bodyContainer">
+    <Grid
+      className="bodyContainer"
+      sx={{ background: themeContext.bodyBackground }}
+    >
       <Grid
         style={{
           margin: -1.5,
@@ -90,6 +100,7 @@ function Body(props) {
             fontWeight: "bold",
             transition: "all ease-in-out 0.5s",
             textUnderlineOffset: 10,
+            color: themeContext.titleText,
           }}
           className="underline-first-two"
         >
@@ -97,21 +108,26 @@ function Body(props) {
         </span>
         <Grid className="navBar" sx={{ display: { xs: "none", md: "flex" } }}>
           {menuList.map((menu, index) => (
-            <a
+            <Link
               className="menuList"
               key={menu.name}
               onClick={(e) => handleMenuSelect(index)}
-              style={
-                selectedMenu.includes(menu.name)
-                  ? {
-                      color: "#aa89f2",
-                      filter: "drop-shadow(0px 0px 0.8px #aa89f2)",
-                    }
-                  : null
-              }
+              sx={{
+                textDecoration: "none",
+                color: selectedMenu.includes(menu.name)
+                  ? themeContext.themeColor
+                  : themeContext.bodyText,
+                filter: selectedMenu.includes(menu.name)
+                  ? `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`
+                  : null,
+                "&:hover": {
+                  color: themeContext.themeColor,
+                  filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
+                },
+              }}
             >
               {menu.name}
-            </a>
+            </Link>
           ))}
         </Grid>
         <Box className="navBar" sx={{ display: { xs: "flex", md: "none" } }}>
@@ -143,8 +159,8 @@ function Body(props) {
             slotProps={{
               paper: {
                 style: {
-                  background: "#080411",
-                  border: "1px solid white",
+                  background: themeContext.themeBackground,
+                  border: `0.2px solid ${themeContext.dullThemeColor}`,
                   borderRadius: "10px",
                 },
               },
@@ -158,16 +174,18 @@ function Body(props) {
                 className="menuList"
                 key={menu.name}
                 onClick={(e) => handleMenuSelect(index)}
-                sx={
-                  selectedMenu.includes(menu.name)
-                    ? {
-                        color: "#aa89f2",
-                        filter: " drop-shadow(0px 0px 0.8px #aa89f2)",
-                      }
-                    : {
-                        color: "white",
-                      }
-                }
+                sx={{
+                  color: selectedMenu.includes(menu.name)
+                    ? themeContext.themeColor
+                    : themeContext.bodyText,
+                  filter: selectedMenu.includes(menu.name)
+                    ? `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`
+                    : null,
+                  "&:hover": {
+                    color: themeContext.themeColor,
+                    filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
+                  },
+                }}
               >
                 {menu.name}
               </MenuItem>

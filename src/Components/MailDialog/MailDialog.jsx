@@ -19,6 +19,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { withAttachmentToggle } from "./attachmentContext";
 import { useMutation } from "@apollo/client";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 function MailDialog({
   mailDialogVisible,
@@ -27,8 +28,11 @@ function MailDialog({
   secretAlert,
   attachmentToggle,
 }) {
-  const [sendMail] = useMutation(SEND_MAIL_QUERY);
+  // Contexts
+  const { themeContext } = useThemeContext();
 
+  // States
+  const [sendMail] = useMutation(SEND_MAIL_QUERY);
   const [contactDetails, setContactDetails] = useState({
     name: "",
     email: "",
@@ -43,6 +47,7 @@ function MailDialog({
   });
   const [loading, setLoading] = useState(false);
 
+  // Effects
   useEffect(() => {
     // console.log("cleared");
     setContactDetails({ name: "", email: "", subject: "", message: "" });
@@ -51,6 +56,7 @@ function MailDialog({
     setFilesUploaded([]);
   }, [mailDialogVisible]);
 
+  // Functions and Handlers
   const handleChange = async (event) => {
     setContactDetails({
       ...contactDetails,
@@ -195,25 +201,36 @@ function MailDialog({
         paper: {
           style: {
             borderRadius: "10px",
-            background: "#211e29",
-            border: " 0.5px solid rgba(255, 255, 255, 0.3)",
+            background: themeContext.themeBackground,
+            border: `0.5px solid ${themeContext.dullThemeColor}`,
           },
         },
       }}
     >
       <DialogTitle
-        sx={{ color: "white", fontWeight: "bold", padding: "18px 20px" }}
+        sx={{
+          color: themeContext.titleText,
+          fontWeight: "bold",
+          padding: "18px 20px",
+        }}
         onClick={secretMailAlertHandler}
       >
         Contact Me
       </DialogTitle>
       <Grid
-        style={{ display: "flex", justifyContent: "center", color: "white" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          color: themeContext.oppositeTheme,
+        }}
       >
         <Divider
-          color="white"
-          sx={{ color: "white", backgroundColor: "white" }}
-          style={{ color: "white" }}
+          color={themeContext.oppositeTheme}
+          sx={{
+            color: themeContext.oppositeTheme,
+            backgroundColor: themeContext.oppositeTheme,
+          }}
+          style={{ color: themeContext.oppositeTheme }}
           width="92%"
         />
       </Grid>
@@ -235,35 +252,42 @@ function MailDialog({
               autoFocus
               InputLabelProps={{
                 style: {
-                  color: errors.name ? "red" : "rgba(255,255,255,0.6)",
+                  color: errors.name
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
               }}
               InputProps={{
                 style: {
-                  color: errors.name ? "red" : "white",
+                  color: errors.name
+                    ? themeContext.errorColor
+                    : themeContext.oppositeTheme,
                 },
               }}
               sx={{
+                "& .MuiInput-root": {
+                  caretColor: themeContext.dullOppositeTheme,
+                },
                 "& .MuiInput-underline:before": {
                   borderBottom: "1px solid",
                   borderBottomColor: errors.name
-                    ? "red"
-                    : "rgba(255,255,255,0.3)", // Error color or default color
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover": {
-                  borderBottomColor: "rgba(255,255,255,0.5)", // Error color or default color
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover:before": {
                   borderBottom: "2px solid",
                   borderBottomColor: errors.name
-                    ? "red"
-                    : "rgba(255,255,255,0.3)", // Error color or default color
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:after": {
                   borderBottom: "2px solid",
                   borderBottomColor: errors.name
-                    ? "red"
-                    : "rgba(255,255,255,0.3)", // Error color or default color
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
               }}
               variant="standard"
@@ -278,31 +302,42 @@ function MailDialog({
             <TextField
               InputLabelProps={{
                 style: {
-                  color: errors.email ? "red" : "rgba(255,255,255,0.6)",
+                  color: errors.email
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
               }}
-              InputProps={{ style: { color: errors.email ? "red" : "white" } }}
+              InputProps={{
+                style: {
+                  color: errors.email
+                    ? themeContext.errorColor
+                    : themeContext.oppositeTheme,
+                },
+              }}
               sx={{
+                "& .MuiInput-root": {
+                  caretColor: themeContext.dullOppositeTheme,
+                },
                 "& .MuiInput-underline:before": {
                   borderBottom: "1px solid",
                   borderBottomColor: errors.email
-                    ? "red"
-                    : "rgba(255,255,255,0.3)",
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover": {
-                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover:before": {
                   borderBottom: "2px solid",
                   borderBottomColor: errors.email
-                    ? "red"
-                    : "rgba(255,255,255,0.3)",
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:after": {
                   borderBottom: "2px solid",
                   borderBottomColor: errors.email
-                    ? "red"
-                    : "rgba(255,255,255,0.3)",
+                    ? themeContext.errorColor
+                    : themeContext.dullOppositeTheme,
                 },
               }}
               fullWidth
@@ -315,23 +350,28 @@ function MailDialog({
               // onBlur={handleValidity}
             />
             <TextField
-              InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
-              InputProps={{ style: { color: "white" } }}
+              InputLabelProps={{
+                style: { color: themeContext.dullOppositeTheme },
+              }}
+              InputProps={{ style: { color: themeContext.oppositeTheme } }}
               sx={{
+                "& .MuiInput-root": {
+                  caretColor: themeContext.dullOppositeTheme,
+                },
                 "& .MuiInput-underline:before": {
                   borderBottom: "1px solid",
-                  borderBottomColor: "rgba(255,255,255,0.3)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover": {
-                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover:before": {
                   borderBottom: "2px solid",
-                  borderBottomColor: "rgba(255,255,255,0.3)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:after": {
                   borderBottom: "2px solid",
-                  borderBottomColor: "rgba(255,255,255,0.3)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
               }}
               fullWidth
@@ -343,23 +383,28 @@ function MailDialog({
             />
             <TextField
               multiline
-              InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
-              InputProps={{ style: { color: "white" } }}
+              InputLabelProps={{
+                style: { color: themeContext.dullOppositeTheme },
+              }}
+              InputProps={{ style: { color: themeContext.oppositeTheme } }}
               sx={{
+                "& .MuiInput-root": {
+                  caretColor: themeContext.dullOppositeTheme,
+                },
                 "& .MuiInput-underline:before": {
                   borderBottom: "1px solid",
-                  borderBottomColor: "rgba(255,255,255,0.3)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover": {
-                  borderBottomColor: "rgba(255,255,255,0.5)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:hover:before": {
                   borderBottom: "2px solid",
-                  borderBottomColor: "rgba(255,255,255,0.3)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:after": {
                   borderBottom: "2px solid",
-                  borderBottomColor: "rgba(255,255,255,0.3)",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
               }}
               fullWidth
@@ -381,17 +426,16 @@ function MailDialog({
               sx={{
                 height: 40,
                 width: 90,
-                border: "1px solid rgba(255,255,255,.6)",
+                border: `0.2px solid ${themeContext.oppositeTheme}`,
                 borderRadius: "7px",
                 textTransform: "none",
-                color: "white",
+                color: themeContext.oppositeTheme,
                 fontWeight: "bold",
                 ...(secretMailAlert && {
                   textTransform: "uppercase",
                 }),
                 "&:hover": {
-                  boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-                  // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
+                  boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
                 },
               }}
               onClick={onclose}
@@ -406,14 +450,13 @@ function MailDialog({
                 borderRadius: "7px",
                 fontWeight: "bold",
                 border: !!(errors.name || errors.email)
-                  ? "1px solid rgba(255,0,0,1)"
-                  : "1px solid rgba(255,255,255,0.6)",
+                  ? `0.2px solid ${themeContext.errorColor}`
+                  : `0.2px solid ${themeContext.oppositeTheme}`,
                 color: !!(errors.name || errors.email)
-                  ? "rgba(255,0,0,1) !important"
-                  : "rgba(255,255,255,1) !important",
+                  ? `${themeContext.errorColor} !important`
+                  : `${themeContext.oppositeTheme} !important`,
                 "&:hover": {
-                  boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-                  // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
+                  boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
                 },
                 "&:disabled": {
                   pointerEvents: "unset",
@@ -425,7 +468,11 @@ function MailDialog({
               disabled={!!(errors.name || errors.email || loading)}
             >
               {loading ? (
-                <CircularProgress size={25} color="inherit" />
+                <CircularProgress
+                  size={25}
+                  color="inherit"
+                  sx={{ color: themeContext.oppositeTheme }}
+                />
               ) : (
                 "Send"
               )}
@@ -472,11 +519,10 @@ function MailDialog({
                         border: "1px solid rgba(255, 255, 255)",
                         borderRadius: "7px",
                         transition: "all 0.2s ease-in-out",
-                        color: "white",
+                        color: themeContext.white,
                         cursor: "pointer",
                         "&:hover": {
-                          boxShadow:
-                            "inset 0px 0px 28px rgba(170, 137, 242, 1)",
+                          boxShadow: `inset 0px 0px 28px ${themeContext.primaryColor}`,
                         },
                       }}
                     />
@@ -511,13 +557,13 @@ function MailDialog({
                         <Grid
                           sx={{
                             padding: 1,
-                            color: "white",
+                            color: themeContext.white,
                             display: "flex",
                             whiteSpace: "nowrap",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             "&:hover": {
-                              outline: "1.5px solid white",
+                              outline: `1.5px solid ${themeContext.white}`,
                               borderRadius: "7px",
                             },
                           }}
@@ -536,7 +582,7 @@ function MailDialog({
                               marginRight: -1,
                               transition: "all 0.2s ease-in-out",
                               "&:hover": {
-                                color: "red",
+                                color: themeContext.errorColor,
                               },
                             }}
                           />
@@ -545,7 +591,11 @@ function MailDialog({
                     ))
                   ) : (
                     <Typography
-                      sx={{ fontSize: 17, fontWeight: "bold", color: "white" }}
+                      sx={{
+                        fontSize: 17,
+                        fontWeight: "bold",
+                        color: themeContext.white,
+                      }}
                     >
                       No files attached.
                     </Typography>

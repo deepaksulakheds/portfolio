@@ -19,6 +19,7 @@ import { useMutation } from "@apollo/client";
 import { EDIT_NOTE } from "../queries";
 import React, { useEffect, useState } from "react";
 import { ClearOutlined } from "@mui/icons-material";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 function EditNotesDialog({
   editAnchorEl,
@@ -29,6 +30,10 @@ function EditNotesDialog({
   setNoteEditing,
   notistackSnackbar,
 }) {
+  // Contexts
+  const { themeContext } = useThemeContext();
+
+  // States
   const [editNote, { data, loading, error }] = useMutation(EDIT_NOTE);
   const [newNote, setNewNote] = useState({
     note: "",
@@ -123,24 +128,35 @@ function EditNotesDialog({
         paper: {
           style: {
             borderRadius: "10px",
-            background: "#211e29",
-            border: " 0.5px solid rgba(255, 255, 255, 0.3)",
+            background: themeContext.themeBackground,
+            border: `0.5px solid ${themeContext.dullThemeColor}`,
           },
         },
       }}
     >
       <DialogTitle
-        sx={{ color: "white", fontWeight: "bold", padding: "18px 20px" }}
+        sx={{
+          color: themeContext.titleText,
+          fontWeight: "bold",
+          padding: "18px 20px",
+        }}
       >
         Edit Note
       </DialogTitle>
       <Grid
-        style={{ display: "flex", justifyContent: "center", color: "white" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          color: themeContext.oppositeTheme,
+        }}
       >
         <Divider
-          color="white"
-          sx={{ color: "white", backgroundColor: "white" }}
-          style={{ color: "white" }}
+          color={themeContext.oppositeTheme}
+          sx={{
+            color: themeContext.oppositeTheme,
+            backgroundColor: themeContext.oppositeTheme,
+          }}
+          style={{ color: themeContext.oppositeTheme }}
           width="92%"
         />
       </Grid>
@@ -148,28 +164,28 @@ function EditNotesDialog({
         sx={{
           padding: "20px",
           scrollbarWidth: "thin",
-          color: "white",
+          color: themeContext.oppositeTheme,
         }}
       >
         <TextField
           multiline
-          InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
-          InputProps={{ style: { color: "white" } }}
+          InputLabelProps={{ style: { color: themeContext.oppositeTheme } }}
+          InputProps={{ style: { color: themeContext.oppositeTheme } }}
           sx={{
             "& .MuiInput-underline:before": {
               borderBottom: "1px solid",
-              borderBottomColor: "rgba(255,255,255,0.3)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
             "& .MuiInput-underline:hover": {
-              borderBottomColor: "rgba(255,255,255,0.5)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
             "& .MuiInput-underline:hover:before": {
               borderBottom: "2px solid",
-              borderBottomColor: "rgba(255,255,255,0.3)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
             "& .MuiInput-underline:after": {
               borderBottom: "2px solid",
-              borderBottomColor: "rgba(255,255,255,0.3)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
           }}
           fullWidth
@@ -193,25 +209,25 @@ function EditNotesDialog({
               control={
                 <Radio
                   sx={{
-                    color: "white",
+                    color: themeContext.oppositeTheme,
                     "&.Mui-checked": {
-                      color: "#aa89f2",
+                      color: themeContext.oppositeTheme,
                     },
                   }}
                 />
               }
               label="Select"
               sx={{
-                color: "white",
+                color: themeContext.oppositeTheme,
                 "& .Mui-disabled": {
-                  color: "rgba(255, 0, 0, 0.8)", // text color
-                  WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+                  color: themeContext.disabledColor,
+                  WebkitTextFillColor: themeContext.disabledColor,
                 },
                 "& .MuiInput-underline.Mui-disabled:before": {
-                  borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+                  borderBottomColor: themeContext.disabledColor,
                 },
                 "& .Mui-disabled .MuiSvgIcon-root": {
-                  color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+                  color: themeContext.disabledColor,
                 },
               }}
             />
@@ -220,30 +236,30 @@ function EditNotesDialog({
               control={
                 <Radio
                   sx={{
-                    color: "white",
+                    color: themeContext.oppositeTheme,
                     "&.Mui-checked": {
-                      color: "#aa89f2",
+                      color: themeContext.oppositeTheme,
                     },
                   }}
                 />
               }
               label="New Tag"
-              sx={{ color: "white" }}
+              sx={{ color: themeContext.oppositeTheme }}
             />
             <FormControlLabel
               value="untagged"
               control={
                 <Radio
                   sx={{
-                    color: "white",
+                    color: themeContext.oppositeTheme,
                     "&.Mui-checked": {
-                      color: "#aa89f2",
+                      color: themeContext.oppositeTheme,
                     },
                   }}
                 />
               }
               label="- Untagged -"
-              sx={{ color: "white" }}
+              sx={{ color: themeContext.oppositeTheme }}
             />
           </RadioGroup>
         </FormControl>
@@ -257,32 +273,32 @@ function EditNotesDialog({
             sx={{
               minWidth: "200px",
               "& .MuiSvgIcon-root": {
-                color: "white",
+                color: themeContext.oppositeTheme,
               },
               "& .MuiInputLabel-root": {
-                color: "rgba(255, 255, 255, 0.4)",
+                color: themeContext.dullOppositeTheme,
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "rgba(255, 255, 255, 0.4)",
+                color: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:before": {
-                borderBottomColor: "#555",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                borderBottomColor: "lightgray",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:after": {
-                borderBottomColor: "lightgray",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .Mui-disabled": {
-                color: "rgba(255, 0, 0, 0.8)", // text color
-                WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+                color: themeContext.disabledColor,
+                WebkitTextFillColor: themeContext.disabledColor,
               },
               "& .MuiInput-underline.Mui-disabled:before": {
-                borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+                borderBottomColor: themeContext.disabledColor,
               },
               "& .Mui-disabled .MuiSvgIcon-root": {
-                color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+                color: themeContext.disabledColor,
               },
             }}
             slotProps={{
@@ -298,10 +314,10 @@ function EditNotesDialog({
               },
               paper: {
                 sx: {
-                  backgroundColor: "#2c2c2e",
-                  color: "white",
-                  background: "#080411",
-                  border: "1px solid white",
+                  backgroundColor: themeContext.themeBackground,
+                  background: themeContext.themeBackground,
+                  color: themeContext.oppositeTheme,
+                  border: `1px solid ${themeContext.oppositeTheme}`,
                   borderRadius: "10px",
                 },
               },
@@ -309,11 +325,12 @@ function EditNotesDialog({
                 sx: {
                   "& .MuiAutocomplete-option": {
                     "&:hover": {
-                      backgroundColor: "#aa89f2",
-                      color: "#fff",
+                      backgroundColor: themeContext.oppositeTheme,
+                      color: themeContext.themeBackground,
                     },
                     '&[aria-selected="true"]': {
-                      color: "#aa89f2",
+                      color: themeContext.themeColor,
+                      filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
                     },
                   },
                 },
@@ -321,19 +338,19 @@ function EditNotesDialog({
 
               root: {
                 "& .MuiInputLabel-root": {
-                  color: "lightgray",
+                  color: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInputLabel-root.Mui-focused": {
-                  color: "lightgray",
+                  color: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:before": {
-                  borderBottomColor: "#555",
+                  borderBottomColor: themeContext.oppositeTheme,
                 },
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "lightgray",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:after": {
-                  borderBottomColor: "lightgray",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
               },
               clearIndicator: {
@@ -350,7 +367,7 @@ function EditNotesDialog({
                 label={allTags.length > 0 ? "Select Tag" : "No Tags, Crate Tag"}
                 InputProps={{
                   ...params.InputProps,
-                  style: { color: "white" },
+                  style: { color: themeContext.oppositeTheme },
                   inputProps: {
                     ...params.inputProps,
                     readOnly: true,
@@ -366,18 +383,18 @@ function EditNotesDialog({
             slotProps={{
               input: {
                 style: {
-                  color: "white",
+                  color: themeContext.oppositeTheme,
                 },
                 endAdornment: (
                   <InputAdornment position="end" title="Clear">
                     <ClearOutlined
                       onClick={() => setNewNote({ ...newNote, tag: "" })}
                       sx={{
-                        color: "white",
+                        color: themeContext.oppositeTheme,
                         cursor: "pointer",
                         borderRadius: "50%",
                         "&:hover": {
-                          backgroundColor: "#aa89f2",
+                          backgroundColor: themeContext.oppositeTheme,
                         },
                       }}
                     />
@@ -386,7 +403,7 @@ function EditNotesDialog({
               },
               inputLabel: {
                 style: {
-                  color: "rgba(255,255,255,0.5)",
+                  color: themeContext.oppositeTheme,
                 },
               },
             }}
@@ -399,18 +416,18 @@ function EditNotesDialog({
             sx={{
               "& .MuiInput-underline:before": {
                 borderBottom: "1px solid",
-                borderBottomColor: "rgba(255,255,255,0.3)",
+                borderBottomColor: themeContext.oppositeTheme,
               },
               "& .MuiInput-underline:hover": {
-                borderBottomColor: "rgba(255,255,255,0.5)",
+                borderBottomColor: themeContext.oppositeTheme,
               },
               "& .MuiInput-underline:hover:before": {
                 borderBottom: "2px solid",
-                borderBottomColor: "rgba(255,255,255,0.3)",
+                borderBottomColor: themeContext.oppositeTheme,
               },
               "& .MuiInput-underline:after": {
                 borderBottom: "2px solid",
-                borderBottomColor: "rgba(255,255,255,0.3)",
+                borderBottomColor: themeContext.oppositeTheme,
               },
             }}
           />
@@ -424,22 +441,26 @@ function EditNotesDialog({
         >
           <Button
             sx={{
-              color: "white",
+              color: themeContext.oppositeTheme,
               height: 40,
               width: 90,
               borderRadius: "7px",
               fontWeight: "bold",
-              border: "1px solid rgba(255,255,255,0.3)",
+              border: `1px solid ${themeContext.oppositeTheme}`,
               "&:hover": {
-                boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                boxShadow: `inset 0px 0px 22px 0px ${themeContext.oppositeTheme}`,
               },
               "&:disabled": {
                 pointerEvents: "unset",
                 cursor: "not-allowed",
                 boxShadow: "none",
-                color: !newNote.note ? `red` : `rgba(255, 255, 255, 0.3)`,
+                color: !newNote.note
+                  ? themeContext.disabledColor
+                  : themeContext.oppositeTheme,
                 border: `1px solid ${
-                  !newNote.note ? `red` : `rgba(255, 255, 255, 0.3)`
+                  !newNote.note
+                    ? themeContext.disabledColor
+                    : themeContext.oppositeTheme
                 }`,
               },
             }}
@@ -451,7 +472,15 @@ function EditNotesDialog({
             }
             onClick={() => handleEditNote()}
           >
-            {loading ? <CircularProgress color="white" size={20} /> : "Save"}
+            {loading ? (
+              <CircularProgress
+                color={themeContext.oppositeTheme}
+                sx={{ color: themeContext.oppositeTheme }}
+                size={20}
+              />
+            ) : (
+              "Save"
+            )}
           </Button>
         </Grid>
       </DialogContent>
