@@ -17,6 +17,7 @@ import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_NOTE } from "../queries";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 function NotesDialog({
   noteAnchorEl,
@@ -25,6 +26,10 @@ function NotesDialog({
   fetchNotes,
   allTags,
 }) {
+  // Contexts
+  const { themeContext } = useThemeContext();
+
+  // States
   const [tagTypeSelection, setTagTypeSelection] = useState(null);
   const [addNote, { data, loading, error }] = useMutation(ADD_NOTE);
   const [note, setNote] = useState({
@@ -103,24 +108,35 @@ function NotesDialog({
         paper: {
           style: {
             borderRadius: "10px",
-            background: "#211e29",
-            border: " 0.5px solid rgba(255, 255, 255, 0.3)",
+            background: themeContext.themeBackground,
+            border: `0.5px solid ${themeContext.dullThemeColor}`,
           },
         },
       }}
     >
       <DialogTitle
-        sx={{ color: "white", fontWeight: "bold", padding: "18px 20px" }}
+        sx={{
+          color: themeContext.titleText,
+          fontWeight: "bold",
+          padding: "18px 20px",
+        }}
       >
         Notes
       </DialogTitle>
       <Grid
-        style={{ display: "flex", justifyContent: "center", color: "white" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          color: themeContext.oppositeTheme,
+        }}
       >
         <Divider
-          color="white"
-          sx={{ color: "white", backgroundColor: "white" }}
-          style={{ color: "white" }}
+          color={themeContext.oppositeTheme}
+          sx={{
+            color: themeContext.oppositeTheme,
+            backgroundColor: themeContext.oppositeTheme,
+          }}
+          style={{ color: themeContext.oppositeTheme }}
           width="92%"
         />
       </Grid>
@@ -128,29 +144,29 @@ function NotesDialog({
         sx={{
           padding: "20px",
           scrollbarWidth: "thin",
-          color: "white",
+          color: themeContext.oppositeTheme,
         }}
       >
         <TextField
           autoFocus
           multiline
-          InputLabelProps={{ style: { color: "rgba(255,255,255,0.6)" } }}
-          InputProps={{ style: { color: "white" } }}
+          InputLabelProps={{ style: { color: themeContext.oppositeTheme } }}
+          InputProps={{ style: { color: themeContext.oppositeTheme } }}
           sx={{
             "& .MuiInput-underline:before": {
               borderBottom: "1px solid",
-              borderBottomColor: "rgba(255,255,255,0.3)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
             "& .MuiInput-underline:hover": {
-              borderBottomColor: "rgba(255,255,255,0.5)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
             "& .MuiInput-underline:hover:before": {
               borderBottom: "2px solid",
-              borderBottomColor: "rgba(255,255,255,0.3)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
             "& .MuiInput-underline:after": {
               borderBottom: "2px solid",
-              borderBottomColor: "rgba(255,255,255,0.3)",
+              borderBottomColor: themeContext.oppositeTheme,
             },
           }}
           fullWidth
@@ -174,25 +190,25 @@ function NotesDialog({
               control={
                 <Radio
                   sx={{
-                    color: "white",
+                    color: themeContext.oppositeTheme,
                     "&.Mui-checked": {
-                      color: "#aa89f2",
+                      color: themeContext.oppositeTheme,
                     },
                   }}
                 />
               }
               label="Select"
               sx={{
-                color: "white",
+                color: themeContext.oppositeTheme,
                 "& .Mui-disabled": {
-                  color: "rgba(255, 0, 0, 0.8)", // text color
-                  WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+                  color: themeContext.disabledColor,
+                  WebkitTextFillColor: themeContext.disabledColor,
                 },
                 "& .MuiInput-underline.Mui-disabled:before": {
-                  borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+                  borderBottomColor: themeContext.disabledColor,
                 },
                 "& .Mui-disabled .MuiSvgIcon-root": {
-                  color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+                  color: themeContext.disabledColor,
                 },
               }}
             />
@@ -201,30 +217,30 @@ function NotesDialog({
               control={
                 <Radio
                   sx={{
-                    color: "white",
+                    color: themeContext.oppositeTheme,
                     "&.Mui-checked": {
-                      color: "#aa89f2",
+                      color: themeContext.oppositeTheme,
                     },
                   }}
                 />
               }
               label="New Tag"
-              sx={{ color: "white" }}
+              sx={{ color: themeContext.oppositeTheme }}
             />
             <FormControlLabel
               value="untagged"
               control={
                 <Radio
                   sx={{
-                    color: "white",
+                    color: themeContext.oppositeTheme,
                     "&.Mui-checked": {
-                      color: "#aa89f2",
+                      color: themeContext.oppositeTheme,
                     },
                   }}
                 />
               }
               label="- Untagged -"
-              sx={{ color: "white" }}
+              sx={{ color: themeContext.oppositeTheme }}
             />
           </RadioGroup>
         </FormControl>
@@ -238,32 +254,32 @@ function NotesDialog({
             sx={{
               minWidth: "200px",
               "& .MuiSvgIcon-root": {
-                color: "white",
+                color: themeContext.oppositeTheme,
               },
               "& .MuiInputLabel-root": {
-                color: "rgba(255, 255, 255, 0.4)",
+                color: themeContext.dullOppositeTheme,
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "rgba(255, 255, 255, 0.4)",
+                color: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:before": {
-                borderBottomColor: "#555",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                borderBottomColor: "lightgray",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:after": {
-                borderBottomColor: "lightgray",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .Mui-disabled": {
-                color: "rgba(255, 0, 0, 0.8)", // text color
-                WebkitTextFillColor: "rgba(255, 0, 0, 0.8)", // fix for Safari
+                color: themeContext.disabledColor,
+                WebkitTextFillColor: themeContext.disabledColor,
               },
               "& .MuiInput-underline.Mui-disabled:before": {
-                borderBottomColor: "rgba(255, 0, 0, 0.8)", // underline color when disabled
+                borderBottomColor: themeContext.disabledColor,
               },
               "& .Mui-disabled .MuiSvgIcon-root": {
-                color: "rgba(255, 0, 0, 0.8)", // lighter arrow color when disabled
+                color: themeContext.disabledColor,
               },
             }}
             slotProps={{
@@ -279,10 +295,10 @@ function NotesDialog({
               },
               paper: {
                 sx: {
-                  backgroundColor: "#2c2c2e",
-                  color: "white",
-                  background: "#080411",
-                  border: "1px solid white",
+                  backgroundColor: themeContext.themeBackground,
+                  background: themeContext.themeBackground,
+                  color: themeContext.oppositeTheme,
+                  border: `1px solid ${themeContext.oppositeTheme}`,
                   borderRadius: "10px",
                 },
               },
@@ -290,11 +306,12 @@ function NotesDialog({
                 sx: {
                   "& .MuiAutocomplete-option": {
                     "&:hover": {
-                      backgroundColor: "#aa89f2",
-                      color: "#fff",
+                      backgroundColor: themeContext.oppositeTheme,
+                      color: themeContext.themeBackground,
                     },
                     '&[aria-selected="true"]': {
-                      color: "#aa89f2",
+                      color: themeContext.themeColor,
+                      filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
                     },
                   },
                 },
@@ -302,23 +319,24 @@ function NotesDialog({
 
               root: {
                 "& .MuiInputLabel-root": {
-                  color: "lightgray",
+                  color: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInputLabel-root.Mui-focused": {
-                  color: "lightgray",
+                  color: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:before": {
-                  borderBottomColor: "#555",
+                  borderBottomColor: themeContext.oppositeTheme,
                 },
                 "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "lightgray",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
                 "& .MuiInput-underline:after": {
-                  borderBottomColor: "lightgray",
+                  borderBottomColor: themeContext.dullOppositeTheme,
                 },
               },
               clearIndicator: {
                 sx: {
+                  color: themeContext.oppositeTheme,
                   visibility: "visible",
                   opacity: 1,
                 },
@@ -331,7 +349,7 @@ function NotesDialog({
                 label={allTags.length > 0 ? "Select Tag" : "No Tags, Crate Tag"}
                 InputProps={{
                   ...params.InputProps,
-                  style: { color: "white" },
+                  style: { color: themeContext.oppositeTheme },
                   inputProps: {
                     ...params.inputProps,
                     readOnly: true,
@@ -347,12 +365,12 @@ function NotesDialog({
             slotProps={{
               input: {
                 style: {
-                  color: "white",
+                  color: themeContext.oppositeTheme,
                 },
               },
               inputLabel: {
                 style: {
-                  color: "rgba(255,255,255,0.5)",
+                  color: themeContext.oppositeTheme,
                 },
               },
             }}
@@ -365,18 +383,18 @@ function NotesDialog({
             sx={{
               "& .MuiInput-underline:before": {
                 borderBottom: "1px solid",
-                borderBottomColor: "rgba(255,255,255,0.3)",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:hover": {
-                borderBottomColor: "rgba(255,255,255,0.5)",
+                borderBottomColor: themeContext.oppositeTheme,
               },
               "& .MuiInput-underline:hover:before": {
                 borderBottom: "2px solid",
-                borderBottomColor: "rgba(255,255,255,0.3)",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:after": {
                 borderBottom: "2px solid",
-                borderBottomColor: "rgba(255,255,255,0.3)",
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
             }}
           />
@@ -390,29 +408,40 @@ function NotesDialog({
         >
           <Button
             sx={{
-              color: "white",
+              color: themeContext.oppositeTheme,
               height: 40,
               width: 90,
               borderRadius: "7px",
               fontWeight: "bold",
-              border: "1px solid rgba(255,255,255,0.3)",
+              border: `0.2px solid ${themeContext.oppositeTheme}`,
               "&:hover": {
-                boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
+                boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
               },
               "&:disabled": {
                 pointerEvents: "unset",
                 cursor: "not-allowed",
                 boxShadow: "none",
-                color: !note ? `red` : `rgba(255, 255, 255, 0.3)`,
-                border: `1px solid ${
-                  !note ? `red` : `rgba(255, 255, 255, 0.3)`
+                color: !note ? `red` : `${themeContext.oppositeTheme}`,
+                border: `0.2px solid ${
+                  !note
+                    ? themeContext.disabledColor
+                    : themeContext.oppositeTheme
+                }
                 }`,
               },
             }}
             disabled={!note.note || loading}
             onClick={handleAddNote}
           >
-            {loading ? <CircularProgress color="white" size={20} /> : "Add"}
+            {loading ? (
+              <CircularProgress
+                color={themeContext.oppositeTheme}
+                sx={{ color: themeContext.oppositeTheme }}
+                size={20}
+              />
+            ) : (
+              "Add"
+            )}
           </Button>
         </Grid>
       </DialogContent>

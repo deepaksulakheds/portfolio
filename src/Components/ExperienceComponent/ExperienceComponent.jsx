@@ -20,6 +20,7 @@ import { Chip, Grid } from "@mui/material";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
 import { useSecretContext } from "../../Contexts/SecretContext";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 const experienceData = [
   {
@@ -104,7 +105,9 @@ const educationData = [
   },
 ];
 export function ExperienceComponent({ attachmentToggle }) {
+  // Contexts
   const secretContext = useSecretContext();
+  const { themeContext } = useThemeContext();
 
   return (
     <Grid className="experienceContainer">
@@ -120,13 +123,21 @@ export function ExperienceComponent({ attachmentToggle }) {
       >
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot sx={{ margin: 0 }} variant="outlined">
+            <TimelineDot
+              sx={{
+                margin: 0,
+                color: themeContext.oppositeTheme,
+                borderColor: themeContext.oppositeTheme,
+              }}
+              variant="outlined"
+            >
               <BusinessCenter
                 onDoubleClick={() => {
                   if (secretContext.secretEnabled) {
                     attachmentToggle.toggleAttachment();
                   }
                 }}
+                sx={{ color: themeContext.oppositeTheme }}
               />
             </TimelineDot>
           </TimelineSeparator>
@@ -138,6 +149,7 @@ export function ExperienceComponent({ attachmentToggle }) {
                 textDecoration: "underline",
                 textUnderlineOffset: "5px",
                 textDecorationThickness: "0.1px",
+                color: themeContext.subTitleText,
               }}
             >
               Experience
@@ -171,8 +183,18 @@ export function ExperienceComponent({ attachmentToggle }) {
       >
         <TimelineItem>
           <TimelineSeparator>
-            <TimelineDot sx={{ margin: 0 }} variant="outlined">
-              <AutoStories />
+            <TimelineDot
+              sx={{
+                margin: 0,
+                color: themeContext.oppositeTheme,
+                borderColor: themeContext.oppositeTheme,
+              }}
+              variant="outlined"
+            >
+              <AutoStories
+                sx={{ margin: 0, color: themeContext.oppositeTheme }}
+                color={themeContext.oppositeTheme}
+              />
             </TimelineDot>
             {/* <TimelineConnector /> */}
           </TimelineSeparator>
@@ -184,6 +206,7 @@ export function ExperienceComponent({ attachmentToggle }) {
                 textDecoration: "underline",
                 textUnderlineOffset: "5px",
                 textDecorationThickness: "0.1px",
+                color: themeContext.subTitleText,
               }}
             >
               Education
@@ -249,6 +272,9 @@ function CustomEducationTimeLineItem({
   timePeriod,
   siteUrl,
 }) {
+  // Contexts
+  const { themeContext } = useThemeContext();
+
   return (
     <TimelineItem>
       <TimelineContent
@@ -260,9 +286,6 @@ function CustomEducationTimeLineItem({
           title={course}
           sx={{
             maxWidth: 500,
-            // ":hover > .educationIcon": {
-            //   background: `linear-gradient(744deg,#af40ff,#5b42f3 60%,#00ddeb)`,
-            // },
             ":hover > .educationIcon": {
               animation: "pulse 1s infinite ease-in-out",
             },
@@ -273,14 +296,15 @@ function CustomEducationTimeLineItem({
             sx={{
               height: "40px",
               width: "40px",
-              border: "0.2px solid white",
+              border: `0.2px solid ${themeContext.subTitleText}`,
+              color: themeContext.oppositeTheme,
               borderRadius: "50%",
               position: "absolute",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               top: "20px",
-              backgroundColor: "#201e29",
+              backgroundColor: themeContext.themeBackground,
             }}
           >
             {icons[index]}
@@ -290,8 +314,7 @@ function CustomEducationTimeLineItem({
             sx={{
               marginTop: "10px",
               marginLeft: "10px",
-              backgroundColor: "#fff2",
-              // outline: "0.1px solid white",
+              backgroundColor: themeContext.cardBackground,
               borderRadius: "10px",
             }}
           >
@@ -300,17 +323,33 @@ function CustomEducationTimeLineItem({
             >
               <Typography
                 component="p"
-                sx={{ fontSize: 16, fontWeight: 600, color: "#aa89f2" }}
+                sx={{
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: themeContext.themeColor,
+                }}
               >
                 {course}
               </Typography>
-              <Typography sx={{ fontSize: 15, color: "#aa89f2" }}>
+              <Typography sx={{ fontSize: 15, color: themeContext.themeColor }}>
                 -&nbsp;{institute}
               </Typography>
-              <Typography sx={{ fontSize: 13, marginTop: "5px" }}>
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  marginTop: "5px",
+                  color: themeContext.bodyText,
+                }}
+              >
                 &nbsp;&nbsp; {place}
               </Typography>
-              <Typography sx={{ fontSize: 13, marginBottom: "5px" }}>
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  marginBottom: "5px",
+                  color: themeContext.bodyText,
+                }}
+              >
                 &nbsp;&nbsp; {timePeriod}
               </Typography>
               <Chip
@@ -318,10 +357,11 @@ function CustomEducationTimeLineItem({
                 size="small"
                 sx={{
                   fontWeight: "500",
-                  backgroundColor: "rgba(170, 137, 242, 1)",
+                  backgroundColor: themeContext.dullThemeColor,
+                  color: themeContext.oppositeTheme,
                   ":hover": {
-                    backgroundColor: "rgb(97, 65, 167)",
-                    color: "white",
+                    backgroundColor: themeContext.themeColor,
+                    color: themeContext.white,
                   },
                 }}
                 onClick={() => {
@@ -344,6 +384,9 @@ function CustomExperienceTimeLineItem({
   companyUrl,
   companyIndex,
 }) {
+  // Contexts
+  const { themeContext } = useThemeContext();
+
   return (
     <TimelineItem title={company}>
       <TimelineContent
@@ -356,7 +399,7 @@ function CustomExperienceTimeLineItem({
       >
         <Grid
           sx={{
-            border: "1px solid white",
+            border: `1px solid ${themeContext.bodyText}`,
             borderRadius: 2,
             width: "fit-content",
             display: "flex",
@@ -394,6 +437,7 @@ function CustomExperienceTimeLineItem({
                 paddingBottom: "0",
                 width: "fit-content",
                 fontWeight: "bold",
+                color: themeContext.subTitleText,
               }}
             >
               {company}
@@ -402,7 +446,7 @@ function CustomExperienceTimeLineItem({
               component="p"
               sx={{
                 fontSize: 12,
-                color: "#aa89f2",
+                color: themeContext.subTitleText,
                 fontWeight: "bold",
               }}
             >
@@ -414,10 +458,12 @@ function CustomExperienceTimeLineItem({
             fontSize="small"
             sx={{
               padding: "5px",
+              borderRadius: "50%",
               cursor: "pointer",
-              color: "white",
+              color: themeContext.oppositeTheme,
               "&:hover": {
-                color: "rgba(170, 137, 242, 1)",
+                color: themeContext.themeColor,
+                // filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
               },
             }}
             onClick={(e) => window.open(companyUrl, "_blank")}
@@ -436,9 +482,19 @@ function CustomExperienceTimeLineItem({
             {titlesList.map((title, titleIndex) => (
               <TimelineItem key={title.designation}>
                 <TimelineSeparator>
-                  <TimelineDot style={{ opacity: "0.6" }} />
+                  <TimelineDot
+                    style={{
+                      opacity: "0.6",
+                      backgroundColor: themeContext.oppositeTheme,
+                    }}
+                  />
                   {titleIndex == titlesList.length - 1 ? null : (
-                    <TimelineConnector style={{ opacity: "0.6" }} />
+                    <TimelineConnector
+                      style={{
+                        opacity: "0.6",
+                        backgroundColor: themeContext.oppositeTheme,
+                      }}
+                    />
                   )}
                 </TimelineSeparator>
                 <TimelineContent>
@@ -447,13 +503,17 @@ function CustomExperienceTimeLineItem({
                       sx={{
                         fontSize: 15.5,
                         fontWeight: "bold",
-                        color: "#aa89f2",
+                        color: themeContext.bodyText,
                       }}
                     >
                       {title.designation}
                     </Typography>
                     <Typography
-                      sx={{ fontSize: 14, color: "#aa89f2", marginLeft: "5px" }}
+                      sx={{
+                        fontSize: 14,
+                        color: themeContext.bodyText,
+                        marginLeft: "5px",
+                      }}
                     >
                       {title.duration}, ( {title.timePeriod} )<br />
                       {title.location}
@@ -462,7 +522,12 @@ function CustomExperienceTimeLineItem({
                       {title.descriptions.map((desc) => (
                         <Grid
                           key={desc}
-                          sx={{ fontSize: 14, maxWidth: 500, display: "flex" }}
+                          sx={{
+                            fontSize: 14,
+                            maxWidth: 500,
+                            display: "flex",
+                            color: themeContext.bodyText,
+                          }}
                         >
                           ➛
                           {desc.includes("</") ? (

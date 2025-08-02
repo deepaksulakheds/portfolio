@@ -15,6 +15,7 @@ import HeaderImageDialog from "./HeaderImageDialog";
 import { withAttachmentToggle } from "../MailDialog/attachmentContext";
 import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
 import { useSecretContext } from "../../Contexts/SecretContext";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 function Header({ attachmentToggle }) {
   const [mailDialogVisible, setMailDialogVisible] = useState(false);
@@ -23,50 +24,6 @@ function Header({ attachmentToggle }) {
   const [age, setAge] = useState(
     getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`)
   );
-
-  const secretContext = useSecretContext();
-  useEffect(() => {
-    let ageInterval;
-    const isAgeExists = contacts.some((contact) => contact.name === "age");
-
-    if (
-      secretContext.secretEnabled &&
-      attachmentToggle.isAttachmentEnabled &&
-      !isAgeExists
-    ) {
-      setContacts((prevContacts) => [
-        ...prevContacts,
-        {
-          name: "age",
-          icon: <Refresh fontSize="medium" />,
-          onclick: (e) =>
-            setAnchorEl((prev) => (prev ? null : e.currentTarget)),
-          toolTip: null,
-          style: {
-            boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-          },
-        },
-      ]);
-
-      ageInterval = setInterval(() => {
-        setAge(getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`));
-      }, 1000);
-    } else if (
-      (!secretContext.secretEnabled || !attachmentToggle.isAttachmentEnabled) &&
-      isAgeExists
-    ) {
-      setContacts((prevContacts) =>
-        prevContacts.filter((contact) => contact.name !== "age")
-      );
-
-      clearInterval(ageInterval);
-    }
-
-    return () => {
-      if (ageInterval) clearInterval(ageInterval);
-    };
-  }, [attachmentToggle.isAttachmentEnabled, secretContext.secretEnabled]);
-
   const [contacts, setContacts] = useState([
     {
       name: "Github",
@@ -101,6 +58,70 @@ function Header({ attachmentToggle }) {
     },
   ]);
 
+  const secretContext = useSecretContext();
+  const { themeContext, toggleTheme } = useThemeContext();
+
+  useEffect(() => {
+    let ageInterval;
+    const isAgeExists = contacts.some((contact) => contact.name === "age");
+
+    if (
+      secretContext.secretEnabled &&
+      attachmentToggle.isAttachmentEnabled &&
+      !isAgeExists
+    ) {
+      setContacts((prevContacts) => [
+        ...prevContacts,
+        {
+          name: "age",
+          icon: <Refresh fontSize="medium" />,
+          onclick: (e) =>
+            setAnchorEl((prev) => (prev ? null : e.currentTarget)),
+          toolTip: null,
+          style: {
+            boxShadow: `inset 0px 0px 22px 0px ${themeContext.primaryColor}`,
+          },
+        },
+      ]);
+
+      ageInterval = setInterval(() => {
+        setAge(getFormattedTimePeriod(`22-jun-1999`, `present`, `YMDhms`));
+      }, 1000);
+    } else if (
+      (!secretContext.secretEnabled || !attachmentToggle.isAttachmentEnabled) &&
+      isAgeExists
+    ) {
+      setContacts((prevContacts) =>
+        prevContacts.filter((contact) => contact.name !== "age")
+      );
+
+      clearInterval(ageInterval);
+    }
+
+    return () => {
+      if (ageInterval) clearInterval(ageInterval);
+    };
+  }, [attachmentToggle.isAttachmentEnabled, secretContext.secretEnabled]);
+
+  useEffect(() => {
+    if (document) {
+      document.documentElement.style.background = themeContext.themeBackground;
+      document.documentElement.style.backgroundColor =
+        themeContext.themeBackground;
+      document.body.style.background = themeContext.themeBackground;
+      document.body.style.backgroundColor = themeContext.themeBackground;
+
+      document.documentElement.style.setProperty(
+        "--background-color",
+        themeContext.background
+      );
+      document.documentElement.style.setProperty(
+        "--theme-color",
+        themeContext.themeColor
+      );
+    }
+  }, [themeContext]);
+
   const handleSecretToggle = () => {
     if (attachmentToggle.isAttachmentEnabled) {
       attachmentToggle.toggleAttachment();
@@ -111,87 +132,133 @@ function Header({ attachmentToggle }) {
   return (
     <Grid
       className="headerContainer"
-      style={{ display: "flex", padding: "20px", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        padding: "20px",
+        // alignItems: "center",
+        justifyContent: "space-between",
+        // boxShadow: themeContext.themeShadow,
+        backgroundColor: themeContext.bodyBackground,
+      }}
     >
-      <img
-        title="View more images"
-        onClick={() => setImageDialogVisible(true)}
-        loading="lazy"
-        src="./deepak.jpg"
-        className="image"
-      />
-      <Grid>
-        <Typography
-          variant="h5"
-          sx={{ fontSize: "1.8rem", fontWeight: "550", marginBlock: "5px" }}
-        >
-          Deepak Sulakhe
-        </Typography>
-        <Chip
-          clickable
-          disableRipple
-          onDoubleClick={(e) => handleSecretToggle()}
-          label="Software Engineer 1"
-          style={{
-            color: "white",
-            cursor: "text",
-            fontWeight: secretContext.secretEnabled ? "bold" : "400",
-            border: secretContext.secretEnabled
-              ? "1px solid rgba(248, 246, 254, 0.8)"
-              : "1px solid rgba(248, 246, 254, 0.2)",
-            boxShadow: "inset 0px 0px 15px 8px rgba(255, 255, 255, 0.08)",
-            // background: "rgba(25, 17, 51, 1)", // kept commented as original
-          }}
+      <Grid sx={{ display: "flex" }}>
+        <img
+          title="View more images"
+          onClick={() => setImageDialogVisible(true)}
+          loading="lazy"
+          src="./deepak.jpg"
+          className="image"
         />
-        <Grid
-          sx={{
-            display: "flex",
-            gap: "6px",
-            marginTop: "5px",
-            flexWrap: "wrap",
-          }}
-        >
-          {contacts.map((contact) => (
-            <Tooltip
-              arrow
-              key={contact.name}
-              title={contact.toolTip}
-              slotProps={{
-                tooltip: {
-                  sx: {
-                    backgroundColor: "transparent",
-                    boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
-                    fontSize: 13,
+        <Grid>
+          <Typography
+            variant="h5"
+            sx={{
+              fontSize: "1.8rem",
+              fontWeight: "550",
+              marginBlock: "5px",
+              color: themeContext.titleText,
+            }}
+          >
+            Deepak Sulakhe
+          </Typography>
+          <Chip
+            clickable
+            disableRipple
+            onDoubleClick={(e) => handleSecretToggle()}
+            label="Software Engineer 1"
+            sx={{
+              color: themeContext.subTitleText,
+              cursor: "text",
+              fontWeight: secretContext.secretEnabled ? "bold" : "400",
+              border: secretContext.secretEnabled
+                ? `1px solid ${themeContext.themeColor}`
+                : `1px solid ${themeContext.dullThemeColor}`,
+              boxShadow: `inset 0px 0px 15px 8px ${themeContext.chipShadow}`,
+              "&:hover": {
+                backgroundColor: "inherit",
+                boxShadow: `inset 0px 0px 15px 8px ${themeContext.chipShadow}`,
+                cursor: "text",
+              },
+            }}
+          />
+          <Grid
+            sx={{
+              display: "flex",
+              gap: "6px",
+              marginTop: "5px",
+              flexWrap: "wrap",
+            }}
+          >
+            {contacts.map((contact) => (
+              <Tooltip
+                arrow
+                key={contact.name}
+                title={contact.toolTip}
+                slotProps={{
+                  tooltip: {
+                    sx: {
+                      backgroundColor: "transparent",
+                      // boxShadow: `inset 0px 0px 30px 0px ${themeContext.themeColor}`,
+                      backgroundColor: themeContext.themeColor,
+                      fontSize: 13,
+                      color: themeContext.noThemeColor,
+                    },
                   },
-                },
-                arrow: {
-                  sx: {
-                    color: "rgba(170, 137, 242, 0.6)",
+                  arrow: {
+                    sx: {
+                      color: themeContext.themeColor,
+                    },
                   },
-                },
-              }}
-            >
-              <IconButton
-                target="blank"
-                sx={{
-                  padding: "0.5rem",
-                  transition: "all ease-in-out 0.15s",
-                  color: "white",
-                  "&:hover": {
-                    boxShadow: "inset 0px 0px 22px 0px rgba(170, 137, 242, 1)",
-                    // boxShadow: "inset 0px 0px 22px 0px #aa89f2",
-                  },
-                  ...(anchorEl && contact.style),
                 }}
-                href={contact?.ref}
-                onClick={contact.onclick ? contact.onclick : null}
               >
-                {contact.icon}
-              </IconButton>
-            </Tooltip>
-          ))}
+                <IconButton
+                  target="blank"
+                  sx={{
+                    padding: "0.5rem",
+                    transition: "all ease-in-out 0.15s",
+                    color: themeContext.titleText,
+                    "&:hover": {
+                      boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
+                      color: themeContext.iconHoverColor,
+                    },
+                    ...(anchorEl && contact.style),
+                  }}
+                  href={contact?.ref}
+                  onClick={contact.onclick ? contact.onclick : null}
+                >
+                  {contact.icon}
+                </IconButton>
+              </Tooltip>
+            ))}
+          </Grid>
         </Grid>
       </Grid>
+      <IconButton
+        onClick={() => toggleTheme()}
+        sx={{
+          padding: "3px",
+          // cursor: "pointer",
+          transition: "all ease-in-out 0.15s",
+          height: "fit-content",
+          width: "fit-content",
+          color: themeContext.themeIcons,
+          backgroundColor: themeContext.oppositeTheme,
+          borderRadius: "50%",
+          "&:hover": {
+            boxShadow: `inset 0px 0px 22px 10px ${themeContext.themeColor}`,
+            // color: themeContext.iconHoverColor,
+          },
+        }}
+      >
+        <img
+          src={
+            themeContext.mode == "dark"
+              ? "./icons/light.svg"
+              : "./icons/moon.svg"
+          }
+          style={{ height: "28px", width: "28px", cursor: "pointer" }}
+        />
+      </IconButton>
       <MailDialog
         mailDialogVisible={mailDialogVisible}
         onclose={() => setMailDialogVisible(!mailDialogVisible)}
@@ -216,10 +283,10 @@ function Header({ attachmentToggle }) {
         slotProps={{
           paper: {
             sx: {
-              backgroundColor: "transparent",
-              boxShadow: "inset 0px 0px 30px 0px rgba(170, 137, 242, 1)",
+              // boxShadow: `inset 0px 0px 30px 0px ${themeContext.themeColor}`,
+              backgroundColor: themeContext.themeColor,
               fontSize: 13,
-              color: "white",
+              color: themeContext.noThemeColor,
               marginTop: "5px",
               padding: "8px",
             },

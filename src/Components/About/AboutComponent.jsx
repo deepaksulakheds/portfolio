@@ -1,6 +1,7 @@
 import { Grid, Typography } from "@mui/material";
 import "./aboutComponent.css";
 import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 const skills = [
   {
@@ -60,10 +61,16 @@ const skills = [
 ];
 
 function AboutComponent(props) {
+  // Contexts
+  const { themeContext } = useThemeContext();
+
   return (
     <Grid className="aboutContainer">
       <Grid>
-        <Typography variant="p" sx={{ fontSize: "1.1rem" }}>
+        <Typography
+          variant="p"
+          sx={{ fontSize: "1.1rem", color: themeContext.bodyText }}
+        >
           {`Results-driven Software Engineer with ${getFormattedTimePeriod(
             `1-jun-2023`,
             `present`,
@@ -85,6 +92,7 @@ function AboutComponent(props) {
               textDecorationThickness: "0.1px",
               fontSize: 22,
               transition: "all ease-in-out 0.5s",
+              color: themeContext.titleText,
             }}
             // variant="h6"
           >
@@ -100,20 +108,35 @@ function AboutComponent(props) {
                   textDecoration: "underline",
                   textUnderlineOffset: "5px",
                   textDecorationThickness: "0.1px",
+                  color: themeContext.subTitleText,
                 }}
               >
                 {skill.title}
               </h3>
               <Grid className="skillList">
                 {skill.list.map((s) => (
-                  <Grid key={s.content} className="skill">
+                  <Grid
+                    key={s.content}
+                    className="skill"
+                    sx={{
+                      "&:hover": {
+                        filter: `drop-shadow(0px 0px 5px ${themeContext.themeColor})`,
+                        transform: `scale(1.2)`,
+                      },
+                    }}
+                  >
                     <img
                       src={s.icon}
                       className="skillIcon"
                       height="32"
                       width="32"
                     />
-                    <p className="skillContent">{s.content}</p>
+                    <p
+                      className="skillContent"
+                      style={{ color: themeContext.bodyText }}
+                    >
+                      {s.content}
+                    </p>
                   </Grid>
                 ))}
               </Grid>

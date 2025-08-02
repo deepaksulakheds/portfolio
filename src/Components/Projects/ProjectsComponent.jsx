@@ -2,6 +2,7 @@ import { GitHub } from "@mui/icons-material";
 import { Chip, Grid, IconButton, Typography } from "@mui/material";
 import React from "react";
 import "./projectComponent.css";
+import { useThemeContext } from "../../Contexts/ThemeContext";
 
 const projData = [
   {
@@ -71,6 +72,8 @@ const projData = [
 ];
 
 function ProjectsComponent(props) {
+  // Contexts
+  const { themeContext } = useThemeContext();
   return (
     <Grid className="projectContainer">
       {projData.map((project) => (
@@ -94,7 +97,6 @@ function ProjectsComponent(props) {
               transition: "all 0.3s ease-in-out",
             }}
           >
-            {/* <Container style={{ padding: 0 }}> */}
             <img
               src={project.image}
               alt={project.title}
@@ -107,7 +109,6 @@ function ProjectsComponent(props) {
                 transition: "all 0.3s ease-in-out",
               }}
             />
-            {/* </Container> */}
           </Grid>
           <Grid sx={{ padding: "0.2rem" }}>
             <Grid
@@ -118,7 +119,9 @@ function ProjectsComponent(props) {
                 margin: "0.5rem 0",
               }}
             >
-              <Typography sx={{ fontWeight: "500", color: "#aa89f2" }}>
+              <Typography
+                sx={{ fontWeight: "500", color: themeContext.themeColor }}
+              >
                 {project.title}
               </Typography>
               <IconButton
@@ -126,10 +129,11 @@ function ProjectsComponent(props) {
                 href={project.path}
                 sx={{
                   padding: "0",
-                  color: "white",
+                  color: themeContext.themeIcons,
                   transition: "all ease-in-out 0.15s",
                   "&:hover": {
-                    color: "#aa89f2",
+                    color: themeContext.themeIcons,
+                    filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
                   },
                 }}
               >
@@ -142,6 +146,7 @@ function ProjectsComponent(props) {
                 marginBottom: "0.6rem",
                 marginLeft: ".5rem",
                 fontWeight: "400",
+                color: themeContext.bodyText,
               }}
             >
               {project.description}
@@ -154,11 +159,11 @@ function ProjectsComponent(props) {
                   size="small"
                   style={{
                     userSelect: "none",
-                    color: "white",
+                    color: themeContext.bodyText,
                     cursor: "text",
                     margin: "2px",
                     fontWeight: "400",
-                    border: "1px solid rgba(248, 246, 254, .2)",
+                    border: `1px solid ${themeContext.dullThemeColor}`,
                   }}
                 />
               ))}
