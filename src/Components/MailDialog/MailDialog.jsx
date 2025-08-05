@@ -435,7 +435,7 @@ function MailDialog({
                   textTransform: "uppercase",
                 }),
                 "&:hover": {
-                  boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
+                  boxShadow: `inset 0px 0px 25px 0px ${themeContext.themeColor}`,
                 },
               }}
               onClick={onclose}
@@ -456,7 +456,7 @@ function MailDialog({
                   ? `${themeContext.errorColor} !important`
                   : `${themeContext.oppositeTheme} !important`,
                 "&:hover": {
-                  boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
+                  boxShadow: `inset 0px 0px 25px 0px ${themeContext.themeColor}`,
                 },
                 "&:disabled": {
                   pointerEvents: "unset",

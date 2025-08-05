@@ -169,23 +169,23 @@ function EditNotesDialog({
       >
         <TextField
           multiline
-          InputLabelProps={{ style: { color: themeContext.oppositeTheme } }}
+          InputLabelProps={{ style: { color: themeContext.dullOppositeTheme } }}
           InputProps={{ style: { color: themeContext.oppositeTheme } }}
           sx={{
             "& .MuiInput-underline:before": {
               borderBottom: "1px solid",
-              borderBottomColor: themeContext.oppositeTheme,
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
             "& .MuiInput-underline:hover": {
-              borderBottomColor: themeContext.oppositeTheme,
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
             "& .MuiInput-underline:hover:before": {
               borderBottom: "2px solid",
-              borderBottomColor: themeContext.oppositeTheme,
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
             "& .MuiInput-underline:after": {
               borderBottom: "2px solid",
-              borderBottomColor: themeContext.oppositeTheme,
+              borderBottomColor: themeContext.dullOppositeTheme,
             },
           }}
           fullWidth
@@ -394,7 +394,8 @@ function EditNotesDialog({
                         cursor: "pointer",
                         borderRadius: "50%",
                         "&:hover": {
-                          backgroundColor: themeContext.oppositeTheme,
+                          boxShadow: `inset 0px 0px 5px 1px ${themeContext.themeColor}`,
+                          color: themeContext.themeColor,
                         },
                       }}
                     />
@@ -403,7 +404,7 @@ function EditNotesDialog({
               },
               inputLabel: {
                 style: {
-                  color: themeContext.oppositeTheme,
+                  color: themeContext.dullOppositeTheme,
                 },
               },
             }}
@@ -416,18 +417,18 @@ function EditNotesDialog({
             sx={{
               "& .MuiInput-underline:before": {
                 borderBottom: "1px solid",
-                borderBottomColor: themeContext.oppositeTheme,
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:hover": {
-                borderBottomColor: themeContext.oppositeTheme,
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:hover:before": {
                 borderBottom: "2px solid",
-                borderBottomColor: themeContext.oppositeTheme,
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
               "& .MuiInput-underline:after": {
                 borderBottom: "2px solid",
-                borderBottomColor: themeContext.oppositeTheme,
+                borderBottomColor: themeContext.dullOppositeTheme,
               },
             }}
           />
@@ -446,9 +447,10 @@ function EditNotesDialog({
               width: 90,
               borderRadius: "7px",
               fontWeight: "bold",
+              textTransform: "none",
               border: `1px solid ${themeContext.oppositeTheme}`,
               "&:hover": {
-                boxShadow: `inset 0px 0px 22px 0px ${themeContext.oppositeTheme}`,
+                boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
               },
               "&:disabled": {
                 pointerEvents: "unset",
@@ -456,11 +458,11 @@ function EditNotesDialog({
                 boxShadow: "none",
                 color: !newNote.note
                   ? themeContext.disabledColor
-                  : themeContext.oppositeTheme,
+                  : themeContext.dullOppositeTheme,
                 border: `1px solid ${
                   !newNote.note
                     ? themeContext.disabledColor
-                    : themeContext.oppositeTheme
+                    : themeContext.dullOppositeTheme
                 }`,
               },
             }}

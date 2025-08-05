@@ -137,7 +137,7 @@ export function ExperienceComponent({ attachmentToggle }) {
                     attachmentToggle.toggleAttachment();
                   }
                 }}
-                sx={{ color: themeContext.oppositeTheme }}
+                sx={{ color: themeContext.themeIcons }}
               />
             </TimelineDot>
           </TimelineSeparator>
@@ -192,8 +192,8 @@ export function ExperienceComponent({ attachmentToggle }) {
               variant="outlined"
             >
               <AutoStories
-                sx={{ margin: 0, color: themeContext.oppositeTheme }}
-                color={themeContext.oppositeTheme}
+                sx={{ margin: 0, color: themeContext.themeIcons }}
+                color={themeContext.themeIcons}
               />
             </TimelineDot>
             {/* <TimelineConnector /> */}
@@ -297,7 +297,7 @@ function CustomEducationTimeLineItem({
               height: "40px",
               width: "40px",
               border: `0.2px solid ${themeContext.subTitleText}`,
-              color: themeContext.oppositeTheme,
+              color: themeContext.themeIcons,
               borderRadius: "50%",
               position: "absolute",
               display: "flex",
@@ -460,10 +460,10 @@ function CustomExperienceTimeLineItem({
               padding: "5px",
               borderRadius: "50%",
               cursor: "pointer",
-              color: themeContext.oppositeTheme,
+              color: themeContext.themeIcons,
               "&:hover": {
                 color: themeContext.themeColor,
-                // filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
+                boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
               },
             }}
             onClick={(e) => window.open(companyUrl, "_blank")}
@@ -503,7 +503,7 @@ function CustomExperienceTimeLineItem({
                       sx={{
                         fontSize: 15.5,
                         fontWeight: "bold",
-                        color: themeContext.bodyText,
+                        color: themeContext.themeColor,
                       }}
                     >
                       {title.designation}
@@ -511,7 +511,7 @@ function CustomExperienceTimeLineItem({
                     <Typography
                       sx={{
                         fontSize: 14,
-                        color: themeContext.bodyText,
+                        color: themeContext.themeColor,
                         marginLeft: "5px",
                       }}
                     >

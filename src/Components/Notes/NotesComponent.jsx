@@ -517,12 +517,11 @@ function NotesComponent({ notistackSnackbar }) {
                   <Checkbox
                     sx={{
                       alignSelf: "flex-start",
-                      color: themeContext.themeColor,
+                      color: themeContext.themeIcons,
                       margin: 0,
                       padding: "0.2rem",
                       ":hover": {
-                        color: themeContext.dullOppositeTheme,
-                        backgroundColor: themeContext.dullOppositeTheme,
+                        boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
                       },
                       "&.Mui-checked": {
                         color: themeContext.themeColor,
@@ -535,7 +534,7 @@ function NotesComponent({ notistackSnackbar }) {
                     <CheckCircle
                       sx={{
                         padding: "0.2rem",
-                        color: themeContext.themeColor,
+                        color: themeContext.themeIcons,
                       }}
                     />
                   ) : (
@@ -543,10 +542,10 @@ function NotesComponent({ notistackSnackbar }) {
                       sx={{
                         padding: "0.2rem",
                         cursor: "pointer",
-                        color: themeContext.themeColor,
+                        color: themeContext.themeIcons,
                         borderRadius: "50%",
                         ":hover": {
-                          backgroundColor: themeContext.dullOppositeTheme,
+                          boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
                         },
                       }}
                       onClick={() => handleCopy(note)}
@@ -556,10 +555,10 @@ function NotesComponent({ notistackSnackbar }) {
                     sx={{
                       padding: "0.2rem",
                       cursor: "pointer",
-                      color: themeContext.themeColor,
+                      color: themeContext.themeIcons,
                       borderRadius: "50%",
                       ":hover": {
-                        backgroundColor: themeContext.dullOppositeTheme,
+                        boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
                       },
                     }}
                     onClick={(e) => handleEdit(note, e)}
@@ -575,9 +574,9 @@ function NotesComponent({ notistackSnackbar }) {
             sx={{
               cursor: "pointer",
               borderRadius: "5px",
-              color: themeContext.themeColor,
+              color: themeContext.themeIcons,
               "&:hover": {
-                backgroundColor: themeContext.dullOppositeTheme,
+                boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
               },
             }}
             onClick={(e) =>
@@ -587,7 +586,7 @@ function NotesComponent({ notistackSnackbar }) {
           {deleteLoading ? (
             <CircularProgress
               sx={{ color: themeContext.themeColor }}
-              color={themeContext.themeColor}
+              color={themeContext.themeIcons}
               size={23}
             />
           ) : (
@@ -596,9 +595,9 @@ function NotesComponent({ notistackSnackbar }) {
               sx={{
                 borderRadius: "5px",
                 cursor: "pointer",
-                color: themeContext.themeColor,
+                color: themeContext.themeIcons,
                 "&:hover": {
-                  backgroundColor: themeContext.dullOppositeTheme,
+                  boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
                 },
               }}
               onClick={handleMultipleDelete}
@@ -610,9 +609,9 @@ function NotesComponent({ notistackSnackbar }) {
             sx={{
               borderRadius: "5px",
               cursor: "pointer",
-              color: themeContext.themeColor,
+              color: themeContext.themeIcons,
               "&:hover": {
-                backgroundColor: themeContext.dullOppositeTheme,
+                boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
               },
             }}
             onClick={handleClearSelection}

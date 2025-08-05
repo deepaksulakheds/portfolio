@@ -113,13 +113,16 @@ function Body(props) {
               key={menu.name}
               onClick={(e) => handleMenuSelect(index)}
               sx={{
-                textDecoration: "none",
                 color: selectedMenu.includes(menu.name)
                   ? themeContext.themeColor
                   : themeContext.bodyText,
                 filter: selectedMenu.includes(menu.name)
                   ? `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`
                   : null,
+                textUnderlineOffset: 2.5,
+                textDecoration: selectedMenu.includes(menu.name)
+                  ? `underline`
+                  : "none",
                 "&:hover": {
                   color: themeContext.themeColor,
                   filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
@@ -181,6 +184,10 @@ function Body(props) {
                   filter: selectedMenu.includes(menu.name)
                     ? `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`
                     : null,
+                  textUnderlineOffset: 2.5,
+                  textDecoration: selectedMenu.includes(menu.name)
+                    ? `underline`
+                    : "none",
                   "&:hover": {
                     color: themeContext.themeColor,
                     filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,

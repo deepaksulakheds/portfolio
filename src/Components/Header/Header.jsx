@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./header.css";
 import { Grid } from "@mui/system";
 import { Chip, IconButton, Popover, Tooltip, Typography } from "@mui/material";
@@ -134,13 +134,40 @@ function Header({ attachmentToggle }) {
       className="headerContainer"
       sx={{
         display: "flex",
+        flexDirection: "column",
         padding: "20px",
-        // alignItems: "center",
-        justifyContent: "space-between",
-        // boxShadow: themeContext.themeShadow,
         backgroundColor: themeContext.bodyBackground,
       }}
     >
+      <IconButton
+        title={`Switch to ${
+          themeContext.mode == "dark" ? "Light " : "Dark "
+        }Mode`}
+        onClick={() => toggleTheme()}
+        sx={{
+          padding: "3px",
+          alignSelf: "flex-end",
+          transition: "all ease-in-out 0.15s",
+          height: "fit-content",
+          width: "fit-content",
+          color: themeContext.themeIcons,
+          backgroundColor: themeContext.oppositeTheme,
+          borderRadius: "50%",
+          "&:hover": {
+            boxShadow: `inset 0px 0px 22px 10px ${themeContext.themeColor}`,
+            // color: themeContext.iconHoverColor,
+          },
+        }}
+      >
+        <img
+          src={
+            themeContext.mode == "dark"
+              ? "./icons/light.svg"
+              : "./icons/moon.svg"
+          }
+          style={{ height: "28px", width: "28px", cursor: "pointer" }}
+        />
+      </IconButton>
       <Grid sx={{ display: "flex" }}>
         <img
           title="View more images"
@@ -216,7 +243,7 @@ function Header({ attachmentToggle }) {
                   sx={{
                     padding: "0.5rem",
                     transition: "all ease-in-out 0.15s",
-                    color: themeContext.titleText,
+                    color: themeContext.themeIcons,
                     "&:hover": {
                       boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
                       color: themeContext.iconHoverColor,
@@ -233,32 +260,6 @@ function Header({ attachmentToggle }) {
           </Grid>
         </Grid>
       </Grid>
-      <IconButton
-        onClick={() => toggleTheme()}
-        sx={{
-          padding: "3px",
-          // cursor: "pointer",
-          transition: "all ease-in-out 0.15s",
-          height: "fit-content",
-          width: "fit-content",
-          color: themeContext.themeIcons,
-          backgroundColor: themeContext.oppositeTheme,
-          borderRadius: "50%",
-          "&:hover": {
-            boxShadow: `inset 0px 0px 22px 10px ${themeContext.themeColor}`,
-            // color: themeContext.iconHoverColor,
-          },
-        }}
-      >
-        <img
-          src={
-            themeContext.mode == "dark"
-              ? "./icons/light.svg"
-              : "./icons/moon.svg"
-          }
-          style={{ height: "28px", width: "28px", cursor: "pointer" }}
-        />
-      </IconButton>
       <MailDialog
         mailDialogVisible={mailDialogVisible}
         onclose={() => setMailDialogVisible(!mailDialogVisible)}
