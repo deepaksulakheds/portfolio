@@ -197,7 +197,7 @@ function Header({ attachmentToggle }) {
                 slotProps={{
                   tooltip: {
                     sx: {
-                      backgroundColor: "transparent",
+                      // backgroundColor: "transparent",
                       // boxShadow: `inset 0px 0px 30px 0px ${themeContext.themeColor}`,
                       backgroundColor: themeContext.themeColor,
                       fontSize: 13,
