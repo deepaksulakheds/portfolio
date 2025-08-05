@@ -116,7 +116,7 @@ function ProjectsComponent(props) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                margin: "0.5rem 0",
+                margin: "0.3rem 0",
               }}
             >
               <Typography
@@ -128,12 +128,13 @@ function ProjectsComponent(props) {
                 target="blank"
                 href={project.path}
                 sx={{
-                  padding: "0",
+                  padding: "4px",
                   color: themeContext.themeIcons,
                   transition: "all ease-in-out 0.15s",
                   "&:hover": {
-                    color: themeContext.themeIcons,
-                    filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
+                    color: themeContext.themeColor,
+                    // filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
                   },
                 }}
               >

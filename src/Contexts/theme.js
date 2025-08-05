@@ -158,7 +158,7 @@ const themeOptions = {
 
     // Opposite Theme
     oppositeTheme: "#fff",
-    dullOppositeTheme: "rgba(255,255,255, 0.4)",
+    dullOppositeTheme: "rgba(255,255,255, 0.5)",
     oppositeText: "#fff",
 
     // No theme
