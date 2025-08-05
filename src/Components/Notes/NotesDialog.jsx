@@ -150,8 +150,18 @@ function NotesDialog({
         <TextField
           autoFocus
           multiline
-          InputLabelProps={{ style: { color: themeContext.dullOppositeTheme } }}
-          InputProps={{ style: { color: themeContext.oppositeTheme } }}
+          slotProps={{
+            input: {
+              style: {
+                color: themeContext.oppositeTheme,
+              },
+            },
+            inputLabel: {
+              style: {
+                color: themeContext.dullOppositeTheme,
+              },
+            },
+          }}
           sx={{
             "& .MuiInput-underline:before": {
               borderBottom: "1px solid",

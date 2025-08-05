@@ -250,18 +250,20 @@ function MailDialog({
           <Grid>
             <TextField
               autoFocus
-              InputLabelProps={{
-                style: {
-                  color: errors.name
-                    ? themeContext.errorColor
-                    : themeContext.dullOppositeTheme,
+              slotProps={{
+                input: {
+                  style: {
+                    color: errors.name
+                      ? themeContext.errorColor
+                      : themeContext.oppositeTheme,
+                  },
                 },
-              }}
-              InputProps={{
-                style: {
-                  color: errors.name
-                    ? themeContext.errorColor
-                    : themeContext.oppositeTheme,
+                inputLabel: {
+                  style: {
+                    color: errors.name
+                      ? themeContext.errorColor
+                      : themeContext.dullOppositeTheme,
+                  },
                 },
               }}
               sx={{
@@ -300,18 +302,20 @@ function MailDialog({
               // onBlur={handleValidity}
             />
             <TextField
-              InputLabelProps={{
-                style: {
-                  color: errors.email
-                    ? themeContext.errorColor
-                    : themeContext.dullOppositeTheme,
+              slotProps={{
+                input: {
+                  style: {
+                    color: errors.email
+                      ? themeContext.errorColor
+                      : themeContext.oppositeTheme,
+                  },
                 },
-              }}
-              InputProps={{
-                style: {
-                  color: errors.email
-                    ? themeContext.errorColor
-                    : themeContext.oppositeTheme,
+                inputLabel: {
+                  style: {
+                    color: errors.email
+                      ? themeContext.errorColor
+                      : themeContext.dullOppositeTheme,
+                  },
                 },
               }}
               sx={{
@@ -350,10 +354,18 @@ function MailDialog({
               // onBlur={handleValidity}
             />
             <TextField
-              InputLabelProps={{
-                style: { color: themeContext.dullOppositeTheme },
+              slotProps={{
+                input: {
+                  style: {
+                    color: themeContext.oppositeTheme,
+                  },
+                },
+                inputLabel: {
+                  style: {
+                    color: themeContext.dullOppositeTheme,
+                  },
+                },
               }}
-              InputProps={{ style: { color: themeContext.oppositeTheme } }}
               sx={{
                 "& .MuiInput-root": {
                   caretColor: themeContext.dullOppositeTheme,
@@ -383,10 +395,18 @@ function MailDialog({
             />
             <TextField
               multiline
-              InputLabelProps={{
-                style: { color: themeContext.dullOppositeTheme },
+              slotProps={{
+                input: {
+                  style: {
+                    color: themeContext.oppositeTheme,
+                  },
+                },
+                inputLabel: {
+                  style: {
+                    color: themeContext.dullOppositeTheme,
+                  },
+                },
               }}
-              InputProps={{ style: { color: themeContext.oppositeTheme } }}
               sx={{
                 "& .MuiInput-root": {
                   caretColor: themeContext.dullOppositeTheme,
