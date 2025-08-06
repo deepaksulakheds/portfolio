@@ -137,6 +137,7 @@ function Header({ attachmentToggle }) {
         flexDirection: "column",
         padding: "20px",
         backgroundColor: themeContext.bodyBackground,
+        boxShadow: `inset 0px 0px 35px -30px ${themeContext.containerShadowColor}`,
       }}
     >
       <IconButton

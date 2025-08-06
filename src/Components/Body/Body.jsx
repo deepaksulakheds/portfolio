@@ -82,7 +82,10 @@ function Body(props) {
   return (
     <Grid
       className="bodyContainer"
-      sx={{ background: themeContext.bodyBackground }}
+      sx={{
+        background: themeContext.bodyBackground,
+        boxShadow: `inset 0px 0px 35px -30px ${themeContext.containerShadowColor}`,
+      }}
     >
       <Grid
         style={{
