@@ -202,7 +202,7 @@ function Header({ attachmentToggle }) {
                 : `1px solid ${themeContext.dullThemeColor}`,
               boxShadow: `inset 0px 0px 15px 8px ${themeContext.chipShadow}`,
               "&:hover": {
-                backgroundColor: "inherit",
+                // backgroundColor: "inherit",
                 boxShadow: `inset 0px 0px 15px 8px ${themeContext.chipShadow}`,
                 cursor: "text",
               },
