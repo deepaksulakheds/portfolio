@@ -149,6 +149,7 @@ const themeOptions = {
     themeBackground: "#080412",
     bodyBackground: "rgb(32, 30, 41)",
     cardBackground: "rgba(255, 255, 255, 0.1)",
+    containerShadowColor: "rgba(255, 255, 255, 1)",
 
     // Theme
     themeColor: "#aa89f2",
@@ -191,6 +192,7 @@ const themeOptions = {
     themeBackground: "#A7BFFF",
     bodyBackground: "rgba(108, 144, 238, 0.5)",
     cardBackground: "rgba(108, 144, 238, 0.5)",
+    containerShadowColor: "rgba(0, 0, 0, 1)",
 
     // Theme
     themeColor: "#203354",
