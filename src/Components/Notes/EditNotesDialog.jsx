@@ -275,7 +275,9 @@ function EditNotesDialog({
         </FormControl>
         {tagTypeSelection && tagTypeSelection === "select" ? (
           <Autocomplete
-            options={allTags}
+            options={allTags
+              .map((t) => t.tag)
+              .filter((tag) => !tag?.toLowerCase()?.includes("untagged"))}
             disabled={allTags.length === 0}
             autoComplete
             value={newNote.tag}

@@ -256,7 +256,9 @@ function NotesDialog({
         </FormControl>
         {tagTypeSelection && tagTypeSelection === "select" ? (
           <Autocomplete
-            options={allTags}
+            options={allTags
+              .map((t) => t.tag)
+              .filter((tag) => !tag?.toLowerCase()?.includes("untagged"))}
             autoComplete
             value={note.tag}
             onChange={(e, value) => handleTagChange(e, value)}

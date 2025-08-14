@@ -92,6 +92,22 @@ function NotesComponent({ notistackSnackbar }) {
           .filter((tag) => tag)
           .sort();
 
+        const tempTags = {};
+        for (const { tag } of urlNotes || []) {
+          const key = tag?.trim() || "- Untagged -";
+          tempTags[key] = (tempTags[key] || 0) + 1;
+        }
+
+        const countArr = Object.entries(tempTags)?.map(([tag, count]) => ({
+          tag,
+          count,
+        }));
+        countArr.sort((a, b) => {
+          if (a.tag === "- Untagged -") return -1;
+          if (b.tag === "- Untagged -") return 1;
+          return a.tag.localeCompare(b.tag);
+        });
+
         tagColorMap = await tags.reduce((acc, currTag, index) => {
           const color = tagColors[index % tagColors.length];
           acc[currTag] = color;
@@ -100,7 +116,7 @@ function NotesComponent({ notistackSnackbar }) {
 
         setAllRespNotes(urlNotes);
         setNotesToDisplay(urlNotes);
-        setAllTags([...new Set(tags)]);
+        setAllTags(countArr);
         displayedSelected = false;
       } else {
         setNotesToDisplay([]);
@@ -200,19 +216,20 @@ function NotesComponent({ notistackSnackbar }) {
   };
 
   const handleTagChange = async (newTags) => {
+    const selectedTagNames = newTags.map((t) => t.tag);
+
     const baseNotes = displayedSelected
       ? allRespNotes.filter((note) => checkedNotes.includes(note.id))
       : allRespNotes;
 
-    if (newTags.length === 0) {
+    if (selectedTagNames.length === 0) {
       setNotesToDisplay(baseNotes);
     } else {
       const filteredNotes = baseNotes.filter((note) => {
-        if (newTags.includes("- Untagged -")) {
-          return newTags.includes(note.tag) || !note.tag;
+        if (selectedTagNames.includes("- Untagged -")) {
+          return selectedTagNames.includes(note.tag) || !note.tag;
         }
-
-        return newTags.includes(note.tag);
+        return selectedTagNames.includes(note.tag);
       });
       setNotesToDisplay(filteredNotes);
     }
@@ -230,7 +247,9 @@ function NotesComponent({ notistackSnackbar }) {
         }}
       >
         <Autocomplete
-          options={["- Untagged -", ...allTags]}
+          // options={["- Untagged -", ...allTags]}
+          options={allTags}
+          getOptionLabel={(option) => `${option.tag} (${option.count})`}
           multiple
           autoComplete
           disabled={allTags.length == 0}
