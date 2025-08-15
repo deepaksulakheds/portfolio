@@ -86,11 +86,16 @@ function NotesComponent({ notistackSnackbar }) {
           } catch (e) {}
           return { ...note, isUrl };
         });
-        const tags = urlNotes
-          ?.map((note) => note.tag)
-          .flat()
-          .filter((tag) => tag)
-          .sort();
+
+        const tags = [
+          ...new Set(
+            urlNotes
+              ?.map((note) => note.tag)
+              .flat()
+              .filter((tag) => tag)
+              .sort()
+          ),
+        ];
 
         const tempTags = {};
         for (const { tag } of urlNotes || []) {
