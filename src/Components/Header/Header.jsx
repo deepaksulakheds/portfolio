@@ -79,7 +79,8 @@ function Header({ attachmentToggle }) {
             setAnchorEl((prev) => (prev ? null : e.currentTarget)),
           toolTip: null,
           style: {
-            boxShadow: `inset 0px 0px 22px 0px ${themeContext.primaryColor}`,
+            boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+            color: themeContext.themeColor,
           },
         },
       ]);
@@ -246,11 +247,11 @@ function Header({ attachmentToggle }) {
                     padding: "0.5rem",
                     transition: "all ease-in-out 0.15s",
                     color: themeContext.themeIcons,
+                    ...(anchorEl && contact.style),
                     "&:hover": {
                       boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
                       color: themeContext.themeColor,
                     },
-                    ...(anchorEl && contact.style),
                   }}
                   href={contact?.ref}
                   onClick={contact.onclick ? contact.onclick : null}
