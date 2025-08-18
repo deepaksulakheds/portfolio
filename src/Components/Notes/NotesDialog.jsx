@@ -265,9 +265,9 @@ function NotesDialog({
             disabled={allTags.length === 0}
             sx={{
               minWidth: "200px",
-              "& .MuiSvgIcon-root": {
-                color: themeContext.oppositeTheme,
-              },
+              // "& .MuiSvgIcon-root": {
+              //   color: themeContext.oppositeTheme,
+              // },
               "& .MuiInputLabel-root": {
                 color: themeContext.dullOppositeTheme,
               },
@@ -348,9 +348,22 @@ function NotesDialog({
               },
               clearIndicator: {
                 sx: {
-                  color: themeContext.oppositeTheme,
                   visibility: "visible",
                   opacity: 1,
+                  color: themeContext.oppositeTheme,
+                  "&:hover": {
+                    color: themeContext.themeColor, // color on hover
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  },
+                },
+              },
+              popupIndicator: {
+                sx: {
+                  color: themeContext.oppositeTheme,
+                  "&:hover": {
+                    color: themeContext.themeColor, // color on hover
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  },
                 },
               },
             }}

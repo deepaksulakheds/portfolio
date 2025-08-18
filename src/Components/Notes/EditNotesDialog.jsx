@@ -284,9 +284,9 @@ function EditNotesDialog({
             onChange={(e, value) => handleTagChange(e, value)}
             sx={{
               minWidth: "200px",
-              "& .MuiSvgIcon-root": {
-                color: themeContext.oppositeTheme,
-              },
+              // "& .MuiSvgIcon-root": {
+              //   color: themeContext.oppositeTheme,
+              // },
               "& .MuiInputLabel-root": {
                 color: themeContext.dullOppositeTheme,
               },
@@ -369,6 +369,20 @@ function EditNotesDialog({
                 sx: {
                   visibility: "visible",
                   opacity: 1,
+                  color: themeContext.oppositeTheme,
+                  "&:hover": {
+                    color: themeContext.themeColor, // color on hover
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  },
+                },
+              },
+              popupIndicator: {
+                sx: {
+                  color: themeContext.oppositeTheme,
+                  "&:hover": {
+                    color: themeContext.themeColor, // color on hover
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  },
                 },
               },
             }}
@@ -406,7 +420,7 @@ function EditNotesDialog({
                         cursor: "pointer",
                         borderRadius: "50%",
                         "&:hover": {
-                          boxShadow: `inset 0px 0px 5px 1px ${themeContext.themeColor}`,
+                          boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
                           color: themeContext.themeColor,
                         },
                       }}

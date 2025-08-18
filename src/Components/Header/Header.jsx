@@ -142,8 +142,8 @@ function Header({ attachmentToggle }) {
     >
       <IconButton
         title={`Switch to ${
-          themeContext.mode == "dark" ? "Light " : "Dark "
-        }Mode`}
+          themeContext.mode == "dark" ? "Light" : "Dark"
+        } Mode`}
         onClick={() => toggleTheme()}
         sx={{
           padding: "3px",
@@ -157,6 +157,7 @@ function Header({ attachmentToggle }) {
           "&:hover": {
             boxShadow: `inset 0px 0px 22px 10px ${themeContext.themeColor}`,
             // color: themeContext.iconHoverColor,
+            cursor: "pointer",
           },
         }}
       >
@@ -246,8 +247,8 @@ function Header({ attachmentToggle }) {
                     transition: "all ease-in-out 0.15s",
                     color: themeContext.themeIcons,
                     "&:hover": {
-                      boxShadow: `inset 0px 0px 22px 0px ${themeContext.themeColor}`,
-                      color: themeContext.iconHoverColor,
+                      boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                      color: themeContext.themeColor,
                     },
                     ...(anchorEl && contact.style),
                   }}
