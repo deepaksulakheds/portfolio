@@ -79,8 +79,8 @@ function Header({ attachmentToggle }) {
             setAnchorEl((prev) => (prev ? null : e.currentTarget)),
           toolTip: null,
           style: {
-            boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
-            color: themeContext.themeColor,
+            boxShadow: `inset 0px 0px 10px 2px var(--theme-color)`,
+            color: `var(--theme-color)`,
           },
         },
       ]);
