@@ -262,9 +262,9 @@ function NotesComponent({ notistackSnackbar }) {
           disableCloseOnSelect
           sx={{
             minWidth: "200px",
-            "& .MuiSvgIcon-root": {
-              color: themeContext.oppositeTheme,
-            },
+            // "& .MuiSvgIcon-root": {
+            //   color: themeContext.oppositeTheme,
+            // },
             "& .MuiInputLabel-root": {
               color: themeContext.dullOppositeTheme,
             },
@@ -362,6 +362,20 @@ function NotesComponent({ notistackSnackbar }) {
               sx: {
                 visibility: "visible",
                 opacity: 1,
+                color: themeContext.oppositeTheme,
+                "&:hover": {
+                  color: themeContext.themeColor, // color on hover
+                  boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                },
+              },
+            },
+            popupIndicator: {
+              sx: {
+                color: themeContext.oppositeTheme,
+                "&:hover": {
+                  color: themeContext.themeColor, // color on hover
+                  boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                },
               },
             },
           }}
@@ -545,7 +559,8 @@ function NotesComponent({ notistackSnackbar }) {
                       margin: 0,
                       padding: "0.2rem",
                       ":hover": {
-                        boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
+                        boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                        color: themeContext.themeColor,
                       },
                       "&.Mui-checked": {
                         color: themeContext.themeColor,
@@ -569,7 +584,8 @@ function NotesComponent({ notistackSnackbar }) {
                         color: themeContext.themeIcons,
                         borderRadius: "50%",
                         ":hover": {
-                          boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
+                          color: themeContext.themeColor,
+                          boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
                         },
                       }}
                       onClick={() => handleCopy(note)}
@@ -582,7 +598,8 @@ function NotesComponent({ notistackSnackbar }) {
                       color: themeContext.themeIcons,
                       borderRadius: "50%",
                       ":hover": {
-                        boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
+                        color: themeContext.themeColor,
+                        boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
                       },
                     }}
                     onClick={(e) => handleEdit(note, e)}
@@ -600,7 +617,8 @@ function NotesComponent({ notistackSnackbar }) {
               borderRadius: "5px",
               color: themeContext.themeIcons,
               "&:hover": {
-                boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
+                boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                color: themeContext.themeColor,
               },
             }}
             onClick={(e) =>
@@ -621,7 +639,8 @@ function NotesComponent({ notistackSnackbar }) {
                 cursor: "pointer",
                 color: themeContext.themeIcons,
                 "&:hover": {
-                  boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
+                  boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  color: themeContext.themeColor,
                 },
               }}
               onClick={handleMultipleDelete}
@@ -635,7 +654,8 @@ function NotesComponent({ notistackSnackbar }) {
               cursor: "pointer",
               color: themeContext.themeIcons,
               "&:hover": {
-                boxShadow: `inset 0px 0px 15px 1px ${themeContext.themeColor}`,
+                boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                color: themeContext.themeColor,
               },
             }}
             onClick={handleClearSelection}
