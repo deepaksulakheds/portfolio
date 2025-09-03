@@ -26,8 +26,8 @@ import { Masonry } from "@mui/lab";
 import EditNotesDialog from "./EditNotesDialog.jsx";
 import { useThemeContext } from "../../Contexts/ThemeContext.jsx";
 
-let displayedSelected = false;
 var tagColorMap = {};
+let timer = null;
 
 const tagColors = [
   "springgreen",
@@ -62,6 +62,12 @@ function NotesComponent({ notistackSnackbar }) {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [allRespNotes, setAllRespNotes] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const [filtersUsed, setFiltersUsed] = useState({
+    tags: [],
+    search: "",
+    showOnlySelected: false,
+  });
+
   const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
     onError: (err) => {
       notistackSnackbar.showSnackbar(err.message, "error");
@@ -72,6 +78,10 @@ function NotesComponent({ notistackSnackbar }) {
   useEffect(() => {
     fetchNotes();
   }, []);
+
+  useEffect(() => {
+    applyFilters();
+  }, [filtersUsed, allRespNotes]);
 
   const fetchNotes = async () => {
     try {
@@ -120,16 +130,100 @@ function NotesComponent({ notistackSnackbar }) {
         }, {});
 
         setAllRespNotes(urlNotes);
-        setNotesToDisplay(urlNotes);
         setAllTags(countArr);
-        displayedSelected = false;
       } else {
+        setAllRespNotes([]);
         setNotesToDisplay([]);
+        setAllTags([]);
       }
     } catch (err) {
       console.log("err", err);
       notistackSnackbar.showSnackbar(err.message, "error");
     }
+  };
+
+  const applyFilters = () => {
+    const { tags, search, showOnlySelected } = filtersUsed;
+
+    let baseNotes = [...allRespNotes];
+
+    if (showOnlySelected && checkedNotes.length > 0) {
+      baseNotes = baseNotes.filter((note) => checkedNotes.includes(note.id));
+    }
+
+    if (tags.length > 0) {
+      baseNotes = baseNotes.filter((note) => {
+        if (tags.includes("- Untagged -")) {
+          return tags.includes(note.tag) || !note.tag;
+        }
+        return tags.includes(note.tag);
+      });
+    }
+
+    if (search) {
+      baseNotes = baseNotes.filter((note) =>
+        note.note.toLowerCase().includes(search)
+      );
+    }
+
+    setNotesToDisplay(baseNotes);
+  };
+
+  const handleTagChange = (newTags) => {
+    setFiltersUsed((prev) => ({
+      ...prev,
+      tags: newTags.map((t) => t.tag),
+    }));
+  };
+
+  const handleSearch = (e) => {
+    const query = e.target.value?.toLowerCase()?.trim() || "";
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      setFiltersUsed((prev) => ({
+        ...prev,
+        search: query,
+      }));
+    }, 500);
+  };
+
+  const toggleDisplaySelected = () => {
+    setFiltersUsed((prev) => ({
+      ...prev,
+      showOnlySelected: !prev.showOnlySelected,
+    }));
+  };
+
+  const handleCheck = (id) => {
+    setCheckedNotes((prev) =>
+      prev.includes(id) ? prev.filter((note) => note !== id) : [...prev, id]
+    );
+  };
+
+  const handleClearSelection = () => {
+    setCheckedNotes([]);
+    setFiltersUsed((prev) => ({
+      ...prev,
+      showOnlySelected: false,
+    }));
+    notistackSnackbar.showSnackbar("Selection cleared.", "info");
+  };
+
+  const handleCopy = async (note) => {
+    try {
+      navigator.clipboard.writeText(note.note);
+      setCopied(note.id);
+      setTimeout(() => {
+        setCopied(false);
+      }, 4000);
+    } catch (error) {
+      notistackSnackbar.showSnackbar("Failed to copy note.", "error");
+    }
+  };
+
+  const handleEdit = async (note, e) => {
+    setNoteEditing(note);
+    setEditNoteAnchorEl(e.currentTarget);
   };
 
   const handleMultipleDelete = async () => {
@@ -161,83 +255,6 @@ function NotesComponent({ notistackSnackbar }) {
       notistackSnackbar.showSnackbar(err.message, "error");
     }
     setDeleteLoading(false);
-  };
-
-  const handleCheck = (id) => {
-    setCheckedNotes((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((note) => note !== id);
-      } else {
-        return [...prev, id];
-      }
-    });
-  };
-
-  const handleClearSelection = () => {
-    setCheckedNotes([]);
-    setNotesToDisplay(allRespNotes);
-    displayedSelected = false;
-    notistackSnackbar.showSnackbar("Selection cleared.", "info");
-  };
-
-  const toggleDisplaySelected = () => {
-    const isAllSelected = notesToDisplay.every((note) =>
-      checkedNotes.includes(note.id)
-    );
-    // console.log("isAllSelected", isAllSelected);
-    if (isAllSelected) {
-      setNotesToDisplay(allRespNotes);
-      displayedSelected = false;
-    } else {
-      setNotesToDisplay((prev) =>
-        prev.reduce((acc, note) => {
-          if (checkedNotes.includes(note.id)) {
-            acc.push(note);
-          }
-          return acc;
-        }, [])
-      );
-      displayedSelected = true;
-    }
-  };
-
-  const handleCopy = async (note) => {
-    try {
-      navigator.clipboard.writeText(note.note);
-
-      setCopied(note.id);
-      setTimeout(() => {
-        setCopied(false);
-      }, 4000);
-    } catch (error) {
-      // console.error("Clipboard error:", error);
-      notistackSnackbar.showSnackbar("Failed to copy note.", "error");
-    }
-  };
-
-  const handleEdit = async (note, e) => {
-    setNoteEditing(note);
-    setEditNoteAnchorEl(e.currentTarget);
-  };
-
-  const handleTagChange = async (newTags) => {
-    const selectedTagNames = newTags.map((t) => t.tag);
-
-    const baseNotes = displayedSelected
-      ? allRespNotes.filter((note) => checkedNotes.includes(note.id))
-      : allRespNotes;
-
-    if (selectedTagNames.length === 0) {
-      setNotesToDisplay(baseNotes);
-    } else {
-      const filteredNotes = baseNotes.filter((note) => {
-        if (selectedTagNames.includes("- Untagged -")) {
-          return selectedTagNames.includes(note.tag) || !note.tag;
-        }
-        return selectedTagNames.includes(note.tag);
-      });
-      setNotesToDisplay(filteredNotes);
-    }
   };
 
   return (
@@ -395,10 +412,58 @@ function NotesComponent({ notistackSnackbar }) {
             />
           )}
         />
+        <TextField
+          variant="standard"
+          id="search-notes"
+          label={allTags.length === 0 ? "No notes available" : "Search Notes"}
+          disabled={allTags.length == 0}
+          onChange={(e) => handleSearch(e)}
+          sx={{
+            flexGrow: 1,
+            maxWidth: "200px",
+            "& .MuiInputLabel-root": {
+              color: themeContext.dullOppositeTheme,
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: themeContext.dullOppositeTheme,
+            },
+            "& .MuiInput-underline:before": {
+              borderBottomColor: themeContext.dullOppositeTheme,
+            },
+            "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+              borderBottomColor: themeContext.dullOppositeTheme,
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor: themeContext.dullOppositeTheme,
+            },
+            "& .Mui-disabled": {
+              color: themeContext.disabledColor,
+              WebkitTextFillColor: themeContext.disabledColor,
+            },
+            "& .MuiInput-underline.Mui-disabled:before": {
+              borderBottomColor: themeContext.disabledColor,
+            },
+            "& .Mui-disabled .MuiSvgIcon-root": {
+              color: themeContext.disabledColor,
+            },
+          }}
+          slotProps={{
+            input: {
+              style: {
+                color: themeContext.oppositeTheme,
+              },
+            },
+            inputLabel: {
+              style: {
+                color: themeContext.dullOppositeTheme,
+              },
+            },
+          }}
+        />
         <Chip
           sx={{
             color: themeContext.noThemeColor,
-            backgroundColor: displayedSelected
+            backgroundColor: filtersUsed.showOnlySelected
               ? themeContext.oppositeTheme
               : themeContext.dullOppositeTheme,
             fontWeight: "bold",
