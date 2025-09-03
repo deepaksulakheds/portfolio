@@ -4,6 +4,7 @@ import {
   Chip,
   CircularProgress,
   Grid,
+  InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
@@ -18,6 +19,7 @@ import {
   CopyAllRounded,
   CheckCircle,
   EditNote,
+  ClearOutlined,
 } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
@@ -62,6 +64,7 @@ function NotesComponent({ notistackSnackbar }) {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [allRespNotes, setAllRespNotes] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const [internalSearch, setInternalSearch] = useState("");
   const [filtersUsed, setFiltersUsed] = useState({
     tags: [],
     search: "",
@@ -178,6 +181,8 @@ function NotesComponent({ notistackSnackbar }) {
 
   const handleSearch = (e) => {
     const query = e.target.value?.toLowerCase()?.trim() || "";
+    setInternalSearch(query);
+
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       setFiltersUsed((prev) => ({
@@ -418,6 +423,7 @@ function NotesComponent({ notistackSnackbar }) {
           label={allTags.length === 0 ? "No notes available" : "Search Notes"}
           disabled={allTags.length == 0}
           onChange={(e) => handleSearch(e)}
+          value={internalSearch}
           sx={{
             flexGrow: 1,
             maxWidth: "200px",
@@ -452,6 +458,22 @@ function NotesComponent({ notistackSnackbar }) {
               style: {
                 color: themeContext.oppositeTheme,
               },
+              endAdornment: (
+                <InputAdornment position="end" title="Clear">
+                  <ClearOutlined
+                    onClick={(e) => handleSearch(e)}
+                    sx={{
+                      color: themeContext.oppositeTheme,
+                      cursor: "pointer",
+                      borderRadius: "50%",
+                      "&:hover": {
+                        boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                        color: themeContext.themeColor,
+                      },
+                    }}
+                  />
+                </InputAdornment>
+              ),
             },
             inputLabel: {
               style: {
