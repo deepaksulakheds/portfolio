@@ -27,6 +27,7 @@ import moment from "moment";
 import { Masonry } from "@mui/lab";
 import EditNotesDialog from "./EditNotesDialog.jsx";
 import { useThemeContext } from "../../Contexts/ThemeContext.jsx";
+import Linkify from "linkify-react";
 
 var tagColorMap = {};
 let timer = null;
@@ -549,92 +550,67 @@ function NotesComponent({ notistackSnackbar }) {
                     justifyContent: "space-between",
                   }}
                 >
-                  {note.isUrl ? (
-                    <>
-                      <a
-                        href={note.note}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ textDecorationColor: themeContext.themeColor }}
-                      >
-                        <Typography
-                          sx={{
-                            fontWeight: "500",
-                            whiteSpace: "pre-line",
-                            color: themeContext.themeColor,
-                          }}
-                        >
-                          {note.note}
-                        </Typography>
-                      </a>
-                      <Typography
-                        sx={{
-                          fontSize: "12.5px",
-                          fontWeight: "400",
-                          color: themeContext.themeColor,
-                          userSelect: "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "5px",
-                        }}
-                        component={"div"}
-                      >
-                        {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
-                        {note.tag && (
-                          <Chip
-                            sx={{
-                              backgroundColor: tagColorMap[note.tag],
-                              width: "fit-content",
-                              fontWeight: "bold",
-                              padding: 0,
-                              height: "fit-content",
-                              color: themeContext.blackText,
+                  <Linkify
+                    options={{
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      render: ({ tagName, attributes, content }) => {
+                        const { href, ...props } = attributes;
+                        return (
+                          <a
+                            href={href}
+                            {...props}
+                            style={{
+                              textDecorationColor: themeContext.themeColor,
+                              color: themeContext.themeColor,
+                              wordBreak: "break-all",
+                              wordWrap: "break-word",
                             }}
-                            label={note.tag}
-                          />
-                        )}
-                      </Typography>
-                    </>
-                  ) : (
-                    <>
-                      <Typography
+                          >
+                            {content}
+                          </a>
+                        );
+                      },
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontWeight: "500",
+                        whiteSpace: "pre-line",
+                        color: themeContext.oppositeTheme,
+                      }}
+                    >
+                      {note.note}
+                    </Typography>
+                  </Linkify>
+                  <Typography
+                    sx={{
+                      fontSize: "12.5px",
+                      fontWeight: "400",
+                      color: themeContext.themeColor,
+                      userSelect: "none",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "5px",
+                      marginTop: "20px",
+                    }}
+                    component={"div"}
+                  >
+                    {note.tag && (
+                      <Chip
                         sx={{
-                          fontWeight: "500",
-                          whiteSpace: "pre-line",
-                          color: themeContext.oppositeTheme,
+                          backgroundColor: tagColorMap[note.tag],
+                          width: "fit-content",
+                          fontWeight: "bold",
+                          padding: 0,
+                          height: "fit-content",
+                          color: themeContext.blackText,
                         }}
-                      >
-                        {note.note}
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "12.5px",
-                          fontWeight: "400",
-                          color: themeContext.themeColor,
-                          userSelect: "none",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "5px",
-                        }}
-                        component={"div"}
-                      >
-                        {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
-                        {note.tag && (
-                          <Chip
-                            sx={{
-                              backgroundColor: tagColorMap[note.tag],
-                              width: "fit-content",
-                              fontWeight: "bold",
-                              padding: 0,
-                              height: "fit-content",
-                              color: themeContext.blackText,
-                            }}
-                            label={note.tag}
-                          />
-                        )}
-                      </Typography>
-                    </>
-                  )}
+                        label={note.tag}
+                      />
+                    )}
+                    {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
+                  </Typography>
                 </Grid>
                 <Grid
                   sx={{ display: "flex", gap: "10px", flexDirection: "column" }}
