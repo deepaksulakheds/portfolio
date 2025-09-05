@@ -15,7 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { EDIT_NOTE } from "../queries";
 import React, { useEffect, useState } from "react";
 import { ClearOutlined } from "@mui/icons-material";

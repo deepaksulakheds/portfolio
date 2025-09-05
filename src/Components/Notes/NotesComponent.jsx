@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./NotesComponent.css";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
 import {
   AddBox,
