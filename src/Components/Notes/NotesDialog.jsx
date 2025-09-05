@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import React, { useEffect, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { ADD_NOTE } from "../queries";
 import { useThemeContext } from "../../Contexts/ThemeContext";
 

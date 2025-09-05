@@ -1,7 +1,7 @@
 import {
   ApolloClient,
   InMemoryCache,
-  createHttpLink,
+  HttpLink,
   ApolloLink,
 } from "@apollo/client";
 import moment from "moment";
@@ -91,7 +91,7 @@ const authLink = new ApolloLink((operation, forward) => {
 
 const link = ApolloLink.from([
   authLink,
-  createHttpLink({
+  new HttpLink({
     uri: import.meta.env.VITE_APP_BACKEND_URL,
     fetch: fetchResp,
   }),

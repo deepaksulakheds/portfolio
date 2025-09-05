@@ -17,7 +17,7 @@ import "./MailDialog.css";
 import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { withAttachmentToggle } from "./attachmentContext";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import { useThemeContext } from "../../Contexts/ThemeContext";
 
