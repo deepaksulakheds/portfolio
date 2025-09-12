@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./NotesComponent.css";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
 import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
@@ -71,6 +71,7 @@ function NotesComponent({ notistackSnackbar }) {
     search: "",
     showOnlySelected: false,
   });
+  const shrtcutTimer = useRef(false);
 
   const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
     onError: (err) => {
@@ -81,6 +82,56 @@ function NotesComponent({ notistackSnackbar }) {
 
   useEffect(() => {
     fetchNotes();
+
+    const handleKeyDown = (e) => {
+      try {
+        if (shrtcutTimer.current) return;
+
+        const userAgent = navigator?.userAgent?.toLowerCase() || "";
+        const platform = userAgent.includes("mac")
+          ? "mac"
+          : userAgent.includes("win")
+          ? "win"
+          : userAgent.includes("lin") || userAgent.includes("ubu")
+          ? "lin"
+          : false;
+
+        if (!platform) return;
+
+        const modifier =
+          platform == "mac" ? e.metaKey && "cmd" : e.ctrlKey && "ctrl";
+        if (!modifier) return;
+
+        const key = e.key.toLowerCase();
+        const hotkey = [modifier, e.altKey && "alt", e.shiftKey && "shift", key]
+          .filter(Boolean)
+          .join("+");
+
+        switch (hotkey) {
+          case "ctrl+i":
+          case "cmd+i":
+            e.preventDefault();
+            console.log("Add new note");
+            setNoteAnchorEl(e.currentTarget);
+            break;
+
+          default:
+            return;
+        }
+        shrtcutTimer.current = true;
+
+        setTimeout(() => {
+          shrtcutTimer.current = false;
+        }, 3000);
+      } catch (err) {
+        console.log("Error in shortcut", err);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   useEffect(() => {
