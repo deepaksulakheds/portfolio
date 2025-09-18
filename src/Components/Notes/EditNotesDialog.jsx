@@ -338,8 +338,8 @@ function EditNotesDialog({
                 sx: {
                   "& .MuiAutocomplete-option": {
                     "&:hover": {
-                      backgroundColor: themeContext.oppositeTheme,
-                      color: themeContext.themeBackground,
+                      color: themeContext.themeColor,
+                      filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
                     },
                     '&[aria-selected="true"]': {
                       color: themeContext.themeColor,
@@ -483,14 +483,8 @@ function EditNotesDialog({
                 pointerEvents: "unset",
                 cursor: "not-allowed",
                 boxShadow: "none",
-                color: !newNote.note
-                  ? themeContext.disabledColor
-                  : themeContext.dullOppositeTheme,
-                border: `1px solid ${
-                  !newNote.note
-                    ? themeContext.disabledColor
-                    : themeContext.dullOppositeTheme
-                }`,
+                color: themeContext.disabledColor,
+                border: `1px solid ${themeContext.disabledColor}`,
               },
             }}
             disabled={
@@ -503,8 +497,8 @@ function EditNotesDialog({
           >
             {loading ? (
               <CircularProgress
-                color={themeContext.oppositeTheme}
-                sx={{ color: themeContext.oppositeTheme }}
+                color={themeContext.disabledColor}
+                sx={{ color: themeContext.disabledColor }}
                 size={20}
               />
             ) : (

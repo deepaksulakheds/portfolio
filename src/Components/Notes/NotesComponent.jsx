@@ -389,8 +389,8 @@ function NotesComponent({ notistackSnackbar }) {
               sx: {
                 "& .MuiAutocomplete-option": {
                   "&:hover": {
-                    backgroundColor: themeContext.oppositeTheme,
-                    color: themeContext.themeBackground,
+                    color: themeContext.themeColor,
+                    filter: `drop-shadow(0px 0px 0.9px ${themeContext.themeColor})`,
                   },
                   '&[aria-selected="true"]': {
                     color: themeContext.themeColor,
