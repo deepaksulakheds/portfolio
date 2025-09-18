@@ -20,6 +20,7 @@ import { getFormattedTimePeriod } from "../../utils/formatTimePeriod";
 import { useSecretContext } from "../../Contexts/SecretContext";
 import { useThemeContext } from "../../Contexts/ThemeContext";
 import "./ExperienceComponent.css";
+import { useEffect, useRef } from "react";
 
 const experienceData = [
   {
@@ -83,6 +84,65 @@ export function ExperienceComponent({ attachmentToggle }) {
   // Contexts
   const secretContext = useSecretContext();
   const { themeContext } = useThemeContext();
+  const shrtcutTimer = useRef(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      try {
+        if (shrtcutTimer.current) return;
+        if (!secretContext.secretEnabled) return;
+
+        const userAgent = navigator?.userAgent?.toLowerCase() || "";
+        const platform = userAgent.includes("mac")
+          ? "mac"
+          : userAgent.includes("win")
+          ? "win"
+          : userAgent.includes("lin") || userAgent.includes("ubu")
+          ? "lin"
+          : false;
+
+        if (!platform) return;
+
+        const modifier =
+          platform == "mac" ? e.metaKey && "cmd" : e.ctrlKey && "ctrl";
+        if (!modifier) return;
+
+        const key = e.key.toLowerCase();
+        const hotkey = [modifier, e.altKey && "alt", e.shiftKey && "shift", key]
+          .filter(Boolean)
+          .join("+");
+
+        switch (hotkey) {
+          case "ctrl+shift+u":
+          case "cmd+shift+u":
+            e.preventDefault();
+            if (secretContext.secretEnabled) {
+              attachmentToggle.toggleAttachment();
+            }
+
+            break;
+
+          default:
+            return;
+        }
+
+        if (attachmentToggle.isAttachmentEnabled) {
+          shrtcutTimer.current = true;
+          setTimeout(() => {
+            shrtcutTimer.current = false;
+          }, 3000);
+        }
+      } catch (err) {
+        console.log("Error in shortcut", err);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [secretContext.secretEnabled, attachmentToggle]);
 
   return (
     <Grid className="experienceContainer">

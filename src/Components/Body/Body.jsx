@@ -6,7 +6,7 @@ import {
   MenuItem,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./body.css";
 import AboutComponent from "../About/AboutComponent";
 import ResumeComponent from "../Resume/Resume";
@@ -23,6 +23,8 @@ import { useThemeContext } from "../../Contexts/ThemeContext";
 function Body(props) {
   const secretContext = useSecretContext();
   const { themeContext } = useThemeContext();
+
+  const shrtcutTimer = useRef(false);
 
   const [menuList, setMenuList] = useState([
     { name: "About", icon: "👋" },
@@ -41,6 +43,69 @@ function Body(props) {
     document.title = selectedMenu + " | Deepak Sulakhe";
     if (!selectedMenu.includes("Notes")) {
       sessionStorage.setItem("selectedMenu", selectedMenu);
+    }
+
+    if (props.attachmentToggle.isAttachmentEnabled) {
+      const handleKeyDown = (e) => {
+        try {
+          if (shrtcutTimer.current) return;
+          if (!secretContext.secretEnabled) return;
+
+          const userAgent = navigator?.userAgent?.toLowerCase() || "";
+          const platform = userAgent.includes("mac")
+            ? "mac"
+            : userAgent.includes("win")
+            ? "win"
+            : userAgent.includes("lin") || userAgent.includes("ubu")
+            ? "lin"
+            : false;
+
+          if (!platform) return;
+
+          const modifier =
+            platform == "mac" ? e.metaKey && "cmd" : e.ctrlKey && "ctrl";
+          if (!modifier) return;
+
+          const key = e.key.toLowerCase();
+          const hotkey = [
+            modifier,
+            e.altKey && "alt",
+            e.shiftKey && "shift",
+            key,
+          ]
+            .filter(Boolean)
+            .join("+");
+
+          switch (hotkey) {
+            case "ctrl+shift+u":
+            case "cmd+shift+u":
+              e.preventDefault();
+
+              if (secretContext.secretEnabled) {
+                props.attachmentToggle.toggleAttachment();
+              }
+
+              break;
+
+            default:
+              return;
+          }
+
+          shrtcutTimer.current = true;
+
+          setTimeout(() => {
+            shrtcutTimer.current = false;
+          }, 3000);
+        } catch (err) {
+          console.log("Error in shortcut", err);
+        }
+      };
+
+      document.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
     }
   }, [selectedMenu]);
 
