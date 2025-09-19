@@ -111,7 +111,7 @@ function NotesComponent({ notistackSnackbar }) {
           case "ctrl+i":
           case "cmd+i":
             e.preventDefault();
-            console.log("Add new note");
+            // console.log("Add new note");
             setNoteAnchorEl(e.currentTarget);
             break;
 

@@ -1,7 +1,9 @@
-import React, { createContext, useContext, useState } from "react";
-import Snackbar from "@mui/material/Snackbar";
-import { Alert, useTheme } from "@mui/material";
+import { createContext, useContext, useState } from "react";
 
+const toggleMap = {
+  ON: true,
+  OFF: false,
+};
 // Create a context for managing the Snackbar state
 const AttachmentContext = createContext();
 
@@ -11,9 +13,17 @@ export const AttachmentProvider = ({ children }) => {
   const [isAttachmentEnabled, setIsAttachmentEnabled] = useState(false);
 
   // Function to show the Snackbar
-  const toggleAttachment = () => {
-    console.log("AttachmentContext", isAttachmentEnabled);
-    setIsAttachmentEnabled(!isAttachmentEnabled);
+  const toggleAttachment = (mapValue) => {
+    // console.log(
+    //   "AttachmentContext",
+    //   isAttachmentEnabled,
+    //   mapValue,
+    //   toggleMap[mapValue]
+    // );
+
+    setIsAttachmentEnabled(
+      mapValue ? toggleMap[mapValue] : !isAttachmentEnabled
+    );
   };
 
   return (

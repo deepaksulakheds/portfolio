@@ -187,7 +187,6 @@ function MailDialog({
   const secretMailAlertHandler = async () => {
     if (secretAlert) {
       setSecretMailAlert(!secretMailAlert);
-      console.log("setSecretMailAlert");
     }
   };
 
