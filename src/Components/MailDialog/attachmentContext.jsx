@@ -14,7 +14,7 @@ export const AttachmentProvider = ({ children }) => {
 
   // Function to show the Snackbar
   const toggleAttachment = (mapValue) => {
-    console.log("AttachmentContext", isAttachmentEnabled);
+    // console.log("AttachmentContext", isAttachmentEnabled);
 
     setIsAttachmentEnabled(
       mapValue ? toggleMap[mapValue] : !isAttachmentEnabled
