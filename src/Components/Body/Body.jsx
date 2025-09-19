@@ -83,8 +83,28 @@ function Body(props) {
 
               if (secretContext.secretEnabled) {
                 props.attachmentToggle.toggleAttachment();
+                setSelectedMenu(
+                  sessionStorage.getItem("selectedMenu") ||
+                    menuList[0].name + " " + menuList[0].icon
+                );
               }
 
+              break;
+
+            case "ctrl+shift+z":
+            case "cmd+shift+z":
+              if (
+                !props.attachmentToggle.isAttachmentEnabled ||
+                !secretContext.secretEnabled
+              )
+                return;
+
+              e.preventDefault();
+              props.attachmentToggle.toggleAttachment("OFF");
+              setSelectedMenu(
+                sessionStorage.getItem("selectedMenu") ||
+                  menuList[0].name + " " + menuList[0].icon
+              );
               break;
 
             default:
@@ -107,7 +127,11 @@ function Body(props) {
         document.removeEventListener("keydown", handleKeyDown);
       };
     }
-  }, [selectedMenu]);
+  }, [
+    selectedMenu,
+    props.attachmentToggle.isAttachmentEnabled,
+    secretContext.secretEnabled,
+  ]);
 
   useEffect(() => {
     setMenuList((prev) => {
@@ -276,7 +300,7 @@ function Body(props) {
         ) : selectedMenu.includes("Projects") ? (
           <ProjectsComponent />
         ) : selectedMenu.includes("Experience") ? (
-          <ExperienceComponent />
+          <ExperienceComponent setSelectedMenu={setSelectedMenu} />
         ) : selectedMenu.includes("Certificates") ? (
           <CertificatesComponent />
         ) : selectedMenu.includes("Notes") ? (

@@ -80,7 +80,7 @@ const educationData = [
     siteUrl: `http://jsssmiugpg.com/`,
   },
 ];
-export function ExperienceComponent({ attachmentToggle }) {
+export function ExperienceComponent({ attachmentToggle, setSelectedMenu }) {
   // Contexts
   const secretContext = useSecretContext();
   const { themeContext } = useThemeContext();
@@ -119,6 +119,23 @@ export function ExperienceComponent({ attachmentToggle }) {
             if (secretContext.secretEnabled) {
               attachmentToggle.toggleAttachment();
             }
+
+            break;
+
+          case "ctrl+shift+z":
+          case "cmd+shift+z":
+            if (
+              !attachmentToggle.isAttachmentEnabled ||
+              !secretContext.secretEnabled
+            )
+              return;
+
+            e.preventDefault();
+            attachmentToggle.toggleAttachment("OFF");
+            setSelectedMenu(
+              sessionStorage.getItem("selectedMenu") ||
+                menuList[0].name + " " + menuList[0].icon
+            );
 
             break;
 
