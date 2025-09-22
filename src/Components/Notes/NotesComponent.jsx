@@ -660,7 +660,7 @@ function NotesComponent({ notistackSnackbar }) {
                         label={note.tag}
                       />
                     )}
-                    {moment.unix(note.createdAt).format("hh:mm A D/M/YY")}
+                    {moment.unix(note.createdAt).format("hh:mm A - DD/MMM/YY")}
                   </Typography>
                 </Grid>
                 <Grid
