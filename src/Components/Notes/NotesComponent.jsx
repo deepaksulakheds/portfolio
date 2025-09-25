@@ -3,6 +3,7 @@ import {
   Checkbox,
   Chip,
   CircularProgress,
+  Divider,
   Grid,
   InputAdornment,
   TextField,
@@ -11,7 +12,11 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import "./NotesComponent.css";
 import { useLazyQuery, useMutation } from "@apollo/client/react";
-import { DELETE_MULTIPLE_NOTES, GET_NOTES } from "../queries";
+import {
+  DELETE_MULTIPLE_NOTES,
+  GET_NOTES,
+  RESTORE_DELETED_NOTES,
+} from "../queries";
 import {
   AddBox,
   DisabledByDefault,
@@ -20,6 +25,7 @@ import {
   CheckCircle,
   EditNote,
   ClearOutlined,
+  Refresh,
 } from "@mui/icons-material";
 import { withNotistackSnackbar } from "../SharedSnackbar/SharedSnackbar1";
 import NotesDialog from "./NotesDialog.jsx";
@@ -55,7 +61,6 @@ function NotesComponent({ notistackSnackbar }) {
   // Contexts
   const { themeContext } = useThemeContext();
 
-  const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
   const [noteAnchorEl, setNoteAnchorEl] = useState(null);
   const [editNoteAnchorEl, setEditNoteAnchorEl] = useState(null);
   const [noteEditing, setNoteEditing] = useState(null);
@@ -71,6 +76,9 @@ function NotesComponent({ notistackSnackbar }) {
     search: "",
     showOnlySelected: false,
   });
+  const [deletedNotes, setDeletedNotes] = useState([]);
+  const [selectedTrash, setSelectedTrash] = useState([]);
+
   const shrtcutTimer = useRef(false);
 
   const [getNotes, { data, loading, error }] = useLazyQuery(GET_NOTES, {
@@ -79,6 +87,8 @@ function NotesComponent({ notistackSnackbar }) {
     },
     fetchPolicy: "network-only",
   });
+  const [restoreDeletedNotes] = useMutation(RESTORE_DELETED_NOTES);
+  const [deleteMultipleNotes] = useMutation(DELETE_MULTIPLE_NOTES);
 
   useEffect(() => {
     fetchNotes();
@@ -143,7 +153,7 @@ function NotesComponent({ notistackSnackbar }) {
       const resp = await getNotes();
       // console.log("resp", resp.data.getAllNotes.response);
       if (resp?.data?.getAllNotes?.response?.length > 0) {
-        const urlNotes = resp?.data?.getAllNotes?.response?.map((note) => {
+        let urlNotes = resp?.data?.getAllNotes?.response?.map((note) => {
           let isUrl = false;
           try {
             new URL(note?.note);
@@ -151,6 +161,10 @@ function NotesComponent({ notistackSnackbar }) {
           } catch (e) {}
           return { ...note, isUrl };
         });
+
+        const deletedNotes = urlNotes.filter((note) => note.isDeleted);
+        urlNotes = urlNotes.filter((note) => !note.isDeleted);
+        setDeletedNotes(deletedNotes);
 
         const tags = [
           ...new Set(
@@ -257,6 +271,12 @@ function NotesComponent({ notistackSnackbar }) {
     );
   };
 
+  const handleTrashCheck = (id) => {
+    setSelectedTrash((prev) =>
+      prev.includes(id) ? prev.filter((note) => note !== id) : [...prev, id]
+    );
+  };
+
   const handleClearSelection = () => {
     setCheckedNotes([]);
     setFiltersUsed((prev) => ({
@@ -264,6 +284,11 @@ function NotesComponent({ notistackSnackbar }) {
       showOnlySelected: false,
     }));
     notistackSnackbar.showSnackbar("Selection cleared.", "info");
+  };
+
+  const handleTrashClearSelection = () => {
+    setSelectedTrash([]);
+    notistackSnackbar.showSnackbar("Trash selection cleared.", "info");
   };
 
   const handleCopy = async (note) => {
@@ -314,8 +339,42 @@ function NotesComponent({ notistackSnackbar }) {
     setDeleteLoading(false);
   };
 
+  const handleRestoreMultiple = async () => {
+    try {
+      if (selectedTrash.length > 0) {
+        setDeleteLoading(true);
+        const restResp = await restoreDeletedNotes({
+          variables: { ids: selectedTrash },
+        });
+        // console.log("restResp", restResp);
+        if (restResp.data.restoreDeletedNotes.status == 200) {
+          notistackSnackbar.showSnackbar(
+            restResp.data.restoreDeletedNotes.message,
+            "success"
+          );
+          fetchNotes();
+        } else {
+          notistackSnackbar.showSnackbar(
+            restResp.data.restoreDeletedNotes.message,
+            "error"
+          );
+        }
+        setSelectedTrash([]);
+      } else {
+        notistackSnackbar.showSnackbar(
+          "Please select note from Recycle Bin.",
+          "error"
+        );
+      }
+    } catch (err) {
+      // console.log("err", err);
+      notistackSnackbar.showSnackbar(err.message, "error");
+    }
+    setDeleteLoading(false);
+  };
+
   return (
-    <Grid>
+    <>
       <Grid
         sx={{
           display: "flex",
@@ -775,13 +834,209 @@ function NotesComponent({ notistackSnackbar }) {
             onClick={handleClearSelection}
           />
         </Grid>
-        <NotesDialog
-          noteAnchorEl={noteAnchorEl}
-          onClose={() => setNoteAnchorEl(null)}
-          fetchNotes={fetchNotes}
-          allTags={allTags}
+      </Grid>
+      <Grid
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          color: themeContext.oppositeTheme,
+          marginTop: "10px",
+          marginBottom: "20px",
+        }}
+      >
+        <Divider
+          color={themeContext.dullOppositeTheme}
+          sx={{
+            color: themeContext.dullOppositeTheme,
+            backgroundColor: themeContext.dullOppositeTheme,
+            opacity: 0.6,
+          }}
+          style={{ color: themeContext.dullOppositeTheme }}
+          width="100%"
         />
       </Grid>
+      {loading ? null : deletedNotes.length === 0 ? (
+        <>
+          <Typography
+            sx={{
+              fontWeight: "500",
+              color: themeContext.subTitleText,
+            }}
+          >
+            No notes in Trash.
+          </Typography>
+        </>
+      ) : (
+        <Grid
+          sx={{
+            display: "flex",
+            gap: "10px",
+            justifyContent: "space-between",
+            transition: "all ease-in-out .2s",
+          }}
+        >
+          <Grid sx={{ width: "100%" }}>
+            <Typography
+              title="Permanently deleted After 1 day."
+              sx={{
+                fontWeight: "500",
+                color: themeContext.subTitleText,
+                marginBottom: "12px",
+                textDecoration: "underline",
+                textUnderlineOffset: "5px",
+                textDecorationThickness: "0.1px",
+              }}
+            >
+              Trash ({deletedNotes.length})
+            </Typography>
+            <Masonry
+              // sequential
+              columns={{ xs: 1, sm: 2, md: 2, lg: 3 }}
+              spacing={2}
+            >
+              {deletedNotes.map((note) => (
+                <Grid
+                  key={note.id}
+                  sx={{
+                    border: `1px solid gray`,
+                    wordBreak: "break-word",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    padding: "12px",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <Grid
+                    width={"95%"}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Linkify
+                      options={{
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                        render: ({ tagName, attributes, content }) => {
+                          const { href, ...props } = attributes;
+                          return (
+                            <a
+                              href={href}
+                              {...props}
+                              style={{
+                                textDecorationColor: themeContext.themeColor,
+                                color: themeContext.themeColor,
+                                wordBreak: "break-all",
+                                wordWrap: "break-word",
+                              }}
+                            >
+                              {content}
+                            </a>
+                          );
+                        },
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontWeight: "500",
+                          whiteSpace: "pre-line",
+                          color: `gray`,
+                        }}
+                      >
+                        {note.note}
+                      </Typography>
+                    </Linkify>
+                    <Typography
+                      sx={{
+                        fontSize: "12.5px",
+                        fontWeight: "400",
+                        color: `gray`,
+                        userSelect: "none",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "5px",
+                        marginTop: "20px",
+                      }}
+                      component={"div"}
+                    >
+                      {note.tag && (
+                        <Chip
+                          sx={{
+                            backgroundColor: tagColorMap[note.tag],
+                            width: "fit-content",
+                            fontWeight: "bold",
+                            padding: 0,
+                            height: "fit-content",
+                            color: themeContext.blackText,
+                          }}
+                          label={note.tag}
+                        />
+                      )}
+                      {moment
+                        .unix(note.createdAt)
+                        .format("hh:mm A - DD/MMM/YY")}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      gap: "10px",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Checkbox
+                      sx={{
+                        alignSelf: "flex-start",
+                        color: `gray`,
+                        margin: 0,
+                        padding: "0.2rem",
+                        ":hover": {
+                          boxShadow: `inset 0px 0px 10px 2px gray`,
+                          color: `darkgray`,
+                        },
+                        "&.Mui-checked": {
+                          color: `darkgray`,
+                        },
+                      }}
+                      checked={selectedTrash.includes(note.id)}
+                      onClick={(e) => handleTrashCheck(note.id)}
+                    />
+                  </Grid>
+                </Grid>
+              ))}
+            </Masonry>
+          </Grid>
+          <Grid sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>
+            <Refresh
+              titleAccess="Restore Deleted Notes"
+              sx={{
+                borderRadius: "5px",
+                cursor: "pointer",
+                color: themeContext.themeIcons,
+                "&:hover": {
+                  boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  color: themeContext.themeColor,
+                },
+              }}
+              onClick={handleRestoreMultiple}
+            />
+            <DisabledByDefault
+              titleAccess="Clear trash selection"
+              sx={{
+                borderRadius: "5px",
+                cursor: "pointer",
+                color: themeContext.themeIcons,
+                "&:hover": {
+                  boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  color: themeContext.themeColor,
+                },
+              }}
+              onClick={handleTrashClearSelection}
+            />
+          </Grid>
+        </Grid>
+      )}
       {noteEditing && (
         <EditNotesDialog
           editAnchorEl={editNoteAnchorEl}
@@ -791,7 +1046,13 @@ function NotesComponent({ notistackSnackbar }) {
           fetchNotes={fetchNotes}
         />
       )}
-    </Grid>
+      <NotesDialog
+        noteAnchorEl={noteAnchorEl}
+        onClose={() => setNoteAnchorEl(null)}
+        fetchNotes={fetchNotes}
+        allTags={allTags}
+      />
+    </>
   );
 }
 

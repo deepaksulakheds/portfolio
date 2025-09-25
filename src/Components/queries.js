@@ -31,16 +31,8 @@ export const GET_NOTES = gql`
         note
         createdAt
         tag
+        isDeleted
       }
-    }
-  }
-`;
-
-export const DELETE_NOTE = gql`
-  mutation DeleteNote($deleteNoteId: String!) {
-    deleteNote(id: $deleteNoteId) {
-      status
-      message
     }
   }
 `;
@@ -66,6 +58,15 @@ export const DELETE_MULTIPLE_NOTES = gql`
 export const EDIT_NOTE = gql`
   mutation UpdateNote($id: String!, $note: String!, $tag: String) {
     updateNote(id: $id, note: $note, tag: $tag) {
+      status
+      message
+    }
+  }
+`;
+
+export const RESTORE_DELETED_NOTES = gql`
+  mutation RestoreDeletedNotes($ids: [String!]!) {
+    restoreDeletedNotes(ids: $ids) {
       status
       message
     }
