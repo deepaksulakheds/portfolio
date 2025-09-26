@@ -78,6 +78,7 @@ function NotesComponent({ notistackSnackbar }) {
   });
   const [deletedNotes, setDeletedNotes] = useState([]);
   const [selectedTrash, setSelectedTrash] = useState([]);
+  const [restoreLoading, setRestoreLoading] = useState(false);
 
   const shrtcutTimer = useRef(false);
 
@@ -342,7 +343,7 @@ function NotesComponent({ notistackSnackbar }) {
   const handleRestoreMultiple = async () => {
     try {
       if (selectedTrash.length > 0) {
-        setDeleteLoading(true);
+        setRestoreLoading(true);
         const restResp = await restoreDeletedNotes({
           variables: { ids: selectedTrash },
         });
@@ -370,7 +371,7 @@ function NotesComponent({ notistackSnackbar }) {
       // console.log("err", err);
       notistackSnackbar.showSnackbar(err.message, "error");
     }
-    setDeleteLoading(false);
+    setRestoreLoading(false);
   };
 
   return (
@@ -624,6 +625,15 @@ function NotesComponent({ notistackSnackbar }) {
             sx={{ color: themeContext.themeIcons }}
             color={themeContext.themeIcons}
           />
+        ) : (filtersUsed.showOnlySelected ||
+            filtersUsed.search != "" ||
+            filtersUsed.tags.length > 0) &&
+          notesToDisplay.length === 0 ? (
+          <Typography
+            sx={{ fontWeight: "500", color: themeContext.subTitleText }}
+          >
+            Match Not Found.
+          </Typography>
         ) : notesToDisplay.length === 0 ? (
           <Typography
             sx={{ fontWeight: "500", color: themeContext.subTitleText }}
@@ -817,6 +827,7 @@ function NotesComponent({ notistackSnackbar }) {
                 },
               }}
               onClick={handleMultipleDelete}
+              disabled={checkedNotes.length === 0 || deleteLoading}
             />
           )}
 
@@ -863,7 +874,7 @@ function NotesComponent({ notistackSnackbar }) {
               color: themeContext.subTitleText,
             }}
           >
-            No notes in Trash.
+            Trash is empty.
           </Typography>
         </>
       ) : (
@@ -1008,19 +1019,28 @@ function NotesComponent({ notistackSnackbar }) {
             </Masonry>
           </Grid>
           <Grid sx={{ display: "flex", gap: "25px", flexDirection: "column" }}>
-            <Refresh
-              titleAccess="Restore Deleted Notes"
-              sx={{
-                borderRadius: "5px",
-                cursor: "pointer",
-                color: themeContext.themeIcons,
-                "&:hover": {
-                  boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
-                  color: themeContext.themeColor,
-                },
-              }}
-              onClick={handleRestoreMultiple}
-            />
+            {restoreLoading ? (
+              <CircularProgress
+                sx={{ color: themeContext.themeColor }}
+                color={themeContext.themeIcons}
+                size={23}
+              />
+            ) : (
+              <Refresh
+                titleAccess="Restore Deleted Notes"
+                sx={{
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  color: themeContext.themeIcons,
+                  "&:hover": {
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                    color: themeContext.themeColor,
+                  },
+                }}
+                onClick={handleRestoreMultiple}
+                disabled={selectedTrash.length === 0 || restoreLoading}
+              />
+            )}
             <DisabledByDefault
               titleAccess="Clear trash selection"
               sx={{
