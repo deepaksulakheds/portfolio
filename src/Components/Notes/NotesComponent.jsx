@@ -163,10 +163,6 @@ function NotesComponent({ notistackSnackbar }) {
           return { ...note, isUrl };
         });
 
-        const deletedNotes = urlNotes.filter((note) => note.isDeleted);
-        urlNotes = urlNotes.filter((note) => !note.isDeleted);
-        setDeletedNotes(deletedNotes);
-
         const tags = [
           ...new Set(
             urlNotes
@@ -176,6 +172,10 @@ function NotesComponent({ notistackSnackbar }) {
               .sort()
           ),
         ];
+
+        const deletedNotes = urlNotes.filter((note) => note.isDeleted);
+        urlNotes = urlNotes.filter((note) => !note.isDeleted);
+        setDeletedNotes(deletedNotes);
 
         const tempTags = {};
         for (const { tag } of urlNotes || []) {
