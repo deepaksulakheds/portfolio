@@ -1,11 +1,4 @@
-import {
-  Grid,
-  IconButton,
-  Link,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { Grid, IconButton, Link, Menu, MenuItem } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import "./body.css";
 import AboutComponent from "../About/AboutComponent";

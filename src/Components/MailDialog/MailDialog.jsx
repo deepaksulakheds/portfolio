@@ -10,7 +10,7 @@ import {
   CircularProgress,
   Tooltip,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { withSnackbar } from "../SharedSnackbar/SharedSnackbar";
 import { SEND_MAIL_QUERY } from "../queries";
 import "./MailDialog.css";

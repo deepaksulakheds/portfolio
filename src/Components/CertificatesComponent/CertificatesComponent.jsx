@@ -1,6 +1,5 @@
 import { Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import "./CertificatesComponent.css";
-import React from "react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 
 const certs = [

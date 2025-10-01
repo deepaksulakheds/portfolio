@@ -32,6 +32,7 @@ export const GET_NOTES = gql`
         createdAt
         tag
         isDeleted
+        updatedAt
       }
     }
   }

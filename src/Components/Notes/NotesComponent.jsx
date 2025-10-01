@@ -985,7 +985,7 @@ function NotesComponent({ notistackSnackbar }) {
                         />
                       )}
                       {moment
-                        .unix(note.createdAt)
+                        .unix(note?.updatedAt)
                         .format("hh:mm A - DD/MMM/YY")}
                     </Typography>
                   </Grid>

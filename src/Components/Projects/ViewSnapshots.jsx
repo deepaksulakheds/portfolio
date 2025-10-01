@@ -1,0 +1,116 @@
+import { Dialog, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useThemeContext } from "../../Contexts/ThemeContext";
+import "./projectComponent.css";
+
+const snapsList = ["./deepak.jpg", `deepak-1.jpg`, `deepak-2.jpg`];
+
+export function ViewSnapshotsDialog({
+  viewSnapshotVisible,
+  onClose,
+  snapsList,
+}) {
+  const [selectedImage, setSelectedImage] = useState(snapsList[0]);
+
+  const { themeContext } = useThemeContext();
+
+  useEffect(() => {
+    if (viewSnapshotVisible) {
+      // Uncomment for random pics
+      //   setSelectedImage(
+      //     snapsList[Math.floor(Math.random() * snapsList.length)]
+      //   );
+
+      return () => {
+        setTimeout(() => {
+          setSelectedImage(snapsList[0]);
+        }, 200);
+      };
+    }
+  }, [viewSnapshotVisible]);
+
+  const handleImageClick = (index) => {
+    setSelectedImage(snapsList[index]);
+  };
+
+  return (
+    <Dialog
+      open={viewSnapshotVisible}
+      onClose={onClose}
+      fullWidth
+      sx={{ backdropFilter: "blur(12px)", boxShadow: "none" }}
+      slotProps={{
+        paper: {
+          sx: {
+            boxShadow: "none",
+            background: "none",
+            height: "auto",
+            width: "fit-content",
+            // overflow: "hidden",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          },
+        },
+      }}
+    >
+      {snapsList && snapsList.length > 0 ? (
+        <>
+          <img
+            src={selectedImage}
+            style={{
+              padding: "20px",
+              height: "100%",
+              aspectRatio: "auto",
+              borderRadius: "10px",
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+            }}
+          />
+          <Grid
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
+          >
+            <Grid
+              sx={{
+                display: "flex",
+                gap: "20px",
+                padding: "5px",
+                borderRadius: "13px",
+              }}
+            >
+              {snapsList.map((image, index) => (
+                <img
+                  onClick={() => handleImageClick(index)}
+                  key={index}
+                  src={image}
+                  className="imageList"
+                  loading="lazy"
+                  style={{
+                    backgroundColor: themeContext.dullThemeColor,
+                    ...(image === selectedImage && {
+                      boxShadow: `inset 0px 0px 220px 0px ${themeContext.themeColor}`,
+                    }),
+                  }}
+                />
+              ))}
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        <Typography
+          sx={{
+            color: themeContext.themeColor,
+            padding: "20px",
+            textAlign: "center",
+            backgroundColor: themeContext.themeBackground,
+          }}
+          component={"div"}
+        >
+          No Snapshots Available
+        </Typography>
+      )}
+    </Dialog>
+  );
+}

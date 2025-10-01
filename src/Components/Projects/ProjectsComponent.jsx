@@ -1,8 +1,9 @@
-import { GitHub } from "@mui/icons-material";
+import { GitHub, Preview } from "@mui/icons-material";
 import { Chip, Grid, IconButton, Typography } from "@mui/material";
-import React from "react";
+import { useState } from "react";
 import "./projectComponent.css";
 import { useThemeContext } from "../../Contexts/ThemeContext";
+import { ViewSnapshotsDialog } from "./ViewSnapshots.jsx";
 
 const projData = [
   {
@@ -18,6 +19,7 @@ const projData = [
     description: `A telematics data visualization system for fleet analytics of Zeliot. Built with React and GraphQL.`,
     image: "./icons/fleet.jpg",
     path: "https://github.com/deepaksulakheds/Zeliot_Telematic_Project",
+    snapList: ["./icons/fleet.jpg"],
   },
   {
     title: "Dashboard - Zeliot Analytics",
@@ -32,6 +34,7 @@ const projData = [
     description: `An interactive dashboard for vehicle data insights. Developed using React and Apollo Server.`,
     image: "./icons/dashboard.png",
     path: "https://github.com/deepaksulakheds/Zeliot-Analytics-Dashboard",
+    snapList: ["./icons/dashboard.png"],
   },
   {
     title: "Fruits Classification using CNN",
@@ -47,6 +50,7 @@ const projData = [
     description: `Identifies different types of fruits using a Convolutional Neural Network(CNN). Implemented using Python and visualized with Matplotlib.`,
     image: "./icons/fruits.jpg",
     path: "https://github.com/deepaksulakheds/fruits-classification-cnn",
+    snapList: ["./icons/fruits.jpg"],
   },
   {
     title: "Face Recognition using LBPH",
@@ -61,6 +65,7 @@ const projData = [
     description: `A face recognition system using the LBPH algorithm. Utilizes OpenCV and Haar cascades for detection.`,
     image: "./icons/face-rec.jpg",
     path: "https://github.com/deepaksulakheds/Face-Recognition-using-LBPH",
+    snapList: ["./icons/face-rec.jpg"],
   },
   {
     title: "Rice Mill Management System",
@@ -68,12 +73,16 @@ const projData = [
     description: `A web-based management system for rice mills. Handles customer data, inventory, sales efficiently.`,
     image: "./icons/riceMill.jpeg",
     path: "#",
+    snapList: ["./icons/riceMill.jpeg"],
   },
 ];
 
 function ProjectsComponent(props) {
   // Contexts
   const { themeContext } = useThemeContext();
+
+  const [viewSnapshotVisible, setViewSnapshotVisible] = useState(false);
+
   return (
     <Grid className="projectContainer">
       {projData.map((project) => (
@@ -126,7 +135,27 @@ function ProjectsComponent(props) {
               </Typography>
               <IconButton
                 target="blank"
+                title="View Snapshots"
+                onClick={() => {
+                  setViewSnapshotVisible(project);
+                }}
+                sx={{
+                  padding: "4px",
+                  color: themeContext.themeIcons,
+                  transition: "all ease-in-out 0.15s",
+                  "&:hover": {
+                    color: themeContext.themeColor,
+                    // filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                  },
+                }}
+              >
+                <Preview />
+              </IconButton>
+              <IconButton
+                target="blank"
                 href={project.path}
+                title="View on GitHub"
                 sx={{
                   padding: "4px",
                   color: themeContext.themeIcons,
@@ -169,9 +198,16 @@ function ProjectsComponent(props) {
                 />
               ))}
             </Grid>
-          </Grid>
+          </Grid>{" "}
         </Grid>
       ))}
+      {viewSnapshotVisible && (
+        <ViewSnapshotsDialog
+          snapsList={viewSnapshotVisible.snapList}
+          onClose={() => setViewSnapshotVisible(false)}
+          viewSnapshotVisible={viewSnapshotVisible}
+        />
+      )}
     </Grid>
   );
 }
