@@ -19,7 +19,7 @@ const projData = [
     description: `A telematics data visualization system for fleet analytics of Zeliot. Built with React and GraphQL.`,
     image: "./icons/fleet.jpg",
     path: "https://github.com/deepaksulakheds/Zeliot_Telematic_Project",
-    snapList: ["./icons/fleet.jpg"],
+    snapList: ["./icons/fleet.jpg", "./icons/dashboard.png"],
   },
   {
     title: "Dashboard - Zeliot Analytics",
@@ -86,17 +86,11 @@ function ProjectsComponent(props) {
   return (
     <Grid className="projectContainer">
       {projData.map((project) => (
-        <Grid
-          key={project.title}
-          sx={{
-            ":hover > div > img": {
-              transform: "scale(1.15)",
-              transition: "all 0.3s ease-in-out",
-            },
-          }}
-          width={300}
-        >
+        <Grid key={project.title} width={300}>
           <Grid
+            onClick={() => {
+              setViewSnapshotVisible(project);
+            }}
             sx={{
               // marginBottom: 1,
               borderRadius: 3,
@@ -104,6 +98,14 @@ function ProjectsComponent(props) {
               width: 300,
               overflow: "hidden",
               transition: "all 0.3s ease-in-out",
+              border: `1px solid transparent`,
+              ":hover": {
+                cursor: "pointer",
+                borderColor: themeContext.themeColor,
+                filter: `drop-shadow(0px 0px 9px ${themeContext.themeColor})`,
+                transform: "scale(1.08)",
+                // ":hover > img": { transform: "scale(1.1)" },
+              },
             }}
           >
             <img
@@ -133,25 +135,6 @@ function ProjectsComponent(props) {
               >
                 {project.title}
               </Typography>
-              <IconButton
-                target="blank"
-                title="View Snapshots"
-                onClick={() => {
-                  setViewSnapshotVisible(project);
-                }}
-                sx={{
-                  padding: "4px",
-                  color: themeContext.themeIcons,
-                  transition: "all ease-in-out 0.15s",
-                  "&:hover": {
-                    color: themeContext.themeColor,
-                    // filter: `drop-shadow(0px 0px 3px ${themeContext.themeColor})`,
-                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
-                  },
-                }}
-              >
-                <Preview />
-              </IconButton>
               <IconButton
                 target="blank"
                 href={project.path}

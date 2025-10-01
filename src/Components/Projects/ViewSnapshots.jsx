@@ -1,7 +1,8 @@
-import { Dialog, Grid, Typography } from "@mui/material";
+import { Dialog, Grid, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useThemeContext } from "../../Contexts/ThemeContext";
 import "./projectComponent.css";
+import { ArrowCircleLeft, ArrowCircleRight } from "@mui/icons-material";
 
 const snapsList = ["./deepak.jpg", `deepak-1.jpg`, `deepak-2.jpg`];
 
@@ -31,6 +32,18 @@ export function ViewSnapshotsDialog({
 
   const handleImageClick = (index) => {
     setSelectedImage(snapsList[index]);
+  };
+
+  const handlePrevClick = () => {
+    const currentIndex = snapsList.indexOf(selectedImage);
+    const prevIndex = (currentIndex - 1 + snapsList.length) % snapsList.length;
+    setSelectedImage(snapsList[prevIndex]);
+  };
+
+  const handleNextClick = () => {
+    const currentIndex = snapsList.indexOf(selectedImage);
+    const nextIndex = (currentIndex + 1) % snapsList.length;
+    setSelectedImage(snapsList[nextIndex]);
   };
 
   return (
@@ -75,11 +88,27 @@ export function ViewSnapshotsDialog({
             <Grid
               sx={{
                 display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 gap: "20px",
                 padding: "5px",
                 borderRadius: "13px",
               }}
             >
+              <IconButton
+                onClick={handlePrevClick}
+                sx={{
+                  padding: "3px",
+                  transition: "all ease-in-out 0.15s",
+                  color: themeContext.themeIcons,
+                  "&:hover": {
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                    color: themeContext.themeColor,
+                  },
+                }}
+              >
+                <ArrowCircleLeft sx={{ fontSize: "30px" }} />
+              </IconButton>
               {snapsList.map((image, index) => (
                 <img
                   onClick={() => handleImageClick(index)}
@@ -95,6 +124,20 @@ export function ViewSnapshotsDialog({
                   }}
                 />
               ))}
+              <IconButton
+                onClick={handleNextClick}
+                sx={{
+                  padding: "3px",
+                  transition: "all ease-in-out 0.15s",
+                  color: themeContext.themeIcons,
+                  "&:hover": {
+                    boxShadow: `inset 0px 0px 10px 2px ${themeContext.themeColor}`,
+                    color: themeContext.themeColor,
+                  },
+                }}
+              >
+                <ArrowCircleRight sx={{ fontSize: "30px" }} />
+              </IconButton>
             </Grid>
           </Grid>
         </>

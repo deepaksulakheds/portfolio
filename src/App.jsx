@@ -8,6 +8,7 @@ import { client } from "./clients.js";
 import { NotistackSnackbarProvider } from "./Components/SharedSnackbar/SharedSnackbar1";
 import { SecretProvider } from "./Contexts/SecretContext.jsx";
 import { ThemeContextProvider } from "./Contexts/ThemeContext.jsx";
+import ErrorBoundary from "./ErrorController.jsx";
 // import { useEffect } from "react";
 
 // const handleKeyDown = (event) => {
@@ -28,16 +29,18 @@ function App() {
   return (
     <>
       <ThemeContextProvider>
-        <ApolloProvider client={client}>
-          <SecretProvider>
-            <AttachmentProvider>
-              <NotistackSnackbarProvider>
-                <Header />
-                <Body />
-              </NotistackSnackbarProvider>
-            </AttachmentProvider>
-          </SecretProvider>
-        </ApolloProvider>
+        <ErrorBoundary>
+          <ApolloProvider client={client}>
+            <SecretProvider>
+              <AttachmentProvider>
+                <NotistackSnackbarProvider>
+                  <Header />
+                  <Body />
+                </NotistackSnackbarProvider>
+              </AttachmentProvider>
+            </SecretProvider>
+          </ApolloProvider>
+        </ErrorBoundary>
       </ThemeContextProvider>
     </>
   );
