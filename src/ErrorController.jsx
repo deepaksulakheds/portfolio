@@ -446,7 +446,6 @@ class ErrorBoundary extends React.Component {
             variant="h5"
             sx={{
               fontWeight: 700,
-              color: "text.primary",
               mt: 0,
               mb: 1,
               color: themeContext.oppositeText,

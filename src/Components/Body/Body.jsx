@@ -70,8 +70,8 @@ function Body(props) {
             .join("+");
 
           switch (hotkey) {
-            case "ctrl+shift+u":
-            case "cmd+shift+u":
+            case import.meta.env.VITE_APP_HOTKEY1_COMB:
+            case import.meta.env.VITE_APP_HOTKEY1:
               e.preventDefault();
 
               if (secretContext.secretEnabled) {
@@ -84,8 +84,8 @@ function Body(props) {
 
               break;
 
-            case "ctrl+shift+z":
-            case "cmd+shift+z":
+            case import.meta.env.VITE_APP_HOTKEY2_COMB:
+            case import.meta.env.VITE_APP_HOTKEY2:
               if (
                 !props.attachmentToggle.isAttachmentEnabled ||
                 !secretContext.secretEnabled

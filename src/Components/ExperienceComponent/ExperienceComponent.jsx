@@ -113,8 +113,8 @@ export function ExperienceComponent({ attachmentToggle, setSelectedMenu }) {
           .join("+");
 
         switch (hotkey) {
-          case "ctrl+shift+u":
-          case "cmd+shift+u":
+          case import.meta.env.VITE_APP_HOTKEY1_COMB:
+          case import.meta.env.VITE_APP_HOTKEY1:
             e.preventDefault();
             if (secretContext.secretEnabled) {
               attachmentToggle.toggleAttachment();
@@ -122,8 +122,8 @@ export function ExperienceComponent({ attachmentToggle, setSelectedMenu }) {
 
             break;
 
-          case "ctrl+shift+z":
-          case "cmd+shift+z":
+          case import.meta.env.VITE_APP_HOTKEY2_COMB:
+          case import.meta.env.VITE_APP_HOTKEY2:
             if (
               !attachmentToggle.isAttachmentEnabled ||
               !secretContext.secretEnabled

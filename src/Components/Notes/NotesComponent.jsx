@@ -119,8 +119,8 @@ function NotesComponent({ notistackSnackbar }) {
           .join("+");
 
         switch (hotkey) {
-          case "ctrl+i":
-          case "cmd+i":
+          case import.meta.env.VITE_APP_HOTKEY3_COMB:
+          case import.meta.env.VITE_APP_HOTKEY3:
             e.preventDefault();
             // console.log("Add new note");
             setNoteAnchorEl(e.currentTarget);
