@@ -11,13 +11,6 @@ import { ThemeContextProvider } from "./Contexts/ThemeContext.jsx";
 import ErrorBoundary from "./ErrorController.jsx";
 // import { useEffect } from "react";
 
-// const handleKeyDown = (event) => {
-//   if ((event.ctrlKey || event.metaKey) && event.key === "k") {
-//     event.preventDefault();
-//     alert("Shortcut Ctrl+K (or Cmd+K) pressed!");
-//   }
-// };
-
 function App() {
   // useEffect(() => {
   //   window.addEventListener("keydown", handleKeyDown);

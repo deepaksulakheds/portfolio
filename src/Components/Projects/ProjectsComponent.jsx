@@ -7,6 +7,21 @@ import { ViewSnapshotsDialog } from "./ViewSnapshots.jsx";
 
 const projData = [
   {
+    title: "Due Finder (Android App)",
+    techUsed: [
+      "React Native",
+      "React Native Paper",
+      "Expo",
+      "JavaScript",
+      "Expo Notifications",
+    ],
+    description:
+      "React Native and Expo-based Android app designed to help Policy Agents to track and manage upcoming due dates for multiple insurance policies.",
+    image: "./icons/DueFinder.png",
+    path: "#",
+    snapList: ["./icons/DueFinder.png"],
+  },
+  {
     title: "Telematic Analytics - Zeliot",
     techUsed: [
       "JavaScript",
