@@ -909,12 +909,13 @@ function NotesComponent({ notistackSnackbar }) {
                 <Grid
                   key={note.id}
                   sx={{
-                    border: `1px solid gray`,
+                    border: `1px solid ${themeContext.trashText}`,
                     wordBreak: "break-word",
                     display: "flex",
                     justifyContent: "space-between",
                     padding: "12px",
                     borderRadius: "10px",
+                    backgroundColor: themeContext.trashBackground,
                   }}
                 >
                   <Grid
@@ -936,8 +937,8 @@ function NotesComponent({ notistackSnackbar }) {
                               href={href}
                               {...props}
                               style={{
-                                textDecorationColor: themeContext.themeColor,
-                                color: themeContext.themeColor,
+                                textDecorationColor: themeContext.trashText,
+                                color: themeContext.trashText,
                                 wordBreak: "break-all",
                                 wordWrap: "break-word",
                               }}
@@ -952,7 +953,7 @@ function NotesComponent({ notistackSnackbar }) {
                         sx={{
                           fontWeight: "500",
                           whiteSpace: "pre-line",
-                          color: `gray`,
+                          color: themeContext.trashText,
                         }}
                       >
                         {note.note}
@@ -962,7 +963,7 @@ function NotesComponent({ notistackSnackbar }) {
                       sx={{
                         fontSize: "12.5px",
                         fontWeight: "400",
-                        color: `gray`,
+                        color: themeContext.trashText,
                         userSelect: "none",
                         display: "flex",
                         flexDirection: "column",
@@ -974,12 +975,12 @@ function NotesComponent({ notistackSnackbar }) {
                       {note.tag && (
                         <Chip
                           sx={{
-                            backgroundColor: tagColorMap[note.tag],
+                            backgroundColor: "lightgray",
                             width: "fit-content",
                             fontWeight: "bold",
                             padding: 0,
                             height: "fit-content",
-                            color: themeContext.blackText,
+                            color: "black",
                           }}
                           label={note.tag}
                         />
@@ -999,15 +1000,15 @@ function NotesComponent({ notistackSnackbar }) {
                     <Checkbox
                       sx={{
                         alignSelf: "flex-start",
-                        color: `gray`,
+                        color: themeContext.trashBackground,
                         margin: 0,
                         padding: "0.2rem",
                         ":hover": {
-                          boxShadow: `inset 0px 0px 10px 2px gray`,
-                          color: `darkgray`,
+                          boxShadow: `inset 0px 0px 10px 2px ${themeContext.trashText}`,
+                          color: themeContext.trashText,
                         },
                         "&.Mui-checked": {
-                          color: `darkgray`,
+                          color: themeContext.trashText,
                         },
                       }}
                       checked={selectedTrash.includes(note.id)}

@@ -183,6 +183,10 @@ const themeOptions = {
     lightWhite: "rgba(255,255,255,0.6)",
     black: "#000",
     lightBlack: "rgba(0,0,0,0.6)",
+
+    // Trash Colors
+    trashText: "#7f808dff",
+    trashBackground: "rgba(103, 109, 118, 0.3)",
   },
   light: {
     // Mode
@@ -226,6 +230,10 @@ const themeOptions = {
     lightWhite: "rgba(255,255,255,0.6)",
     black: "#000",
     lightBlack: "rgba(0,0,0,0.6)",
+
+    // Trash Colors
+    trashText: "#2e2e2e",
+    trashBackground: "rgba(0, 0, 0, 0.2)",
   },
 };
 
