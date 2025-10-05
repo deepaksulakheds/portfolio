@@ -22,13 +22,49 @@ export function ViewSnapshotsDialog({
       //     snapsList[Math.floor(Math.random() * snapsList.length)]
       //   );
 
+      const handleKeyDown = (e) => {
+        try {
+          const userAgent = navigator?.userAgent?.toLowerCase() || "";
+          const platform = userAgent.includes("mac")
+            ? "mac"
+            : userAgent.includes("win")
+            ? "win"
+            : userAgent.includes("lin") || userAgent.includes("ubu")
+            ? "lin"
+            : false;
+
+          if (!platform) return;
+
+          const key = e.key.toLowerCase();
+
+          switch (key) {
+            case "arrowright":
+              e.preventDefault();
+
+              handleNextClick();
+              break;
+
+            case "arrowleft":
+              e.preventDefault();
+
+              handlePrevClick();
+              break;
+
+            default:
+              return;
+          }
+        } catch (err) {
+          console.log("Error in shortcut", err);
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+
       return () => {
-        setTimeout(() => {
-          setSelectedImage(snapsList[0]);
-        }, 200);
+        window.removeEventListener("keydown", handleKeyDown);
       };
     }
-  }, [viewSnapshotVisible]);
+  }, [viewSnapshotVisible, snapsList, selectedImage]);
 
   const handleImageClick = (index) => {
     setSelectedImage(snapsList[index]);

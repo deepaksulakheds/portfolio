@@ -7,7 +7,7 @@ import { ViewSnapshotsDialog } from "./ViewSnapshots.jsx";
 
 const projData = [
   {
-    title: "Due Finder (Android App)",
+    title: "Due Finder (Mobile App)",
     techUsed: [
       "React Native",
       "React Native Paper",
