@@ -87,6 +87,7 @@ export function ViewSnapshotsDialog({
       open={viewSnapshotVisible}
       onClose={onClose}
       fullWidth
+      maxWidth="md"
       sx={{ backdropFilter: "blur(12px)", boxShadow: "none" }}
       slotProps={{
         paper: {
@@ -126,7 +127,7 @@ export function ViewSnapshotsDialog({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                gap: "20px",
+                gap: "10px",
                 padding: "5px",
                 borderRadius: "13px",
               }}

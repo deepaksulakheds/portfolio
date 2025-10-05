@@ -65,7 +65,12 @@ const projData = [
     description: `Identifies different types of fruits using a Convolutional Neural Network(CNN). Implemented using Python and visualized with Matplotlib.`,
     image: "./icons/fruits.jpg",
     path: "https://github.com/deepaksulakheds/fruits-classification-cnn",
-    snapList: ["./icons/fruits.jpg"],
+    snapList: [
+      "./snapshots/FruitsCNN/FruitsCNN-1.png",
+      "./snapshots/FruitsCNN/FruitsCNN-2.png",
+      "./snapshots/FruitsCNN/FruitsCNN-3.png",
+      "./snapshots/FruitsCNN/FruitsCNN-4.png",
+    ],
   },
   {
     title: "Face Recognition using LBPH",
