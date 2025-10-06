@@ -1,10 +1,8 @@
 import { Dialog, Grid, IconButton, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useThemeContext } from "../../Contexts/ThemeContext";
 import "./projectComponent.css";
 import { ArrowCircleLeft, ArrowCircleRight } from "@mui/icons-material";
-
-const snapsList = ["./deepak.jpg", `deepak-1.jpg`, `deepak-2.jpg`];
 
 export function ViewSnapshotsDialog({
   viewSnapshotVisible,
@@ -15,56 +13,32 @@ export function ViewSnapshotsDialog({
 
   const { themeContext } = useThemeContext();
 
+  const thumbnailsContainerRef = useRef(null);
+  const thumbnailRefs = useRef([]);
+
   useEffect(() => {
-    if (viewSnapshotVisible) {
-      // Uncomment for random pics
-      //   setSelectedImage(
-      //     snapsList[Math.floor(Math.random() * snapsList.length)]
-      //   );
+    if (!viewSnapshotVisible) return;
 
-      const handleKeyDown = (e) => {
-        try {
-          const userAgent = navigator?.userAgent?.toLowerCase() || "";
-          const platform = userAgent.includes("mac")
-            ? "mac"
-            : userAgent.includes("win")
-            ? "win"
-            : userAgent.includes("lin") || userAgent.includes("ubu")
-            ? "lin"
-            : false;
+    const container = thumbnailsContainerRef.current;
+    const selectedThumbnail = thumbnailRefs.current[selectedImage];
 
-          if (!platform) return;
+    if (container && selectedThumbnail) {
+      const containerRect = container.getBoundingClientRect();
+      const thumbRect = selectedThumbnail.getBoundingClientRect();
 
-          const key = e.key.toLowerCase();
-
-          switch (key) {
-            case "arrowright":
-              e.preventDefault();
-
-              handleNextClick();
-              break;
-
-            case "arrowleft":
-              e.preventDefault();
-
-              handlePrevClick();
-              break;
-
-            default:
-              return;
-          }
-        } catch (err) {
-          console.log("Error in shortcut", err);
-        }
-      };
-
-      window.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        window.removeEventListener("keydown", handleKeyDown);
-      };
+      if (thumbRect.left < containerRect.left) {
+        container.scrollBy({
+          left: thumbRect.left - containerRect.left - 5,
+          behavior: "smooth",
+        });
+      } else if (thumbRect.right > containerRect.right) {
+        container.scrollBy({
+          left: thumbRect.right - containerRect.right + 5,
+          behavior: "smooth",
+        });
+      }
     }
-  }, [viewSnapshotVisible, snapsList, selectedImage]);
+  }, [viewSnapshotVisible, selectedImage]);
 
   const handleImageClick = (index) => {
     setSelectedImage(snapsList[index]);
@@ -82,10 +56,37 @@ export function ViewSnapshotsDialog({
     setSelectedImage(snapsList[nextIndex]);
   };
 
+  // Keyboard Shortcuts handler for dialog only
+  const userAgent = navigator?.userAgent?.toLowerCase() || "";
+  const platform = userAgent.includes("mac")
+    ? "mac"
+    : userAgent.includes("win")
+    ? "win"
+    : userAgent.includes("lin") || userAgent.includes("ubu")
+    ? "lin"
+    : false;
+  const handleKeyDown = (e) => {
+    try {
+      if (!platform) return;
+
+      const key = e.key.toLowerCase();
+      if (key === "arrowright") {
+        e.preventDefault();
+        handleNextClick();
+      } else if (key === "arrowleft") {
+        e.preventDefault();
+        handlePrevClick();
+      }
+    } catch (err) {
+      console.log("Error in shortcut", err);
+    }
+  };
+
   return (
     <Dialog
       open={viewSnapshotVisible}
       onClose={onClose}
+      onKeyDown={handleKeyDown}
       fullWidth
       maxWidth="md"
       sx={{ backdropFilter: "blur(12px)", boxShadow: "none" }}
@@ -158,6 +159,7 @@ export function ViewSnapshotsDialog({
                 <ArrowCircleLeft sx={{ fontSize: "30px" }} />
               </IconButton>
               <Grid
+                ref={thumbnailsContainerRef} // container ref
                 sx={{
                   display: "flex",
                   gap: "5px",
@@ -171,6 +173,7 @@ export function ViewSnapshotsDialog({
                     src={image}
                     className="imageList"
                     loading="lazy"
+                    ref={(el) => (thumbnailRefs.current[image] = el)} // assign ref to each image
                     style={{
                       backgroundColor: themeContext.dullThemeColor,
                       ...(image === selectedImage && {
