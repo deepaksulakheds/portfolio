@@ -256,7 +256,7 @@ function NotesComponent({ notistackSnackbar }) {
         ...prev,
         search: query,
       }));
-    }, 500);
+    }, 700);
   };
 
   const toggleDisplaySelected = () => {
