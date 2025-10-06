@@ -110,8 +110,10 @@ export function ViewSnapshotsDialog({
           <img
             src={selectedImage}
             loading="lazy"
-            alt="Selected snapshot"
+            alt="Image Preview"
             style={{
+              minHeight: "200px",
+              minWidth: "250px",
               maxWidth: "100%", // 100% of container width (which includes padding)
               maxHeight: "80vh",
               objectFit: "contain",
