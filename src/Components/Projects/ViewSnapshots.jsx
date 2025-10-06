@@ -97,7 +97,7 @@ export function ViewSnapshotsDialog({
             height: "auto",
             width: "auto",
             maxHeight: "90vh",
-            padding: "20px",
+            padding: "10px",
             boxSizing: "border-box",
             backgroundColor: "rgba(255, 255, 255, 0.2)",
             borderRadius: 3,
