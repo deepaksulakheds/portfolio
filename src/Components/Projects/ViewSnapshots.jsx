@@ -159,9 +159,7 @@ export function ViewSnapshotsDialog({
                 sx={{
                   display: "flex",
                   gap: "5px",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  overflowX: "auto",
                 }}
               >
                 {snapsList.map((image, index) => (
@@ -179,6 +177,7 @@ export function ViewSnapshotsDialog({
                       height: "25px",
                       width: "25px",
                       objectFit: "contain",
+                      flexShrink: 0, // prevent shrinking
                     }}
                   />
                 ))}
