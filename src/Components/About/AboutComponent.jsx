@@ -9,6 +9,8 @@ const skills = [
     list: [
       { content: "React JS", icon: "./icons/react.svg" },
       { content: "Vite", icon: "./icons/vite.svg" },
+      { content: "React Native", icon: "./icons/react-native.svg" },
+      { content: "Expo", icon: "./icons/expo.svg" },
       { content: "Material UI", icon: "./icons/mui.svg" },
       { content: "Bootstrap", icon: "./icons/bootstrap.svg" },
       { content: "HTML", icon: "./icons/html.svg" },
@@ -23,6 +25,7 @@ const skills = [
       { content: "JavaScript", icon: "./icons/javascript.svg" },
       { content: "GraphQL", icon: "./icons/graphql.svg" },
       { content: "REST APIs", icon: "./icons/rest-api1.svg" },
+      { content: "JWT / JWE", icon: "./icons/JWT.svg" },
       { content: "C / C++", icon: "./icons/cpp.svg" },
       { content: "Python", icon: "./icons/python.svg" },
       { content: "Microservices", icon: "./icons/microservices.svg" },
